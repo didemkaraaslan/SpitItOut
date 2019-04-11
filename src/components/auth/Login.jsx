@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Segment } from "semantic-ui-react";
+import { Segment, Header } from "semantic-ui-react";
 
 class Login extends Component {
   render() {
-    return(
+    return (
       <Segment>
+        <Header as="h2">Login</Header>
       </Segment>
     );
   }
