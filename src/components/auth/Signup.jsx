@@ -1,5 +1,15 @@
 import React, { Component } from "react";
-import { Grid, Segment, Form, Header, Button, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import {
+  Grid,
+  Segment,
+  Form,
+  Header,
+  Button,
+  Icon,
+  Message
+} from "semantic-ui-react";
+
 import "../../app.css";
 
 class Signup extends Component {
@@ -16,9 +26,7 @@ class Signup extends Component {
     });
   };
 
-  handleSubmit = event => {
-  
-  };
+  handleSubmit = event => {};
 
   render() {
     return (
@@ -29,7 +37,7 @@ class Signup extends Component {
           className="form__register__login"
         >
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as="h2" color="orange" icon>
+            <Header as="h2" color="violet" icon>
               <Icon name="comment alternate outline" />
               Register for SpitItOut
             </Header>
@@ -79,11 +87,21 @@ class Signup extends Component {
                     type="password"
                   />
                 </Form.Field>
-                <Button color="green" size="large" fluid onClick={this.handleSubmit}>
+                <Button
+                  color="green"
+                  size="large"
+                  fluid
+                  onClick={this.handleSubmit}
+                >
                   Submit
                 </Button>
               </Segment>
             </Form>
+            <Message >
+              <Icon name="help" />
+              Already signed up?&nbsp;<Link to="/signin">Login here</Link>
+              &nbsp;instead.
+            </Message>
           </Grid.Column>
         </Grid>
       </div>
