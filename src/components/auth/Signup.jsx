@@ -18,6 +18,7 @@ const gravatar = require("gravatar");
 
 class Signup extends Component {
   state = {
+    usersRef: this.props.firebase.database().ref("users"),
     username: "",
     email: "",
     password: "",
@@ -53,7 +54,24 @@ class Signup extends Component {
               })
             })
             .then(() => {
-              this.setState({ loading: false, errors: [] });
+              this.saveUserIntoDatabase(createdUser)
+                .then(() => {
+                  this.setState({ loading: false, errors: [] });
+                })
+                .catch(error => {
+                  console.error(error);
+                  this.setState(prevState => ({
+                    loading: false,
+                    errors: [
+                      ...prevState.errors,
+                      {
+                        code: "database_save_user_error",
+                        errorMessage:
+                          "User couldn't been saved into firebase realtime database"
+                      }
+                    ]
+                  }));
+                });
             })
             .catch(error => {
               this.setState(prevState => ({
@@ -119,6 +137,14 @@ class Signup extends Component {
     this.state.errors.map((error, key) => (
       <p key={key}>{error.errorMessage}</p>
     ));
+
+  saveUserIntoDatabase = createdUser => {
+    return this.state.usersRef.child(createdUser.user.uid).set({
+      username: createdUser.user.displayName,
+      email: createdUser.user.email,
+      photoURL: createdUser.user.photoURL
+    });
+  };
 
   render() {
     const { loading, errors } = this.state;
