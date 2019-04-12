@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { withFirebase, isLoaded, isEmpty } from "react-redux-firebase";
+import { withFirebase } from "react-redux-firebase";
 import { Link } from "react-router-dom";
 import {
   Grid,
@@ -13,8 +13,8 @@ import {
   Icon,
   Message
 } from "semantic-ui-react";
-
 import "../../app.css";
+const gravatar = require("gravatar");
 
 class Signup extends Component {
   state = {
@@ -34,7 +34,7 @@ class Signup extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { email, password } = this.state;
+    const { username, email, password } = this.state;
     const { firebase } = this.props;
 
     this.setState({ loading: true, errors: [] });
@@ -44,8 +44,23 @@ class Signup extends Component {
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then(createdUser => {
-          this.setState({ loading: false, errors: [] });
-          console.log(createdUser);
+          createdUser.user
+            .updateProfile({
+              displayName: username,
+              photoURL: gravatar.url(createdUser.user.email, {
+                s: "60",
+                protocol: "https"
+              })
+            })
+            .then(() => {
+              this.setState({ loading: false, errors: [] });
+            })
+            .catch(error => {
+              this.setState(prevState => ({
+                loading: false,
+                errors: [...prevState.errors, error]
+              }));
+            });
         })
         .catch(error => {
           let errorCode = error.code;
@@ -177,7 +192,9 @@ class Signup extends Component {
                 </Button>
               </Segment>
             </Form>
-            {errors.length > 0 && <Message error>{this.displayErrors()}</Message>}
+            {errors.length > 0 && (
+              <Message error>{this.displayErrors()}</Message>
+            )}
             <Message>
               <Icon name="help" />
               Already signed up?&nbsp;<Link to="/signin">Login here</Link>
@@ -192,7 +209,7 @@ class Signup extends Component {
 
 Signup.propTypes = {
   firebase: PropTypes.object
-}
+};
 
 export default compose(
   withFirebase,
