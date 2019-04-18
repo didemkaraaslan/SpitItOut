@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container } from "semantic-ui-react";
+
 import Confession from "./Confession.jsx";
 
 class ContentPanel extends Component {
@@ -11,7 +12,8 @@ class ContentPanel extends Component {
           photoURL:
             "https://s.gravatar.com/avatar/2f027587fe5aa459c6e85f5f1b41d2df?s=60"
         },
-        content: "Edit: Im relieved its still standing! Im not religious, certainly not catholic, or spiritual. But Notre Dame is a massive monument in history, and has withstood so much in 800 years that itss a miracle it even still exits. The building is an engineering ",
+        content:
+          "Edit: Im relieved its still standing! Im not religious, certainly not catholic, or spiritual. But Notre Dame is a massive monument in history, and has withstood so much in 800 years that itss a miracle it even still exits. The building is an engineering ",
         tag: "Sad",
         timestamp: "15 min ago",
         views: 222,
@@ -25,7 +27,8 @@ class ContentPanel extends Component {
           photoURL:
             "https://s.gravatar.com/avatar/2f027587fe5aa459c6e85f5f1b41d2df?s=60"
         },
-        content: "Edit: Im relieved its still standing! Im not religious, certainly not catholic, or spiritual. But Notre Dame is a massive monument in history, and has withstood so much in 800 years that itss a miracle it even still exits. The building is an engineering ",
+        content:
+          "Edit: Im relieved its still standing! Im not religious, certainly not catholic, or spiritual. But Notre Dame is a massive monument in history, and has withstood so much in 800 years that itss a miracle it even still exits. The building is an engineering ",
         tag: "Happy",
         timestamp: "2 min ago",
         views: 100,
@@ -39,7 +42,8 @@ class ContentPanel extends Component {
           photoURL:
             "https://s.gravatar.com/avatar/2f027587fe5aa459c6e85f5f1b41d2df?s=60"
         },
-        content: "Edit: Im relieved its still standing! Im not religious, certainly not catholic, or spiritual. But Notre Dame is a massive monument in history, and has withstood so much in 800 years that itss a miracle it even still exits. The building is an engineering ",
+        content:
+          "Edit: Im relieved its still standing! Im not religious, certainly not catholic, or spiritual. But Notre Dame is a massive monument in history, and has withstood so much in 800 years that itss a miracle it even still exits. The building is an engineering ",
         tag: "First Experience",
         timestamp: "just now",
         views: 333,

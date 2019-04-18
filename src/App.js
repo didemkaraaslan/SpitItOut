@@ -7,12 +7,20 @@ import ContentPanel from "./components/ContentPanel/ContentPanel.jsx";
 
 class App extends Component {
   state = {
+    openConfessionModal: false,
     activeHeaderMenuItem: "",
     activeMenuItem: ""
   };
 
   handleHeaderMenuItemClick = (e, { name }) => {
-    this.setState({ activeHeaderMenuItem: name });
+    let { openConfessionModal } = this.state;
+
+    if (name === "make_confession") {
+      openConfessionModal = true;
+    } else {
+      openConfessionModal = false;
+    }
+    this.setState({ openConfessionModal, activeHeaderMenuItem: name });
   };
 
   handleMenuItemClick = (e, { name }) => {
@@ -20,12 +28,17 @@ class App extends Component {
   };
 
   render() {
-    const { activeHeaderMenuItem, activeMenuItem } = this.state;
+    const {
+      openConfessionModal,
+      activeHeaderMenuItem,
+      activeMenuItem
+    } = this.state;
 
     return (
       <Grid>
         <Grid.Row>
           <HeaderPanel
+            openConfessionModal={openConfessionModal}
             activeHeaderMenuItem={activeHeaderMenuItem}
             handleHeaderMenuItemClick={this.handleHeaderMenuItemClick}
           />

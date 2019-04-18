@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Menu } from "semantic-ui-react";
 
+import * as Tag from "../../utils/Tags";
 import "../../app.css";
 
 const SidePanel = ({ activeItem, handleMenuItemClick }) => (
@@ -20,87 +21,87 @@ const SidePanel = ({ activeItem, handleMenuItemClick }) => (
 
       <Menu.Menu>
         <Menu.Item
-          name="All"
+          name={Tag.ALL}
           as="a"
           icon="hashtag"
-          active={activeItem === "All"}
+          active={activeItem === Tag.ALL}
           onClick={handleMenuItemClick}
         />
         <Menu.Item
-          name="Regret"
+          name={Tag.REGRET}
           as="a"
           icon="hashtag"
-          active={activeItem === "Regret"}
+          active={activeItem === Tag.REGRET}
           onClick={handleMenuItemClick}
         />
         <Menu.Item
-          name="First experience"
+          name={Tag.FIRST_EXPERIENCE}
           as="a"
           icon="hashtag"
-          active={activeItem === "First experience"}
+          active={activeItem === Tag.FIRST_EXPERIENCE}
           onClick={handleMenuItemClick}
         />
         <Menu.Item
-          name="Sad"
+          name={Tag.SAD}
           as="a"
           icon="hashtag"
-          active={activeItem === "Sad"}
+          active={activeItem === Tag.SAD}
           onClick={handleMenuItemClick}
         />
         <Menu.Item
-          name="Guilty"
+          name={Tag.GUILTY}
           as="a"
           icon="hashtag"
-          active={activeItem === "Guilty"}
+          active={activeItem === Tag.GUILTY}
           onClick={handleMenuItemClick}
         />
         <Menu.Item
-          name="Love"
+          name={Tag.LOVE}
           as="a"
           icon="hashtag"
-          active={activeItem === "Love"}
+          active={activeItem === Tag.LOVE}
           onClick={handleMenuItemClick}
         />
         <Menu.Item
-          name="Happy"
+          name={Tag.HAPPY}
           as="a"
           icon="hashtag"
-          active={activeItem === "Happy"}
+          active={activeItem === Tag.HAPPY}
           onClick={handleMenuItemClick}
         />
         <Menu.Item
-          name="Congratulations"
+          name={Tag.CONGRATULATIONS}
           as="a"
           icon="hashtag"
-          active={activeItem === "Congratulations"}
+          active={activeItem === Tag.CONGRATULATIONS}
           onClick={handleMenuItemClick}
         />
         <Menu.Item
-          name="Depression"
+          name={Tag.DEPRESSION}
           as="a"
           icon="hashtag"
-          active={activeItem === "Depression"}
+          active={activeItem === Tag.DEPRESSION}
           onClick={handleMenuItemClick}
         />
         <Menu.Item
-          name="Cheating"
+          name={Tag.CHEATING}
           as="a"
           icon="hashtag"
-          active={activeItem === "Cheating"}
+          active={activeItem === Tag.CHEATING}
           onClick={handleMenuItemClick}
         />
         <Menu.Item
-          name="Mocking"
+          name={Tag.MOCKING}
           as="a"
           icon="hashtag"
-          active={activeItem === "Mocking"}
+          active={activeItem === Tag.MOCKING}
           onClick={handleMenuItemClick}
         />
         <Menu.Item
-          name="Sexual Abuse"
+          name={Tag.SEXUAL_ABUSE}
           as="a"
           icon="hashtag"
-          active={activeItem === "Sexual Abuse"}
+          active={activeItem === Tag.SEXUAL_ABUSE}
           onClick={handleMenuItemClick}
         />
       </Menu.Menu>
