@@ -3,12 +3,8 @@ import PropTypes from "prop-types";
 import { Feed, Segment, Label, Icon, Image } from "semantic-ui-react";
 
 const Confession = ({ confession }) => (
-  <Segment
-    textAligned="center"
-    style={{ maxWidth: "600px", minHeight: "120px" }}
-    raised
-  >
-    <Feed style={{ fontSize: "13px"}}>
+  <Segment style={{ maxWidth: "600px", minHeight: "120px" }} raised>
+    <Feed style={{ fontSize: "13px" }}>
       <Feed.Event>
         <Feed.Label>
           <Image src={confession.user.photoURL} avatar alt="user avatar" />
@@ -32,7 +28,7 @@ const Confession = ({ confession }) => (
               <Icon name="eye" /> {confession.views}
             </Feed.Like>
           </Feed.Meta>
-          <Feed.Date style={{ float: "right", marginTop:"4px" }}>
+          <Feed.Date style={{ float: "right", marginTop: "4px" }}>
             {confession.timestamp}
           </Feed.Date>
         </Feed.Content>
