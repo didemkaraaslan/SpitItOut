@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Feed, Segment, Label, Icon, Image } from "semantic-ui-react";
 
+import { pickTagColor } from "../../utils/functions";
+
 const Confession = ({ confession }) => (
   <Segment style={{ maxWidth: "600px", minHeight: "120px" }} raised>
     <Feed style={{ fontSize: "13px" }}>
@@ -13,7 +15,12 @@ const Confession = ({ confession }) => (
           <Feed.Summary>
             <Feed.User>{confession.user.username}</Feed.User>
           </Feed.Summary>
-          <Label as="a" attached="top right" color="orange" tag>
+          <Label
+            as="a"
+            attached="top right"
+            color={pickTagColor(confession.tag)}
+            tag
+          >
             {confession.tag}
           </Label>
           <Feed.Extra>{confession.content}</Feed.Extra>

@@ -2,23 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Modal, Button, Form } from "semantic-ui-react";
 
-const tagOptions = [
-  {
-    key: "0",
-    text: "All",
-    value: "all"
-  },
-  {
-    key: "1",
-    text: "Sad",
-    value: "sad"
-  },
-  {
-    key: "2",
-    text: "Happy",
-    value: "happy"
-  }
-];
+import { tagOptions } from "../../utils/Tags";
 
 class ConfessionModal extends Component {
   state = {
@@ -77,9 +61,9 @@ class ConfessionModal extends Component {
             </Form.Group>
             <Form.Select
               fluid
-              label="Choose Tag"
+              label="Which tag describes your confession best?"
               options={tagOptions}
-              placeholder="Pick tag"
+              placeholder="Pick a tag"
             />
           </Form>
         </Modal.Content>
