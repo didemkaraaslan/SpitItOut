@@ -40,11 +40,9 @@ class Login extends Component {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(signedInUser => {
-          console.log(signedInUser);
           this.setState({ loading: false, errors: [] });
         })
         .catch(error => {
-          console.log(error)
           this.setState(prevState => ({
             loading: false,
             errors: [...prevState.errors, error]
