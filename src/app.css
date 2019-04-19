@@ -13,3 +13,8 @@ body,
   height: 95vh;
   padding: 1em;
 }
+
+.sidepanel {
+  width: 270px !important;
+
+}
