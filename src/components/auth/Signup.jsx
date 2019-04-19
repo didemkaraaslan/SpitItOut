@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { withFirebase } from "react-redux-firebase";
 import { Link } from "react-router-dom";
 import {
   Grid,
@@ -9,15 +13,18 @@ import {
   Icon,
   Message
 } from "semantic-ui-react";
-
 import "../../app.css";
+const gravatar = require("gravatar");
 
 class Signup extends Component {
   state = {
+    usersRef: this.props.firebase.database().ref("users"),
     username: "",
     email: "",
     password: "",
-    passwordConfirmation: ""
+    passwordConfirmation: "",
+    loading: false,
+    errors: []
   };
 
   handleChange = event => {
@@ -26,9 +33,122 @@ class Signup extends Component {
     });
   };
 
-  handleSubmit = event => {};
+  handleSubmit = event => {
+    event.preventDefault();
+    const { username, email, password } = this.state;
+    const { firebase } = this.props;
+
+    this.setState({ loading: true, errors: [] });
+
+    if (this.isFormValid()) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(createdUser => {
+          createdUser.user
+            .updateProfile({
+              displayName: username,
+              photoURL: gravatar.url(createdUser.user.email, {
+                s: "60",
+                protocol: "https"
+              })
+            })
+            .then(() => {
+              this.saveUserIntoDatabase(createdUser)
+                .then(() => {
+                  this.setState({ loading: false, errors: [] });
+                })
+                .catch(error => {
+                  console.error(error);
+                  this.setState(prevState => ({
+                    loading: false,
+                    errors: [
+                      ...prevState.errors,
+                      {
+                        code: "database_save_user_error",
+                        errorMessage:
+                          "User couldn't been saved into firebase realtime database"
+                      }
+                    ]
+                  }));
+                });
+            })
+            .catch(error => {
+              this.setState(prevState => ({
+                loading: false,
+                errors: [...prevState.errors, error]
+              }));
+            });
+        })
+        .catch(error => {
+          let errorCode = error.code;
+          let errorMessage = error.message;
+
+          this.setState(prevState => ({
+            loading: false,
+            errors: [...prevState.errors, { code: errorCode, errorMessage }]
+          }));
+        });
+    } else {
+      this.setState({ loading: false });
+    }
+  };
+
+  isFormEmpty = () => {
+    const { username, password, email, passwordConfirmation } = this.state;
+    return (
+      !username.length ||
+      !password.length ||
+      !email.length ||
+      !passwordConfirmation.length
+    );
+  };
+
+  isPasswordsMatch = () =>
+    this.state.password === this.state.passwordConfirmation;
+
+  isFormValid = () => {
+    let error;
+
+    if (this.isFormEmpty()) {
+      error = {
+        code: "password_empty",
+        errorMessage: "Please fill in all of the fields."
+      };
+      this.setState(prevState => ({
+        errors: [...prevState.errors, error]
+      }));
+      return false;
+    } else if (!this.isPasswordsMatch()) {
+      error = {
+        code: "password_empty",
+        errorMessage: "Password confirmation must be same with the password."
+      };
+      this.setState(prevState => ({
+        errors: [...prevState.errors, error]
+      }));
+      return false;
+    }
+
+    return true;
+  };
+
+  displayErrors = () =>
+    this.state.errors.map((error, key) => (
+      <p key={key}>{error.errorMessage}</p>
+    ));
+
+  saveUserIntoDatabase = createdUser => {
+    return this.state.usersRef.child(createdUser.user.uid).set({
+      username: createdUser.user.displayName,
+      email: createdUser.user.email,
+      photoURL: createdUser.user.photoURL
+    });
+  };
 
   render() {
+    const { loading, errors } = this.state;
+
     return (
       <div className="app">
         <Grid
@@ -90,6 +210,7 @@ class Signup extends Component {
                 <Button
                   color="green"
                   size="large"
+                  loading={loading}
                   fluid
                   onClick={this.handleSubmit}
                 >
@@ -97,7 +218,10 @@ class Signup extends Component {
                 </Button>
               </Segment>
             </Form>
-            <Message >
+            {errors.length > 0 && (
+              <Message error>{this.displayErrors()}</Message>
+            )}
+            <Message>
               <Icon name="help" />
               Already signed up?&nbsp;<Link to="/signin">Login here</Link>
               &nbsp;instead.
@@ -109,4 +233,11 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+Signup.propTypes = {
+  firebase: PropTypes.object
+};
+
+export default compose(
+  withFirebase,
+  connect(({ firebase: { auth } }) => ({ auth }))
+)(Signup);
