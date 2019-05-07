@@ -6,15 +6,42 @@ import { tagOptions } from "../../utils/Tags";
 
 class ConfessionModal extends Component {
   state = {
-    shareOption: "user"
+    shareAs: "user",
+    content: "",
+    tag: ""
   };
 
   handleChange = (e, { value }) => {
-    this.setState({ shareOption: value });
+    this.setState({
+      [e.target.id]: value
+    });
+  };
+
+  handleSelect = (e, { value }) => {
+    this.setState({ tag: value });
+  };
+
+  createConfession = () => {
+    const { profile, firebase } = this.props;
+
+    const confession = {
+      ...this.state,
+      user: {
+        username: profile.username,
+        photoURL: profile.photoURL
+      },
+      timestamp: "now",
+      views: 222,
+      likes: 99,
+      dislikes: 22,
+      comments: 12
+    };
+
+    firebase.push("confessions", confession);
   };
 
   render() {
-    const { shareOption } = this.state;
+    const { shareAs } = this.state;
     const { open } = this.props;
 
     return (
@@ -41,34 +68,44 @@ class ConfessionModal extends Component {
         <Modal.Content scrolling>
           <Form>
             <Form.TextArea
+              id="content"
               label="What is your confession?"
               placeholder="Tell us all about it..."
+              onChange={this.handleChange}
+              value={this.state.content}
             />
             <Form.Group grouped>
               <label>How would you want to share your confession?</label>
               <Form.Radio
+                id="shareAs"
                 label="Anonymously"
                 value="anonymous"
-                checked={shareOption === "anonymous"}
+                checked={shareAs === "anonymous"}
                 onChange={this.handleChange}
               />
               <Form.Radio
+                id="shareAs"
                 label="Use your fullname"
                 value="user"
-                checked={shareOption === "user"}
+                checked={shareAs === "user"}
                 onChange={this.handleChange}
               />
             </Form.Group>
             <Form.Select
+              id="tag"
               fluid
+              value={this.state.tag}
               label="Which tag describes your confession best?"
               options={tagOptions}
               placeholder="Pick a tag"
+              onChange={this.handleSelect}
             />
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button primary>SHARE</Button>
+          <Button primary onClick={this.createConfession}>
+            SHARE
+          </Button>
         </Modal.Actions>
       </Modal>
     );
@@ -76,7 +113,9 @@ class ConfessionModal extends Component {
 }
 
 ConfessionModal.propTypes = {
-  open: PropTypes.bool
+  open: PropTypes.bool,
+  firebase: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 export default ConfessionModal;

@@ -27,6 +27,8 @@ const options = [
 ];
 
 const HeaderPanel = ({
+  firebase,
+  profile,
   openConfessionModal = false,
   activeHeaderMenuItem = "features",
   handleHeaderMenuItemClick
@@ -75,14 +77,20 @@ const HeaderPanel = ({
         </Menu.Item>
       </Menu.Menu>
     </Menu>
-    <ConfessionModal open={openConfessionModal} />
+    <ConfessionModal
+      open={openConfessionModal}
+      profile={profile}
+      firebase={firebase}
+    />
   </Container>
 );
 
 HeaderPanel.propTypes = {
   openConfessionModal: PropTypes.bool,
   activeHeaderMenuItem: PropTypes.string,
-  handleHeaderMenuItemClick: PropTypes.func
+  handleHeaderMenuItemClick: PropTypes.func,
+  profile: PropTypes.object.isRequired,
+  firebase: PropTypes.object.isRequired
 };
 
 export default HeaderPanel;
