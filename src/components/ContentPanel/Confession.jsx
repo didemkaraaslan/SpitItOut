@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import moment from "moment";
 import { Feed, Segment, Label, Icon, Image } from "semantic-ui-react";
 
 import { pickTagColor } from "../../utils/functions";
@@ -26,17 +27,17 @@ const Confession = ({ confession }) => (
           <Feed.Extra>{confession.content}</Feed.Extra>
           <Feed.Meta>
             <Feed.Like>
-              <Icon name="like" /> {confession.likes}
+              <Icon name="like" /> {confession.numberOfLikes}
             </Feed.Like>
             <Feed.Like>
-              <Icon name="comment" /> {confession.comments}
+              <Icon name="comment" /> {confession.numberOfComments}
             </Feed.Like>
             <Feed.Like>
-              <Icon name="eye" /> {confession.views}
+              <Icon name="eye" /> {confession.numberOfViews}
             </Feed.Like>
           </Feed.Meta>
           <Feed.Date style={{ float: "right", marginTop: "4px" }}>
-            {confession.timestamp}
+            {moment(confession.timestamp).fromNow()}
           </Feed.Date>
         </Feed.Content>
       </Feed.Event>

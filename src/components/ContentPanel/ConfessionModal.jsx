@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Modal, Button, Form } from "semantic-ui-react";
+import { Modal, Button, Form, Message } from "semantic-ui-react";
 
 import { tagOptions } from "../../utils/Tags";
+import { confessionSchema } from "../../utils/schema";
+const Joi = require("@hapi/joi");
 
 class ConfessionModal extends Component {
   state = {
+    loading: false,
     shareAs: "user",
     content: "",
-    tag: ""
+    tag: "",
+    errors: []
   };
 
   handleChange = (e, { value }) => {
@@ -21,27 +25,63 @@ class ConfessionModal extends Component {
     this.setState({ tag: value });
   };
 
-  createConfession = () => {
+  createConfession = async () => {
+    const { content, tag, shareAs } = this.state;
     const { profile, firebase } = this.props;
 
+    this.setState({ loading: true, errors: [] });
+
     const confession = {
-      ...this.state,
+      content,
+      tag,
+      shareAs,
       user: {
         username: profile.username,
         photoURL: profile.photoURL
       },
-      timestamp: "now",
-      views: 222,
-      likes: 99,
-      dislikes: 22,
-      comments: 12
+      timestamp: firebase.database.ServerValue.TIMESTAMP,
+      numberOfViews: 0,
+      numberOfLikes: 0,
+      numberOfDislikes: 0,
+      numberOfComments: 0
     };
 
-    firebase.push("confessions", confession);
+    const validationResult = await this.validateConfession(confession);
+
+    if (validationResult) {
+      firebase
+        .push("confessions", confession)
+        .then(() => {
+          this.setState({ loading: false });
+          this.props.handleCloseConfessionModal();
+        })
+        .catch(error => {
+          console.error(error);
+          this.setState({ loading: false });
+        });
+    }
   };
 
+  validateConfession = confession => {
+    return new Promise((resolve, reject) => {
+      Joi.validate(confession, confessionSchema, errors => {
+        if (errors) {
+          this.setState(prevState => ({
+            loading: false,
+            errors: [...prevState.errors, errors]
+          }));
+          resolve(false);
+        }
+        resolve(true);
+      });
+    });
+  };
+
+  displayErrors = () =>
+    this.state.errors.map((error, key) => <p key={key}>{error.message}</p>);
+
   render() {
-    const { shareAs } = this.state;
+    const { shareAs, loading, errors } = this.state;
     const { open } = this.props;
 
     return (
@@ -101,9 +141,10 @@ class ConfessionModal extends Component {
               onChange={this.handleSelect}
             />
           </Form>
+          {errors.length > 0 && <Message error>{this.displayErrors()}</Message>}
         </Modal.Content>
         <Modal.Actions>
-          <Button primary onClick={this.createConfession}>
+          <Button primary loading={loading} onClick={this.createConfession}>
             SHARE
           </Button>
         </Modal.Actions>
@@ -115,7 +156,8 @@ class ConfessionModal extends Component {
 ConfessionModal.propTypes = {
   open: PropTypes.bool,
   firebase: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  handleCloseConfessionModal: PropTypes.func
 };
 
 export default ConfessionModal;

@@ -11,20 +11,7 @@ import ContentPanel from "./components/ContentPanel/ContentPanel.jsx";
 
 class App extends Component {
   state = {
-    openConfessionModal: false,
-    activeHeaderMenuItem: "",
     activeMenuItem: ""
-  };
-
-  handleHeaderMenuItemClick = (e, { name }) => {
-    let { openConfessionModal } = this.state;
-
-    if (name === "make_confession") {
-      openConfessionModal = true;
-    } else {
-      openConfessionModal = false;
-    }
-    this.setState({ openConfessionModal, activeHeaderMenuItem: name });
   };
 
   handleMenuItemClick = (e, { name }) => {
@@ -32,11 +19,7 @@ class App extends Component {
   };
 
   render() {
-    const {
-      openConfessionModal,
-      activeHeaderMenuItem,
-      activeMenuItem
-    } = this.state;
+    const { activeHeaderMenuItem, activeMenuItem } = this.state;
 
     const { firebase, profile, confessions } = this.props;
 
@@ -44,7 +27,6 @@ class App extends Component {
       <Grid>
         <Grid.Row>
           <HeaderPanel
-            openConfessionModal={openConfessionModal}
             activeHeaderMenuItem={activeHeaderMenuItem}
             handleHeaderMenuItemClick={this.handleHeaderMenuItemClick}
             firebase={firebase}
