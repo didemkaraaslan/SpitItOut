@@ -1,42 +1,22 @@
 import * as Tag from "./Tags";
 
+const tagColors = new Map([
+  [Tag.REGRET, "red"],
+  [Tag.FIRST_EXPERIENCE, "orange"],
+  [Tag.SAD, "yellow"],
+  [Tag.GUILTY, "olive"],
+  [Tag.LOVE, "pink"],
+  [Tag.HAPPY, "green"],
+  [Tag.CONGRATULATIONS, "teal"],
+  [Tag.DEPRESSION, "black"],
+  [Tag.CHEATING, "purple"],
+  [Tag.MOCKING, "violet"],
+  [Tag.SEXUAL_ABUSE, "blue"]
+]);
+
 export const pickTagColor = tag => {
   let tagColor = "grey";
-  switch (tag) {
-    case Tag.REGRET:
-      tagColor = "yellow";
-      break;
-    case Tag.FIRST_EXPERIENCE:
-      tagColor = "yellow";
-      break;
-    case Tag.SAD:
-      tagColor = "yellow";
-      break;
-    case Tag.GUILTY:
-      tagColor = "yellow";
-      break;
-    case Tag.LOVE:
-      tagColor = "yellow";
-      break;
-    case Tag.HAPPY:
-      tagColor = "yellow";
-      break;
-    case Tag.CONGRATULATIONS:
-      tagColor = "yellow";
-      break;
-    case Tag.DEPRESSION:
-      tagColor = "yellow";
-      break;
-    case Tag.CHEATING:
-      tagColor = "yellow";
-      break;
-    case Tag.MOCKING:
-      tagColor = "yellow";
-      break;
-    case Tag.SEXUAL_ABUSE:
-      tagColor = "yellow";
-      break;
-  }
+  tagColor = tagColors.get(tag);
 
   return tagColor;
 };
