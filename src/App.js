@@ -11,15 +11,11 @@ import ContentPanel from "./components/ContentPanel/ContentPanel.jsx";
 
 class App extends Component {
   state = {
-    activeMenuItem: ""
-  };
-
-  handleMenuItemClick = (e, { name }) => {
-    this.setState({ activeMenuItem: name });
+    activeHeaderMenuItem: ""
   };
 
   render() {
-    const { activeHeaderMenuItem, activeMenuItem } = this.state;
+    const { activeHeaderMenuItem } = this.state;
 
     const { firebase, profile, confessions } = this.props;
 
@@ -36,10 +32,7 @@ class App extends Component {
 
         <Grid.Row>
           <Grid.Column width={3}>
-            <SidePanel
-              activeItem={activeMenuItem}
-              handleMenuItemClick={this.handleMenuItemClick}
-            />
+            <SidePanel />
           </Grid.Column>
           <Grid.Column width={12}>
             <ContentPanel
