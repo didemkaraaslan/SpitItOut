@@ -85,7 +85,7 @@ class ConfessionModal extends Component {
     const { open } = this.props;
 
     return (
-      <Modal open={open}>
+      <Modal open={open} onClose={this.props.handleCloseConfessionModal}>
         <Modal.Header>Confess Yourself Out</Modal.Header>
         <Modal.Description>
           <p
