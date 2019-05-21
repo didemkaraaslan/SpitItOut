@@ -9,16 +9,24 @@ import Confession from "./Confession.jsx";
 class ContentPanel extends Component {
   state = {};
 
+  filterConfessions = (confessions, filterCategory) => {
+    let filteredConfessions = confessions.filter(
+      ({ key, value }) => value.tag === filterCategory
+    );
+
+    return filteredConfessions.map(({ key, value }) => (
+      <Confession key={key} id={key} confession={value} />
+    ));
+  };
+
   render() {
-    const { confessions } = this.props;
+    const { confessions, filterCategory } = this.props;
 
     const confessionList = !isLoaded(confessions)
       ? "Loading.."
       : isEmpty(confessions)
       ? "List is empty"
-      : Object.keys(confessions).map((key, id) => (
-          <Confession key={key} id={id} confession={confessions[key]} />
-        ));
+      : this.filterConfessions(confessions, filterCategory);
 
     return (
       <Container style={{ marginTop: "50px" }}>{confessionList}</Container>
@@ -27,8 +35,9 @@ class ContentPanel extends Component {
 }
 
 ContentPanel.propTypes = {
-  confessions: PropTypes.object,
-  profile: PropTypes.object
+  confessions: PropTypes.array,
+  profile: PropTypes.object,
+  filterCategory: PropTypes.string.isRequired
 };
 
 export default ContentPanel;

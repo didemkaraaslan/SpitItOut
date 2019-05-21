@@ -17,7 +17,7 @@ class App extends Component {
   render() {
     const { activeHeaderMenuItem } = this.state;
 
-    const { firebase, profile, confessions } = this.props;
+    const { firebase, profile, confessions, filterCategory } = this.props;
 
     return (
       <Grid>
@@ -32,13 +32,14 @@ class App extends Component {
 
         <Grid.Row>
           <Grid.Column width={3}>
-            <SidePanel />
+            <SidePanel filterCategory={filterCategory} />
           </Grid.Column>
           <Grid.Column width={12}>
             <ContentPanel
               firebase={firebase}
               profile={profile}
               confessions={confessions}
+              filterCategory={filterCategory}
             />
           </Grid.Column>
         </Grid.Row>
@@ -50,13 +51,17 @@ class App extends Component {
 App.propTypes = {
   firebase: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
-  confessions: PropTypes.object
+  confessions: PropTypes.array,
+  filterCategory: PropTypes.string.isRequired
 };
+
+const mapStateToProps = state => ({
+  profile: state.firebase.profile,
+  confessions: state.firebase.ordered.confessions,
+  filterCategory: state.confession.filterCategory
+});
 
 export default compose(
   firebaseConnect(["confessions"]),
-  connect(state => ({
-    profile: state.firebase.profile,
-    confessions: state.firebase.data.confessions
-  }))
+  connect(mapStateToProps)
 )(App);

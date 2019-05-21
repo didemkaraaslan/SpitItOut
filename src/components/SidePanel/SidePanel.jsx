@@ -137,15 +137,11 @@ SidePanel.propTypes = {
   setCategoryFilter: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  filterCategory: state.confession.filterCategory
-});
-
 const mapDispatchToProps = dispatch => ({
   setCategoryFilter: category => dispatch(setCategoryFilter(category))
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(SidePanel);
