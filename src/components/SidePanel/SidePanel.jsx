@@ -18,11 +18,10 @@ class SidePanel extends Component {
       <Menu
         size="large"
         vertical
+        fixed="top"
         style={{
-          marginTop: "26px",
-          fontSize: "1.1rem",
-          minHeight: "600px",
-          maxWidth: "198px"
+          marginTop: "70px",
+          fontSize: "1.1rem"
         }}
       >
         <Menu.Item>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { isLoaded, isEmpty } from "react-redux-firebase";
-
+import { ALL } from "../../utils/Tags";
 import { Container } from "semantic-ui-react";
 
 import Confession from "./Confession.jsx";
@@ -10,9 +10,12 @@ class ContentPanel extends Component {
   state = {};
 
   filterConfessions = (confessions, filterCategory) => {
-    let filteredConfessions = confessions.filter(
-      ({ key, value }) => value.tag === filterCategory
-    );
+    let filteredConfessions = confessions;
+    if (filterCategory !== ALL) {
+      filteredConfessions = confessions.filter(
+        ({ key, value }) => value.tag === filterCategory
+      );
+    }
 
     return filteredConfessions.map(({ key, value }) => (
       <Confession key={key} id={key} confession={value} />
