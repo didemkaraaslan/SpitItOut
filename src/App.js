@@ -34,7 +34,7 @@ class App extends Component {
           <Grid.Column width={4}>
             <SidePanel filterCategory={filterCategory} />
           </Grid.Column>
-          <Grid.Column width={9}>
+          <Grid.Column width={8}>
             <ContentPanel
               firebase={firebase}
               profile={profile}
@@ -42,7 +42,7 @@ class App extends Component {
               filterCategory={filterCategory}
             />
           </Grid.Column>
-          <Grid.Column width={3} />
+          <Grid.Column width={4} />
         </Grid.Row>
       </Grid>
     );

@@ -30,15 +30,14 @@ const confessionSchema = Joi.object().keys({
   numberOfComments: Joi.number()
     .integer()
     .required(),
-  numberOfViews: Joi.number()
-    .integer()
-    .required(),
   numberOfLikes: Joi.number()
     .integer()
     .required(),
   numberOfDislikes: Joi.number()
     .integer()
     .required(),
+  feelings: Joi.object(),
+  comments: Joi.object(),
   tag: Joi.string()
     .required()
     .error(error => (error.message = "Tag should not be empty!")),
