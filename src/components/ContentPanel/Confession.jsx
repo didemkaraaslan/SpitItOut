@@ -1,53 +1,54 @@
 import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
-import { Feed, Segment, Label, Icon, Image } from "semantic-ui-react";
+import {
+  Comment,
+  Feed,
+  Divider,
+  Segment,
+  Label,
+  Icon,
+  Image
+} from "semantic-ui-react";
 
 import { pickTagColor } from "../../utils/functions";
 
 const Confession = ({ confession }) => (
-  <Segment
-    style={{ maxWidth: "600px", minHeight: "120px" }}
-    loading={!confession}
-    raised
-  >
-    <Feed.Event>
-      <Feed.Label>
-        <Image
-          src={confession && confession.user.photoURL}
-          avatar
-          alt="user avatar"
-        />
-      </Feed.Label>
-      <Feed.Content>
-        <Feed.Summary>
-          <Feed.User>{confession && confession.user.username}</Feed.User>
-        </Feed.Summary>
-        <Label
-          as="a"
-          attached="top right"
-          color={pickTagColor(confession && confession.tag)}
-          tag
-        >
-          {confession && confession.tag}
-        </Label>
-        <Feed.Extra>{confession && confession.content}</Feed.Extra>
-        <Feed.Meta>
-          <Feed.Like>
-            <Icon name="like" /> {confession && confession.numberOfLikes}
-          </Feed.Like>
-          <Feed.Like>
-            <Icon name="comment" /> {confession && confession.numberOfComments}
-          </Feed.Like>
-          <Feed.Like>
-            <Icon name="eye" /> {confession && confession.numberOfViews}
-          </Feed.Like>
-        </Feed.Meta>
-        <Feed.Date style={{ float: "right", marginTop: "4px" }}>
-          {moment(confession && confession.timestamp).fromNow()}
-        </Feed.Date>
-      </Feed.Content>
-    </Feed.Event>
+  <Segment loading={!confession} raised>
+    <Comment.Group size="small">
+      <Comment>
+        <Comment.Avatar as="a" src={confession && confession.user.photoURL} />
+        <Comment.Content>
+          <Comment.Author as="a">
+            {confession && confession.user.username}
+          </Comment.Author>
+          <Comment.Metadata>
+            <span>{moment(confession && confession.timestamp).fromNow()}</span>
+          </Comment.Metadata>
+          <Comment.Text>{confession && confession.content}</Comment.Text>
+          <Label
+            as="a"
+            basic
+            size="tiny"
+            color={confession && pickTagColor(confession.tag)}
+          >
+            <span>{confession && confession.tag}</span>
+          </Label>
+          <Divider />
+          <Comment.Actions>
+            <Comment.Action>
+              <Icon name="like" />
+              {confession && confession.numberOfLikes}
+            </Comment.Action>
+            <Comment.Action>
+              <Icon name="comment" />
+              {confession && confession.numberOfComments}
+            </Comment.Action>
+            <Comment.Action style={{ float: "right" }}>Reply</Comment.Action>
+          </Comment.Actions>
+        </Comment.Content>
+      </Comment>
+    </Comment.Group>
   </Segment>
 );
 
