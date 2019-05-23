@@ -12,6 +12,7 @@ import "firebase/database";
 import App from "./App";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
+import NoMatch from "./components/NoMatch";
 import rootReducer from "./reducers/rootReducer.js";
 
 import "./index.css";
@@ -37,6 +38,7 @@ ReactDOM.render(
         <Route exact path="/" component={App} />
         <Route path="/signin" component={Login} />
         <Route path="/register" component={Signup} />
+        <Route component={NoMatch} />
       </Switch>
     </Router>
   </Provider>,
