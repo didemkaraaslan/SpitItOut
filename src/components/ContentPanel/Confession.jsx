@@ -1,19 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
-import {
-  Comment,
-  Feed,
-  Divider,
-  Segment,
-  Label,
-  Icon,
-  Image
-} from "semantic-ui-react";
+import { Comment, Divider, Segment, Label, Icon } from "semantic-ui-react";
 
 import { pickTagColor } from "../../utils/functions";
 
-const Confession = ({ confession }) => (
+const Confession = ({
+  currentUserUid,
+  confession,
+  confessionId,
+  handleLike,
+  handleDislike
+}) => (
   <Segment loading={!confession} raised>
     <Comment.Group size="small">
       <Comment>
@@ -37,11 +35,33 @@ const Confession = ({ confession }) => (
           <Divider />
           <Comment.Actions>
             <Comment.Action>
-              <Icon name="like" />
+              <Icon
+                name={
+                  confession &&
+                  confession.feelings &&
+                  confession.feelings[currentUserUid] === 1
+                    ? "thumbs up"
+                    : "thumbs up outline"
+                }
+                onClick={e => handleLike(confession, confessionId)}
+              />
               {confession && confession.numberOfLikes}
-            </Comment.Action>
+            </Comment.Action>{" "}
             <Comment.Action>
-              <Icon name="comment" />
+              <Icon
+                name={
+                  confession &&
+                  confession.feelings &&
+                  confession.feelings[currentUserUid] === -1
+                    ? "thumbs down"
+                    : "thumbs down outline"
+                }
+                onClick={e => handleDislike(confession, confessionId)}
+              />
+              {confession && confession.numberOfDislikes}
+            </Comment.Action>{" "}
+            <Comment.Action>
+              <Icon name="comment" />{" "}
               {confession && confession.numberOfComments}
             </Comment.Action>
             <Comment.Action style={{ float: "right" }}>Reply</Comment.Action>
@@ -53,7 +73,11 @@ const Confession = ({ confession }) => (
 );
 
 Confession.propTypes = {
-  confession: PropTypes.object
+  currentUserUid: PropTypes.string,
+  confessionId: PropTypes.string,
+  confession: PropTypes.object,
+  handleLike: PropTypes.func,
+  handleDislike: PropTypes.func
 };
 
 export default Confession;

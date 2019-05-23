@@ -28,6 +28,8 @@ class ConfessionModal extends Component {
   createConfession = async () => {
     const { content, tag, shareAs } = this.state;
     const { profile, firebase } = this.props;
+    const currentUser = firebase.auth().currentUser;
+    const currentUserUid = currentUser && currentUser.uid;
 
     this.setState({ loading: true, errors: [] });
 
@@ -40,10 +42,13 @@ class ConfessionModal extends Component {
         photoURL: profile.photoURL
       },
       timestamp: firebase.database.ServerValue.TIMESTAMP,
-      numberOfViews: 0,
       numberOfLikes: 0,
       numberOfDislikes: 0,
-      numberOfComments: 0
+      numberOfComments: 0,
+      feelings: {
+        [currentUserUid]: 0
+      },
+      comments: {}
     };
 
     const validationResult = await this.validateConfession(confession);
@@ -72,6 +77,7 @@ class ConfessionModal extends Component {
           }));
           resolve(false);
         }
+        console.log(confession)
         resolve(true);
       });
     });
