@@ -83,9 +83,10 @@ class ContentPanel extends Component {
     const currentUserUid = currentUser && currentUser.uid;
 
     let filteredConfessions = confessions;
+    // Filter out confessions which doesn't include chosen category
     if (filterCategory !== ALL) {
-      filteredConfessions = confessions.filter(
-        ({ key, value }) => value.tag === filterCategory
+      filteredConfessions = confessions.filter(({ key, value }) =>
+        value.tags.some(tag => tag === filterCategory)
       );
     }
 

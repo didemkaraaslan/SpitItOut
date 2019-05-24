@@ -38,9 +38,9 @@ const confessionSchema = Joi.object().keys({
     .required(),
   feelings: Joi.object(),
   comments: Joi.object(),
-  tag: Joi.string()
+  tags: Joi.array()
     .required()
-    .error(error => (error.message = "Tag should not be empty!")),
+    .error(error => (error.message = "Tags should not be empty!")),
   shareAs: Joi.string().required(),
   timestamp: Joi.object().required(),
   user: {

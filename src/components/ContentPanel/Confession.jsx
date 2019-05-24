@@ -24,14 +24,18 @@ const Confession = ({
             <span>{moment(confession && confession.timestamp).fromNow()}</span>
           </Comment.Metadata>
           <Comment.Text>{confession && confession.content}</Comment.Text>
-          <Label
-            as="a"
-            basic
-            size="tiny"
-            color={confession && pickTagColor(confession.tag)}
-          >
-            <span>{confession && confession.tag}</span>
-          </Label>
+          {confession &&
+            confession.tags.map((prop, key) => (
+              <Label
+                key={key}
+                as="a"
+                basic
+                size="tiny"
+                color={pickTagColor(prop)}
+              >
+                <span>{prop}</span>
+              </Label>
+            ))}
           <Divider />
           <Comment.Actions>
             <Comment.Action>

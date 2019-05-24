@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Modal, Button, Form, Message } from "semantic-ui-react";
+import { Modal, Button, Form, Message, Dropdown } from "semantic-ui-react";
 
 import { tagOptions } from "../../utils/Tags";
 import { confessionSchema } from "../../utils/schema";
@@ -11,7 +11,8 @@ class ConfessionModal extends Component {
     loading: false,
     shareAs: "user",
     content: "",
-    tag: "",
+    tags: [],
+    selectedTagsCount: 0,
     errors: []
   };
 
@@ -22,11 +23,14 @@ class ConfessionModal extends Component {
   };
 
   handleSelect = (e, { value }) => {
-    this.setState({ tag: value });
+    this.setState(prevState => ({
+      selectedTagsCount: prevState.selectedTagsCount + 1,
+      tags: value
+    }));
   };
 
   createConfession = async () => {
-    const { content, tag, shareAs } = this.state;
+    const { content, tags, shareAs } = this.state;
     const { profile, firebase } = this.props;
     const currentUser = firebase.auth().currentUser;
     const currentUserUid = currentUser && currentUser.uid;
@@ -35,7 +39,7 @@ class ConfessionModal extends Component {
 
     const confession = {
       content,
-      tag,
+      tags,
       shareAs,
       user: {
         username: profile.username,
@@ -137,13 +141,17 @@ class ConfessionModal extends Component {
                 onChange={this.handleChange}
               />
             </Form.Group>
-            <Form.Select
-              id="tag"
-              fluid
-              value={this.state.tag}
-              label="Which tag describes your confession best?"
+            <Dropdown
+              id="tags"
+              selection
+              clearable
+              multiple
+              header={<Dropdown.Header content="Filter by tags" icon="tags" />}
+              value={this.state.tags}
+              label="Which tags describe your confession the best?"
+              labeled
               options={tagOptions}
-              placeholder="Pick a tag"
+              placeholder="Pick at most 3 tags"
               onChange={this.handleSelect}
             />
           </Form>
