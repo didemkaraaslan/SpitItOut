@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withFirebase } from "react-redux-firebase";
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import {
   Grid,
   Segment,
@@ -41,6 +41,7 @@ class Login extends Component {
         .signInWithEmailAndPassword(email, password)
         .then(signedInUser => {
           this.setState({ loading: false, errors: [] });
+          this.props.history.push("/");
         })
         .catch(error => {
           this.setState(prevState => ({
@@ -132,10 +133,12 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  firebase: PropTypes.object
+  firebase: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default compose(
   withFirebase,
+  withRouter,
   connect(({ firebase: { auth } }) => ({ auth }))
 )(Login);

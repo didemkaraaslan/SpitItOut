@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withFirebase } from "react-redux-firebase";
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import {
   Grid,
   Segment,
@@ -57,6 +57,7 @@ class Signup extends Component {
               this.saveUserIntoDatabase(createdUser)
                 .then(() => {
                   this.setState({ loading: false, errors: [] });
+                  this.props.history.push("/signin");
                 })
                 .catch(error => {
                   console.error(error);
@@ -234,10 +235,12 @@ class Signup extends Component {
 }
 
 Signup.propTypes = {
-  firebase: PropTypes.object
+  firebase: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default compose(
   withFirebase,
+  withRouter,
   connect(({ firebase: { auth } }) => ({ auth }))
 )(Signup);

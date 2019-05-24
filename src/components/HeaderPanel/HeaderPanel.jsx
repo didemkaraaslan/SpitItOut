@@ -20,12 +20,6 @@ const trigger = (
   </span>
 );
 
-const options = [
-  { key: "user", text: "Account", icon: "user" },
-  { key: "settings", text: "Settings", icon: "settings" },
-  { key: "sign-out", text: "Sign Out", icon: "sign out" }
-];
-
 class HeaderPanel extends Component {
   state = {
     openConfessionModal: false,
@@ -46,6 +40,8 @@ class HeaderPanel extends Component {
   handleCloseConfessionModal = () => {
     this.setState({ openConfessionModal: false });
   };
+
+  handleSignOut = () => this.props.firebase.auth().signOut();
 
   render() {
     const { openConfessionModal, activeHeaderMenuItem } = this.state;
@@ -90,12 +86,22 @@ class HeaderPanel extends Component {
               active={activeHeaderMenuItem === "sign-in"}
               onClick={this.handleHeaderMenuItemClick}
             >
-              <Dropdown
-                trigger={trigger}
-                options={options}
-                pointing="top right"
-                icon={null}
-              />
+              <Dropdown trigger={trigger} pointing="top right" icon={null}>
+                <Dropdown.Menu>
+                  <Dropdown.Item key="user" icon="user" text="Account" />
+                  <Dropdown.Item
+                    key="settings"
+                    icon="settings"
+                    text="Settings"
+                  />
+                  <Dropdown.Item
+                    key="signout"
+                    icon="sign out"
+                    text="Log out"
+                    onClick={this.handleSignOut}
+                  />
+                </Dropdown.Menu>
+              </Dropdown>
             </Menu.Item>
           </Menu.Menu>
         </Menu>
