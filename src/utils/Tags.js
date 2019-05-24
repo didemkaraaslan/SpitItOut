@@ -1,3 +1,11 @@
+/* Special Categories */
+const LATEST = "Latest";
+const MOST_TRENDING = "Most Trending";
+const MOST_APPROVED = "Most Approved";
+const MOST_JUDGED = "Most Judged";
+const MOST_COMMENTED = "Most Commented";
+
+/* General Categories */
 const ALL = "All";
 const REGRET = "Regret";
 const FIRST_EXPERIENCE = "First Experience";
@@ -85,6 +93,11 @@ const tagOptions = [
 ];
 
 export {
+  LATEST,
+  MOST_TRENDING,
+  MOST_APPROVED,
+  MOST_JUDGED,
+  MOST_COMMENTED,
   ALL,
   REGRET,
   FIRST_EXPERIENCE,

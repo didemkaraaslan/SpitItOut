@@ -116,14 +116,39 @@ class SidePanel extends Component {
         </Menu.Item>
 
         <Menu.Item>
-          <Menu.Header>Most Popular</Menu.Header>
+          <Menu.Header>Also filter by</Menu.Header>
 
           <Menu.Menu>
             <Menu.Item
-              name="enterprise"
-              active={filterCategory === "enterprise"}
+              name={Tag.LATEST}
+              as="a"
+              active={filterCategory === Tag.LATEST}
+              onClick={this.handleMenuItemClick}
             />
-            <Menu.Item name="consumer" active={filterCategory === "consumer"} />
+            <Menu.Item
+              name={Tag.MOST_TRENDING}
+              as="a"
+              active={filterCategory === Tag.MOST_TRENDING}
+              onClick={this.handleMenuItemClick}
+            />
+            <Menu.Item
+              name={Tag.MOST_APPROVED}
+              as="a"
+              active={filterCategory === Tag.MOST_APPROVED}
+              onClick={this.handleMenuItemClick}
+            />
+            <Menu.Item
+              name={Tag.MOST_JUDGED}
+              as="a"
+              active={filterCategory === Tag.MOST_JUDGED}
+              onClick={this.handleMenuItemClick}
+            />
+            <Menu.Item
+              name={Tag.MOST_COMMENTED}
+              as="a"
+              active={filterCategory === Tag.MOST_COMMENTED}
+              onClick={this.handleMenuItemClick}
+            />
           </Menu.Menu>
         </Menu.Item>
       </Menu>
