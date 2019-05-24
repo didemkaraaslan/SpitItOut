@@ -31,12 +31,7 @@ const createStoreWithFirebase = compose(
 )(createStore);
 
 // Create store with reducers and initial state
-const initialState = {};
-const store = createStoreWithFirebase(
-  rootReducer,
-  composeWithDevTools(),
-  initialState
-);
+const store = createStoreWithFirebase(rootReducer, composeWithDevTools());
 
 class Root extends React.Component {
   componentDidMount() {
