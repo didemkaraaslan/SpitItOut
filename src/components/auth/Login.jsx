@@ -71,7 +71,7 @@ class Login extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="app">
+      <div className="signin">
         <Grid
           textAlign="center"
           verticalAlign="middle"

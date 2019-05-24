@@ -151,7 +151,7 @@ class Signup extends Component {
     const { loading, errors } = this.state;
 
     return (
-      <div className="app">
+      <div className="signup">
         <Grid
           textAlign="center"
           verticalAlign="middle"

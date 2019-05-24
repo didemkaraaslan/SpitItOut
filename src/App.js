@@ -20,7 +20,7 @@ class App extends Component {
     const { firebase, profile, confessions, filterCategory } = this.props;
 
     return (
-      <Grid>
+      <Grid className="app">
         <Grid.Row>
           <HeaderPanel
             activeHeaderMenuItem={activeHeaderMenuItem}
