@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { isLoaded, isEmpty } from "react-redux-firebase";
-import { ALL } from "../../utils/Tags";
+import {
+  ALL,
+  LATEST,
+  MOST_TRENDING,
+  MOST_APPROVED,
+  MOST_JUDGED,
+  MOST_COMMENTED
+} from "../../utils/Tags";
 import { Container } from "semantic-ui-react";
 
 import Confession from "./Confession.jsx";
@@ -78,18 +85,66 @@ class ContentPanel extends Component {
   };
 
   filterConfessions = (confessions, filterCategory) => {
+    const specialFilterCategories = [
+      LATEST,
+      MOST_TRENDING,
+      MOST_APPROVED,
+      MOST_JUDGED,
+      MOST_COMMENTED
+    ];
+
+    // If ALL filter category is not selected then apply the selected filter
+
+    // Check if special category filtering shall be applied
+    const applySpecialCategoryFilter = specialFilterCategories.some(
+      specialFilter => specialFilter === filterCategory
+    );
+
+    if (applySpecialCategoryFilter) {
+      console.log("special filter");
+      return this.applySpecialCategoryFilter(filterCategory, confessions);
+    } else {
+      console.log("normal filter");
+      return this.applyCategoryFilter(filterCategory, confessions);
+    }
+  };
+
+  applyCategoryFilter = (filterCategory, confessions) => {
+    let filteredConfessions = confessions;
+
+    if (filterCategory !== ALL) {
+      filteredConfessions = confessions.filter(({ key, value }) =>
+        value.tags.some(tag => tag === filterCategory)
+      );
+    }
+
+    console.log(filteredConfessions)
+    return this.displayFilteredConfessions(filteredConfessions);
+  };
+
+  applySpecialCategoryFilter = (filterCategory, confessions) => {
+    switch (filterCategory) {
+      case LATEST:
+        break;
+      case MOST_TRENDING:
+        break;
+      case MOST_APPROVED:
+        break;
+      case MOST_JUDGED:
+        break;
+      case MOST_COMMENTED:
+        break;
+    }
+
+    this.displayFilteredConfessions(confessions);
+  };
+
+  displayFilteredConfessions = confessions => {
     const { firebase } = this.props;
     const currentUser = firebase.auth().currentUser;
     const currentUserUid = currentUser && currentUser.uid;
 
-    let filteredConfessions = confessions;
-    if (filterCategory !== ALL) {
-      filteredConfessions = confessions.filter(
-        ({ key, value }) => value.tag === filterCategory
-      );
-    }
-
-    return filteredConfessions.map(({ key, value }) => (
+    return confessions.map(({ key, value }) => (
       <Confession
         key={key}
         id={key}
