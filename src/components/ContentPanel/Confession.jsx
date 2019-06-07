@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import moment from "moment";
 import { Comment, Divider, Segment, Label, Icon } from "semantic-ui-react";
 
+import { setCategoryFilter } from "../../actions/confessionActions";
 import { pickTagColor } from "../../utils/functions";
 
 const Confession = ({
@@ -10,7 +12,8 @@ const Confession = ({
   confession,
   confessionId,
   handleLike,
-  handleDislike
+  handleDislike,
+  setCategoryFilter
 }) => (
   <Segment loading={!confession} raised>
     <Comment.Group size="small">
@@ -32,6 +35,9 @@ const Confession = ({
                 basic
                 size="tiny"
                 color={pickTagColor(prop)}
+                onClick={(event, data) =>
+                  setCategoryFilter(data.children.props.children)
+                }
               >
                 <span>{prop}</span>
               </Label>
@@ -81,7 +87,15 @@ Confession.propTypes = {
   confessionId: PropTypes.string,
   confession: PropTypes.object,
   handleLike: PropTypes.func,
-  handleDislike: PropTypes.func
+  handleDislike: PropTypes.func,
+  setCategoryFilter: PropTypes.func.isRequired
 };
 
-export default Confession;
+const mapDispatchToProps = dispatch => ({
+  setCategoryFilter: category => dispatch(setCategoryFilter(category))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Confession);
