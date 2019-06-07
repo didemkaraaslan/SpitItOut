@@ -12,6 +12,8 @@ import {
 import { Container } from "semantic-ui-react";
 
 import Confession from "./Confession.jsx";
+import ConfessionSkeleton from "./ConfessionSkeleton.jsx";
+const _ = require("lodash/core");
 
 class ContentPanel extends Component {
   state = {};
@@ -101,10 +103,8 @@ class ContentPanel extends Component {
     );
 
     if (applySpecialCategoryFilter) {
-      console.log("special filter");
       return this.applySpecialCategoryFilter(filterCategory, confessions);
     } else {
-      console.log("normal filter");
       return this.applyCategoryFilter(filterCategory, confessions);
     }
   };
@@ -117,8 +117,6 @@ class ContentPanel extends Component {
         value.tags.some(tag => tag === filterCategory)
       );
     }
-
-    console.log(filteredConfessions)
     return this.displayFilteredConfessions(filteredConfessions);
   };
 
@@ -157,11 +155,14 @@ class ContentPanel extends Component {
     ));
   };
 
+  showSkeletonView = () =>
+    [...Array(6)].map((_, i) => <ConfessionSkeleton key={i} />);
+
   render() {
     const { confessions, filterCategory } = this.props;
 
     const confessionList = !isLoaded(confessions)
-      ? "Loading.."
+      ? this.showSkeletonView()
       : isEmpty(confessions)
       ? "List is empty"
       : this.filterConfessions(confessions, filterCategory);

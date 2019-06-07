@@ -28,5 +28,154 @@ body {
 
 .sidepanel {
   width: 270px !important;
+}
 
+/* Confession skeleton */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  height: 160px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
+.skeleton::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  animation: sweep 2s infinite;
+  background-image: linear-gradient(
+    to left,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+}
+
+.skeleton__avatar {
+  height: 45px;
+  width: 45px;
+  position: absolute;
+  top: 15px;
+  left: 30px;
+  border-radius: 50%;
+  background-color: rgba(190, 188, 187, 0.5);
+}
+
+.skeleton__author {
+  height: 10px;
+  width: 200px;
+  border-radius: 3px;
+  position: absolute;
+  top: 32px;
+  bottom: 25px;
+  left: 90px;
+  right: 10px;
+  background-color: rgba(190, 188, 187, 0.5);
+}
+
+.skeleton__confession_line__1 {
+  height: 10px;
+  border-radius: 3px;
+  position: absolute;
+  bottom: 75px;
+  left: 30px;
+  right: 20px;
+  background-color: rgba(190, 188, 187, 0.5);
+}
+
+.skeleton__confession_line__2 {
+  height: 10px;
+  border-radius: 3px;
+  position: absolute;
+  bottom: 60px;
+  left: 30px;
+  right: 20px;
+  background-color: rgba(190, 188, 187, 0.5);
+}
+
+.skeleton__tag__1 {
+  height: 15px;
+  width: 50px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 40px;
+  left: 30px;
+  right: 20px;
+  background-color: rgba(190, 188, 187, 0.5);
+}
+
+.skeleton__tag__2 {
+  height: 15px;
+  width: 50px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 40px;
+  left: 90px;
+  right: 20px;
+  background-color: rgba(190, 188, 187, 0.5);
+}
+
+.skeleton__divider {
+  height: 1px;
+  left: 30px;
+  right: 20px;
+  background-color: rgba(190, 188, 187, 0.5);
+  position: absolute;
+  bottom: 30px;
+}
+
+.skeleton__icons__like {
+  position: absolute;
+  bottom: 5px;
+  left: 30px;
+  border-radius: 50%;
+  width: 20px;
+  height: 15px;
+  background-color: rgba(190, 188, 187, 0.5);
+}
+
+.skeleton__icons__dislike {
+  position: absolute;
+  bottom: 5px;
+  left: 60px;
+  border-radius: 50%;
+  width: 20px;
+  height: 15px;
+  background-color: rgba(190, 188, 187, 0.5);
+}
+
+.skeleton__icons__comments {
+  position: absolute;
+  bottom: 5px;
+  left: 90px;
+  border-radius: 50%;
+  width: 20px;
+  height: 15px;
+  background-color: rgba(190, 188, 187, 0.5);
+}
+
+.skeleton__reply {
+  position: absolute;
+  bottom: 5px;
+  right: 20px;
+  width: 40px;
+  height: 15px;
+  background-color: rgba(190, 188, 187, 0.5);
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(150%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
