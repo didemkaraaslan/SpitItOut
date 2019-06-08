@@ -93,6 +93,7 @@ class HeaderPanel extends Component {
                     key="settings"
                     icon="settings"
                     text="Settings"
+                    onClick={this.props.handleOpenSettings}
                   />
                   <Dropdown.Item
                     key="signout"
@@ -118,7 +119,8 @@ class HeaderPanel extends Component {
 
 HeaderPanel.propTypes = {
   profile: PropTypes.object.isRequired,
-  firebase: PropTypes.object.isRequired
+  firebase: PropTypes.object.isRequired,
+  handleOpenSettings: PropTypes.func.isRequired
 };
 
 export default HeaderPanel;
