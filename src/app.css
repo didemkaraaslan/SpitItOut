@@ -10,7 +10,11 @@ body {
 }
 
 .app {
-  background: url("./assets/img/secret.jpg") no-repeat center center fixed;
+  height: 100%;
+  background-color: #ffdab9;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .signup {

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
 import PropTypes from "prop-types";
 import { isLoaded, isEmpty } from "react-redux-firebase";
 import {
@@ -13,7 +13,6 @@ import { Container } from "semantic-ui-react";
 
 import Confession from "./Confession.jsx";
 import ConfessionSkeleton from "./ConfessionSkeleton.jsx";
-const _ = require("lodash/core");
 
 class ContentPanel extends Component {
   state = {};

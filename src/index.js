@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { Provider, connect } from "react-redux";
@@ -12,13 +12,21 @@ import "firebase/database";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { setUser } from "./actions/userActions";
 
-import App from "./App";
-import Login from "./components/auth/Login";
-import Signup from "./components/auth/Signup";
-import NoMatch from "./components/NoMatch";
 import rootReducer from "./reducers/rootReducer.js";
-
 import "./index.css";
+import { HashLoader } from "react-spinners";
+import { css } from "@emotion/core";
+
+const App = lazy(() => import("./App"));
+const Login = lazy(() => import("./components/auth/Login"));
+const Signup = lazy(() => import("./components/auth/Signup"));
+const NoMatch = lazy(() => import("./components/NoMatch"));
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 // react-redux-firebase options
 const rrfConfig = {
@@ -75,7 +83,20 @@ Root.propTypes = {
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <RootWithAuth />
+      <Suspense
+        fallback={
+          <div className="sweetloading">
+            <HashLoader
+              sizeUnit="px"
+              size={100}
+              color={"#123abc"}
+              css={override}
+            />
+          </div>
+        }
+      >
+        <RootWithAuth />
+      </Suspense>
     </Router>
   </Provider>,
   document.getElementById("root")
