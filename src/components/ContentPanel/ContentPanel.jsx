@@ -24,7 +24,8 @@ class ContentPanel extends Component {
       const currentUserUid = firebase.auth().currentUser.uid;
       /* Check if the user already have a feeling about this confession */
 
-      const userReaction = confession.feelings[currentUserUid];
+      let userReaction = confession.feelings[currentUserUid];
+      userReaction = userReaction == null ? 0 : userReaction;
       const userAlreadyLiked = userReaction === 1;
 
       if (!userAlreadyLiked) {
@@ -58,7 +59,8 @@ class ContentPanel extends Component {
       const currentUserUid = firebase.auth().currentUser.uid;
       /* Check if the user already have a feeling about this confession */
 
-      const userReaction = confession.feelings[currentUserUid];
+      let userReaction = confession.feelings[currentUserUid];
+      userReaction = userReaction == null ? 0 : userReaction;
       const userAlreadyDisliked = userReaction === -1;
 
       if (!userAlreadyDisliked) {
