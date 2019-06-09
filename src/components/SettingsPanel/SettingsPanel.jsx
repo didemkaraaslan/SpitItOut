@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import * as Settings from "../../utils/Settings";
+
 import {
   Container,
   Modal,
@@ -12,7 +14,7 @@ import {
 
 class SettingsPanel extends Component {
   state = {
-    activePreference: "Notifications"
+    activePreference: Settings.Notifications
   };
 
   handleItemClick = (e, { name }) => this.setState({ activePreference: name });
@@ -30,23 +32,23 @@ class SettingsPanel extends Component {
               <Grid.Column width={4}>
                 <Menu fluid vertical tabular>
                   <Menu.Item
-                    name="Notifications"
-                    active={activePreference === "Notifications"}
+                    name={Settings.Notifications}
+                    active={activePreference === Settings.Notifications}
                     onClick={this.handleItemClick}
                   />
                   <Menu.Item
-                    name="Language & Region"
-                    active={activePreference === "Language & Region"}
+                    name={Settings.LanguageAndRegion}
+                    active={activePreference === Settings.LanguageAndRegion}
                     onClick={this.handleItemClick}
                   />
                   <Menu.Item
-                    name="Theme"
-                    active={activePreference === "Theme"}
+                    name={Settings.Theme}
+                    active={activePreference === Settings.Theme}
                     onClick={this.handleItemClick}
                   />
                   <Menu.Item
-                    name="Advanced"
-                    active={activePreference === "Advanced"}
+                    name={Settings.Advanced}
+                    active={activePreference === Settings.Advanced}
                     onClick={this.handleItemClick}
                   />
                 </Menu>
