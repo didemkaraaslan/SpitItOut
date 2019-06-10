@@ -19,6 +19,7 @@ class SidePanel extends Component {
         size="large"
         vertical
         fixed="top"
+        color="red"
         style={{
           marginTop: "70px",
           fontSize: "1.1rem"

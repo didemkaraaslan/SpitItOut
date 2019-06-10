@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { TwitterPicker } from "react-color";
+
+import PredifinedThemes from "../SettingsPanel/Themes/PredifinedThemes.jsx";
 
 import * as Settings from "../../utils/Settings";
+import { themeColors } from "../../utils/Theme";
 
 import {
   Container,
@@ -9,12 +13,16 @@ import {
   Button,
   Grid,
   Menu,
-  Segment
+  Segment,
+  Header,
+  Checkbox,
+  Form
 } from "semantic-ui-react";
 
 class SettingsPanel extends Component {
   state = {
-    activePreference: Settings.Notifications
+    activePreference: Settings.Notifications,
+    value: "auclassic"
   };
 
   handleItemClick = (e, { name }) => this.setState({ activePreference: name });
@@ -25,7 +33,7 @@ class SettingsPanel extends Component {
 
     return (
       <Container style={{ marginTop: "50px" }}>
-        <Modal size="fulscreen" open>
+        <Modal size="fullscreen" open>
           <Modal.Header>Adjust your preferences</Modal.Header>
           <Modal.Content>
             <Grid>
@@ -54,10 +62,21 @@ class SettingsPanel extends Component {
                 </Menu>
               </Grid.Column>
 
-              <Grid.Column stretched width={12}>
+              <Grid.Column stretched width={12} textAlign="center">
+                <Header.Subheader style={{ marginBottom: "16px" }}>
+                  Customize the look of your workspace. Only you will see this.
+                </Header.Subheader>
+                <PredifinedThemes firebase={firebase} />
+
                 <Segment>
-                  This is an stretched grid column. This segment will always match
-                  tab height
+                  <Header size="medium">
+                    Custom Theme
+                    <Header.Subheader style={{ marginBottom: "16px" }}>
+                      Create your own gorgeous custom theme
+                    </Header.Subheader>
+                  </Header>
+
+                  <TwitterPicker colors={themeColors} color={"#E96C50"} width="310px"/>
                 </Segment>
               </Grid.Column>
             </Grid>
