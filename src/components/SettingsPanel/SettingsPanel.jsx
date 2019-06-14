@@ -1,31 +1,30 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { TwitterPicker } from "react-color";
-
-import PredifinedThemes from "../SettingsPanel/Themes/PredifinedThemes.jsx";
 
 import * as Settings from "../../utils/Settings";
-import { themeColors } from "../../utils/Theme";
-
-import {
-  Container,
-  Modal,
-  Button,
-  Grid,
-  Menu,
-  Segment,
-  Header,
-  Checkbox,
-  Form
-} from "semantic-ui-react";
+import ThemePanel from "../SettingsPanel/Theme/ThemePanel.jsx";
+import { Container, Modal, Button, Grid, Menu } from "semantic-ui-react";
 
 class SettingsPanel extends Component {
   state = {
-    activePreference: Settings.Notifications,
-    value: "auclassic"
+    activePreference: Settings.Notifications
   };
 
   handleItemClick = (e, { name }) => this.setState({ activePreference: name });
+
+  renderRelatedSetting = activePreference => {
+    const { firebase } = this.props;
+    const currentUser = firebase.auth().currentUser;
+
+    switch (activePreference) {
+      case Settings.Notifications:
+        return null;
+      case Settings.LanguageAndRegion:
+        return null;
+      case Settings.Theme:
+        return <ThemePanel currentUser={currentUser} />;
+    }
+  };
 
   render() {
     const { activePreference } = this.state;
@@ -63,21 +62,7 @@ class SettingsPanel extends Component {
               </Grid.Column>
 
               <Grid.Column stretched width={12} textAlign="center">
-                <Header.Subheader style={{ marginBottom: "16px" }}>
-                  Customize the look of your workspace. Only you will see this.
-                </Header.Subheader>
-                <PredifinedThemes firebase={firebase} />
-
-                <Segment>
-                  <Header size="medium">
-                    Custom Theme
-                    <Header.Subheader style={{ marginBottom: "16px" }}>
-                      Create your own gorgeous custom theme
-                    </Header.Subheader>
-                  </Header>
-
-                  <TwitterPicker colors={themeColors} color={"#E96C50"} width="310px"/>
-                </Segment>
+                {this.renderRelatedSetting(activePreference)}
               </Grid.Column>
             </Grid>
           </Modal.Content>

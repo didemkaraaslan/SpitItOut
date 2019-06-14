@@ -5,30 +5,22 @@ import { Grid, Segment, Header, Checkbox, Form } from "semantic-ui-react";
 import { themes } from "../../../utils/Theme";
 
 class PredifinedThemes extends Component {
-  state = {
-    theme: themes.light
-  };
-
-  handleChange = (e, { value }) => {
-    const { firebase } = this.props;
-    const currentUser = firebase.auth().currentUser;
+  handleThemeChange = (e, { value }) => {
+    const { firebase, currentUser } = this.props;
     const currentUserUid = currentUser && currentUser.uid;
 
-    this.setState({ theme: themes[value] }, () => {
-      firebase
-        .push(`users/${currentUserUid}/prefs/theme`, themes[value])
-        .then(() => {
-          console.log("theme has changed to ", themes[value]);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    });
+    firebase
+      .update(`users/${currentUserUid}/prefs/theme`, { activeTheme: value })
+      .then(() => {
+        console.log("theme has changed to ", value);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   render() {
-    const { theme } = this.state;
-    const themeName = theme.name;
+    const { activeTheme } = this.props;
 
     return (
       <Segment>
@@ -47,8 +39,8 @@ class PredifinedThemes extends Component {
                   radio
                   name="checkboxRadioGroup"
                   value={themes.light.name}
-                  checked={themeName === "light"}
-                  onChange={this.props.handleThemeChange}
+                  checked={activeTheme === "light"}
+                  onChange={this.handleThemeChange}
                 />
                 <span>
                   Light
@@ -64,8 +56,8 @@ class PredifinedThemes extends Component {
                 <Checkbox
                   radio
                   value={themes.dark.name}
-                  checked={themeName === "dark"}
-                  onChange={this.props.handleThemeChange}
+                  checked={activeTheme === "dark"}
+                  onChange={this.handleThemeChange}
                 />
                 <span>
                   Dark
@@ -87,8 +79,8 @@ class PredifinedThemes extends Component {
                   radio
                   name="checkboxRadioGroup"
                   value="aubergine"
-                  checked={themeName === "aubergine"}
-                  onChange={this.props.handleThemeChange}
+                  checked={activeTheme === "aubergine"}
+                  onChange={this.handleThemeChange}
                 />
                 <span>
                   Aubergine
@@ -105,8 +97,8 @@ class PredifinedThemes extends Component {
                   radio
                   name="checkboxRadioGroup"
                   value="auclassic"
-                  checked={themeName === "auclassic"}
-                  onChange={this.props.handleThemeChange}
+                  checked={activeTheme === "auclassic"}
+                  onChange={this.handleThemeChange}
                 />
                 <span>
                   Auclassic
@@ -128,8 +120,8 @@ class PredifinedThemes extends Component {
                   radio
                   name="checkboxRadioGroup"
                   value="aubergine"
-                  checked={themeName === "aubergine"}
-                  onChange={this.props.handleThemeChange}
+                  checked={activeTheme === "aubergine"}
+                  onChange={this.handleThemeChange}
                 />
                 <span>
                   Aubergine
@@ -146,8 +138,8 @@ class PredifinedThemes extends Component {
                   radio
                   name="checkboxRadioGroup"
                   value="auclassic"
-                  checked={themeName === "auclassic"}
-                  onChange={this.props.handleThemeChange}
+                  checked={activeTheme === "auclassic"}
+                  onChange={this.handleThemeChange}
                 />
                 <span>
                   Auclassic
@@ -168,7 +160,9 @@ class PredifinedThemes extends Component {
 }
 
 PredifinedThemes.propTypes = {
-  firebase: PropTypes.object.isRequired
+  firebase: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  activeTheme: PropTypes.string.isRequired
 };
 
 export default PredifinedThemes;
