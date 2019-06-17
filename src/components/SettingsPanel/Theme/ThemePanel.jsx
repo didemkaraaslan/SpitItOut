@@ -13,7 +13,7 @@ import { TwitterPicker } from "react-color";
 const ThemePanel = ({ activeTheme, firebase, currentUser }) => (
   <React.Fragment>
     <Header.Subheader style={{ marginBottom: "16px" }}>
-      Customize the look of your workspace. Only you will see this.
+      <em>Customize the look of your workspace. Only you will see this.</em>
     </Header.Subheader>
     <PredifinedThemes
       activeTheme={activeTheme}

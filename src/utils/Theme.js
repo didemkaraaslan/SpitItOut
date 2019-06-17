@@ -18,130 +18,126 @@ export const themes = {
   light: {
     name: "light",
     inverted: false,
-    menuItemSelectedColor: "violet"
+    color: "brown"
   },
-  lightViolet: {
-    name: "lightViolet",
+  lightGrey: {
+    name: "lightGrey",
     inverted: false,
-    menuItemSelectedColor: "violet"
+    color: "grey"
   },
   lightTeal: {
     name: "lightTeal",
     inverted: false,
-    menuItemSelectedColor: "teal"
+    color: "teal"
   },
   lightBlue: {
     name: "lightBlue",
     inverted: false,
-    menuItemSelectedColor: "blue"
+    color: "blue"
   },
   lightOrange: {
     name: "lightOrange",
     inverted: false,
-    menuItemSelectedColor: "orange"
+    color: "orange"
   },
   lightRed: {
     name: "lightRed",
     inverted: false,
-    menuItemSelectedColor: "red"
+    color: "red"
   },
   lightYellow: {
     name: "lightYellow",
     inverted: false,
-    menuItemSelectedColor: "yellow"
+    color: "yellow"
   },
   lightOlive: {
     name: "lightOlive",
     inverted: false,
-    menuItemSelectedColor: "olive"
+    color: "olive"
   },
   lightGreen: {
     name: "lightGreen",
     inverted: false,
-    menuItemSelectedColor: "green"
+    color: "green"
   },
   lightPurple: {
     name: "lightPurple",
     inverted: false,
-    menuItemSelectedColor: "purple"
+    color: "purple"
   },
   lightPink: {
     name: "lightPink",
     inverted: false,
-    menuItemSelectedColor: "pink"
+    color: "pink"
   },
   lightBrown: {
     name: "lightBrown",
     inverted: false,
-    menuItemSelectedColor: "brown"
-  },
-  lightGrey: {
-    name: "lightGray",
-    inverted: false,
-    menuItemSelectedColor: "grey"
+    color: "brown"
   },
   dark: {
     name: "dark",
-    inverted: true
+    inverted: true,
+    color: "black"
   },
   darkViolet: {
     name: "darkViolet",
     inverted: true,
-    menuBGColor: "violet"
+    color: "violet"
   },
   darkTeal: {
     name: "darkTeal",
     inverted: true,
-    menuBGColor: "teal"
+    color: "teal"
   },
   darkBlue: {
     name: "darkBlue",
     inverted: true,
-    menuBGColor: "blue"
+    color: "blue"
   },
   darkOrange: {
     name: "darkOrange",
     inverted: true,
-    menuBGColor: "orange"
+    color: "orange"
   },
   darkRed: {
     name: "darkRed",
     inverted: true,
-    menuBGColor: "red"
+    color: "red"
   },
   darkYellow: {
     name: "darkYellow",
     inverted: true,
-    menuBGColor: "yellow"
+    color: "yellow"
   },
   darkOlive: {
     name: "darkOlive",
     inverted: true,
-    menuBGColor: "olive"
+    color: "olive"
   },
   darkGreen: {
     name: "darkGreen",
     inverted: true,
-    menuBGColor: "green"
+    color: "green"
   },
   darkPurple: {
     name: "darkPurple",
     inverted: true,
-    menuBGColor: "purple"
+    color: "purple"
   },
   darkPink: {
     name: "darkPink",
     inverted: true,
-    menuBGColor: "pink"
+    color: "pink"
   },
   darkBrown: {
     name: "darkBrown",
     inverted: true,
-    menuBGColor: "brown"
+    color: "brown"
   },
   darkGrey: {
     name: "darkGrey",
     inverted: true,
-    menuBGColor: "grey"
+    color: "grey"
   }
 };

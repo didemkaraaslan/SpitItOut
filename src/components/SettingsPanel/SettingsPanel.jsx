@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import * as Settings from "../../utils/Settings";
 import ThemePanel from "../SettingsPanel/Theme/ThemePanel.jsx";
-import { Container, Modal, Button, Grid, Menu } from "semantic-ui-react";
+import { Container, Modal, Grid, Menu } from "semantic-ui-react";
 
 class SettingsPanel extends Component {
   state = {
@@ -28,11 +28,16 @@ class SettingsPanel extends Component {
 
   render() {
     const { activePreference } = this.state;
-    const { firebase, profile } = this.props;
+    const { open, firebase, profile } = this.props;
 
     return (
       <Container style={{ marginTop: "50px" }}>
-        <Modal size="fullscreen" open>
+        <Modal
+          size="fullscreen"
+          open={open}
+          onClose={this.props.handleCloseSettings}
+          closeIcon
+        >
           <Modal.Header>Adjust your preferences</Modal.Header>
           <Modal.Content>
             <Grid>
@@ -66,15 +71,6 @@ class SettingsPanel extends Component {
               </Grid.Column>
             </Grid>
           </Modal.Content>
-          <Modal.Actions>
-            <Button negative>No</Button>
-            <Button
-              positive
-              icon="checkmark"
-              labelPosition="right"
-              content="Yes"
-            />
-          </Modal.Actions>
         </Modal>
       </Container>
     );
@@ -83,7 +79,9 @@ class SettingsPanel extends Component {
 
 SettingsPanel.propTypes = {
   firebase: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
+  handleCloseSettings: PropTypes.func.isRequired
 };
 
 export default SettingsPanel;

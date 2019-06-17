@@ -37,9 +37,8 @@ class PredifinedThemes extends Component {
               <Form.Field>
                 <Checkbox
                   radio
-                  name="checkboxRadioGroup"
                   value={themes.light.name}
-                  checked={activeTheme === "light"}
+                  checked={activeTheme === themes.light.name}
                   onChange={this.handleThemeChange}
                 />
                 <span>
@@ -47,16 +46,115 @@ class PredifinedThemes extends Component {
                   <br />
                   <img
                     src="https://a.slack-edge.com/d65d3/img/themes/aubergine.png"
-                    alt="aubergine theme"
+                    alt="light theme"
                     className="themeImage"
                   />
                 </span>
               </Form.Field>
+
+              <Form.Field>
+                <Checkbox
+                  radio
+                  value={themes.lightGrey.name}
+                  checked={activeTheme === themes.lightGrey.name}
+                  onChange={this.handleThemeChange}
+                />
+                <span>
+                  Light Grey
+                  <br />
+                  <img
+                    src="https://a.slack-edge.com/d65d3/img/themes/aubergine.png"
+                    alt="LightGrey theme"
+                    className="themeImage"
+                  />
+                </span>
+              </Form.Field>
+
+              <Form.Field>
+                <Checkbox
+                  radio
+                  value={themes.lightTeal.name}
+                  checked={activeTheme === themes.lightTeal.name}
+                  onChange={this.handleThemeChange}
+                />
+                <span>
+                  Light Teal
+                  <br />
+                  <img
+                    src="https://a.slack-edge.com/d65d3/img/themes/aubergine.png"
+                    alt="LightTeal theme"
+                    className="themeImage"
+                  />
+                </span>
+              </Form.Field>
+            </Form>
+          </Grid.Column>
+
+          <Grid.Column mobile={12} tablet={5} computer={5} textAlign="center">
+            <Form>
+              <Form.Field>
+                <Checkbox
+                  radio
+                  value={themes.lightBlue.name}
+                  checked={activeTheme === themes.lightBlue.name}
+                  onChange={this.handleThemeChange}
+                />
+                <span>
+                  Light Blue
+                  <br />
+                  <img
+                    src="https://a.slack-edge.com/d65d3/img/themes/aubergine.png"
+                    alt="LightBlue theme"
+                    className="themeImage"
+                  />
+                </span>
+              </Form.Field>
+
+              <Form.Field>
+                <Checkbox
+                  radio
+                  value={themes.lightOrange.name}
+                  checked={activeTheme === themes.lightOrange.name}
+                  onChange={this.handleThemeChange}
+                />
+                <span>
+                  Light Orange
+                  <br />
+                  <img
+                    src="https://a.slack-edge.com/d65d3/img/themes/aubergine.png"
+                    alt="LightOrange theme"
+                    className="themeImage"
+                  />
+                </span>
+              </Form.Field>
+
+              <Form.Field>
+                <Checkbox
+                  radio
+                  value={themes.lightPurple.name}
+                  checked={activeTheme === themes.lightPurple.name}
+                  onChange={this.handleThemeChange}
+                />
+                <span>
+                  Light Purple
+                  <br />
+                  <img
+                    src="https://a.slack-edge.com/d65d3/img/themes/aubergine.png"
+                    alt="LightPurple theme"
+                    className="themeImage"
+                  />
+                </span>
+              </Form.Field>
+            </Form>
+          </Grid.Column>
+
+          <Grid.Column mobile={12} tablet={5} computer={5} textAlign="center">
+            <Form>
               <Form.Field>
                 <Checkbox
                   radio
                   value={themes.dark.name}
-                  checked={activeTheme === "dark"}
+                  checked={activeTheme === themes.dark.name}
                   onChange={this.handleThemeChange}
                 />
                 <span>
@@ -64,89 +162,43 @@ class PredifinedThemes extends Component {
                   <br />
                   <img
                     src="https://a.slack-edge.com/d65d3/img/themes/aubergine.png"
-                    alt="auclassic theme"
+                    alt="dark theme"
                     className="themeImage"
                   />
                 </span>
               </Form.Field>
-            </Form>
-          </Grid.Column>
 
-          <Grid.Column mobile={12} tablet={5} computer={5} textAlign="center">
-            <Form>
               <Form.Field>
                 <Checkbox
                   radio
-                  name="checkboxRadioGroup"
-                  value="aubergine"
-                  checked={activeTheme === "aubergine"}
+                  value={themes.darkOrange.name}
+                  checked={activeTheme === themes.darkOrange.name}
                   onChange={this.handleThemeChange}
                 />
                 <span>
-                  Aubergine
+                  Dark Orange
                   <br />
                   <img
                     src="https://a.slack-edge.com/d65d3/img/themes/aubergine.png"
-                    alt="aubergine theme"
+                    alt="DarkOrange theme"
                     className="themeImage"
                   />
                 </span>
               </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  name="checkboxRadioGroup"
-                  value="auclassic"
-                  checked={activeTheme === "auclassic"}
-                  onChange={this.handleThemeChange}
-                />
-                <span>
-                  Auclassic
-                  <br />
-                  <img
-                    src="https://a.slack-edge.com/d65d3/img/themes/aubergine.png"
-                    alt="auclassic theme"
-                    className="themeImage"
-                  />
-                </span>
-              </Form.Field>
-            </Form>
-          </Grid.Column>
 
-          <Grid.Column mobile={12} tablet={5} computer={5} textAlign="center">
-            <Form>
               <Form.Field>
                 <Checkbox
                   radio
-                  name="checkboxRadioGroup"
-                  value="aubergine"
-                  checked={activeTheme === "aubergine"}
+                  value={themes.darkTeal.name}
+                  checked={activeTheme === themes.darkTeal.name}
                   onChange={this.handleThemeChange}
                 />
                 <span>
-                  Aubergine
+                  Dark Teal
                   <br />
                   <img
                     src="https://a.slack-edge.com/d65d3/img/themes/aubergine.png"
-                    alt="aubergine theme"
-                    className="themeImage"
-                  />
-                </span>
-              </Form.Field>
-              <Form.Field>
-                <Checkbox
-                  radio
-                  name="checkboxRadioGroup"
-                  value="auclassic"
-                  checked={activeTheme === "auclassic"}
-                  onChange={this.handleThemeChange}
-                />
-                <span>
-                  Auclassic
-                  <br />
-                  <img
-                    src="https://a.slack-edge.com/d65d3/img/themes/aubergine.png"
-                    alt="auclassic theme"
+                    alt="DarkTeal theme"
                     className="themeImage"
                   />
                 </span>
