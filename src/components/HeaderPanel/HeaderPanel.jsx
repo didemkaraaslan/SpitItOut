@@ -1,14 +1,20 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { firebaseConnect, getVal, isLoaded } from "react-redux-firebase";
 import faker from "faker";
+import { themes } from "../../utils/Theme";
 import {
-  Container,
   Menu,
   Icon,
   Input,
   Image,
   Header,
-  Dropdown
+  Dropdown,
+  Segment,
+  Dimmer,
+  Loader
 } from "semantic-ui-react";
 
 import ConfessionModal from "../ContentPanel/ConfessionModal.jsx";
@@ -45,80 +51,113 @@ class HeaderPanel extends Component {
 
   render() {
     const { openConfessionModal, activeHeaderMenuItem } = this.state;
-    const { firebase, profile } = this.props;
+    const { activeTheme, firebase, profile } = this.props;
+
+    const { inverted, color } = isLoaded(activeTheme) && themes[activeTheme];
 
     return (
-      <Container>
-        <Menu stackable fixed="top" fluid tabular inverted position="right">
-          <Menu.Item as="a">
-            <Header as="h2" color="violet">
-              <Image src={logo} size="medium" alt="app_logo" />
-              Spit It Out!
-            </Header>
-          </Menu.Item>
-
-          <Menu.Item
-            name="features"
-            active={activeHeaderMenuItem === "features"}
-            onClick={this.handleHeaderMenuItemClick}
+      <React.Fragment>
+        {isLoaded(activeTheme) ? (
+          <Menu
+            stackable
+            fixed="top"
+            fluid
+            tabular
+            inverted
+            color={color}
+            position="right"
           >
-            Features
-          </Menu.Item>
-
-          <Menu.Item name="search">
-            <Input
-              className="icon"
-              icon="search"
-              placeholder="Search for Users, Tags.."
-            />
-          </Menu.Item>
-
-          <Menu.Menu position="right">
-            <Menu.Item
-              name="make_confession"
-              onClick={this.handleHeaderMenuItemClick}
-            >
-              <Icon name="pencil" /> Make a confession
+            <Menu.Item as="a">
+              <Header as="h2" color="violet">
+                <Image src={logo} size="medium" alt="app_logo" />
+                Spit It Out!
+              </Header>
             </Menu.Item>
 
             <Menu.Item
-              name="sign-in"
-              active={activeHeaderMenuItem === "sign-in"}
+              name="features"
+              active={activeHeaderMenuItem === "features"}
               onClick={this.handleHeaderMenuItemClick}
             >
-              <Dropdown trigger={trigger} pointing="top right" icon={null}>
-                <Dropdown.Menu>
-                  <Dropdown.Item key="user" icon="user" text="Account" />
-                  <Dropdown.Item
-                    key="settings"
-                    icon="settings"
-                    text="Settings"
-                  />
-                  <Dropdown.Item
-                    key="signout"
-                    icon="sign out"
-                    text="Log out"
-                    onClick={this.handleSignOut}
-                  />
-                </Dropdown.Menu>
-              </Dropdown>
+              Features
             </Menu.Item>
-          </Menu.Menu>
-        </Menu>
+
+            <Menu.Item name="search">
+              <Input
+                className="icon"
+                icon="search"
+                placeholder="Search for Users, Tags.."
+              />
+            </Menu.Item>
+
+            <Menu.Menu position="right">
+              <Menu.Item
+                name="make_confession"
+                onClick={this.handleHeaderMenuItemClick}
+              >
+                <Icon name="pencil" /> Make a confession
+              </Menu.Item>
+
+              <Menu.Item
+                name="sign-in"
+                active={activeHeaderMenuItem === "sign-in"}
+                onClick={this.handleHeaderMenuItemClick}
+              >
+                <Dropdown trigger={trigger} pointing="top right" icon={null}>
+                  <Dropdown.Menu>
+                    <Dropdown.Item key="user" icon="user" text="Account" />
+                    <Dropdown.Item
+                      key="settings"
+                      icon="settings"
+                      text="Settings"
+                      onClick={this.props.handleOpenSettings}
+                    />
+                    <Dropdown.Item
+                      key="signout"
+                      icon="sign out"
+                      text="Log out"
+                      onClick={this.handleSignOut}
+                    />
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu.Item>
+            </Menu.Menu>
+          </Menu>
+        ) : (
+          <Menu stackable fixed="top" fluid tabular position="right">
+            <Dimmer active inverted>
+              <Loader inverted />
+            </Dimmer>
+          </Menu>
+        )}
         <ConfessionModal
           open={openConfessionModal}
           profile={profile}
           firebase={firebase}
           handleCloseConfessionModal={this.handleCloseConfessionModal}
         />
-      </Container>
+      </React.Fragment>
     );
   }
 }
 
 HeaderPanel.propTypes = {
   profile: PropTypes.object.isRequired,
-  firebase: PropTypes.object.isRequired
+  firebase: PropTypes.object.isRequired,
+  handleOpenSettings: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  activeTheme: PropTypes.string
 };
 
-export default HeaderPanel;
+export default compose(
+  firebaseConnect(props => {
+    const uid = props.currentUser && props.currentUser.uid;
+    return [{ path: `users/${uid}/prefs/theme` }];
+  }),
+  connect(({ firebase }, props) => ({
+    activeTheme: getVal(
+      firebase,
+      `data/users/${props.currentUser.uid}/prefs/theme/activeTheme`
+    )
+  }))
+)(HeaderPanel);
