@@ -13,6 +13,7 @@ const Confession = ({
   confessionId,
   handleLike,
   handleDislike,
+  addFavorite,
   setCategoryFilter
 }) => (
   <Segment loading={!confession} raised>
@@ -26,6 +27,18 @@ const Confession = ({
           <Comment.Metadata>
             <span>{moment(confession && confession.timestamp).fromNow()}</span>
           </Comment.Metadata>
+          <span style={{ position: "absolute", right: "3px" }}>
+            <Icon
+              name={
+                confession &&
+                confession.favorites &&
+                confession.favorites[currentUserUid] === 1
+                  ? "heart"
+                  : "heart outline"
+              }
+              onClick={e => addFavorite(confession, confessionId)}
+            />
+          </span>
           <Comment.Text>{confession && confession.content}</Comment.Text>
           {confession &&
             confession.tags.map((prop, key) => (
@@ -88,6 +101,7 @@ Confession.propTypes = {
   confession: PropTypes.object,
   handleLike: PropTypes.func,
   handleDislike: PropTypes.func,
+  addFavorite: PropTypes.func,
   setCategoryFilter: PropTypes.func.isRequired
 };
 

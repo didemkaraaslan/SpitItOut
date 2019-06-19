@@ -37,6 +37,7 @@ const confessionSchema = Joi.object().keys({
     .integer()
     .required(),
   feelings: Joi.object(),
+  favorites: Joi.object(),
   comments: Joi.object(),
   tags: Joi.array()
     .required()
@@ -44,6 +45,7 @@ const confessionSchema = Joi.object().keys({
   shareAs: Joi.string().required(),
   timestamp: Joi.object().required(),
   user: {
+    uid: Joi.string().required(),
     username: Joi.string().required(),
     photoURL: Joi.string().required()
   }

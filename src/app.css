@@ -43,6 +43,37 @@ body {
   box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 1px 3px 0 rgba(0,0,0,.08)
 }
 
+/* User Profile */
+.profile__top__area {
+  margin-bottom: 20px;
+}
+
+.profile__avatar {
+  position: absolute;
+  top: 5px;
+  left: 40px;
+  width: 130px;
+  height: 130px;
+}
+
+.profile__user__name {
+  position: absolute;
+  top: 27px;
+  left: 200px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.profile__user__biography {
+  position: absolute;
+  top: 55px;
+  left: 200px;
+  font-size: 14px;
+  color: #ccc;
+  font-style: italic;
+  font-weight: 400;
+}
+
 /* Confession skeleton */
 .skeleton {
   position: relative;

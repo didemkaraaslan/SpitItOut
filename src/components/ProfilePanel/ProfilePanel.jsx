@@ -1,22 +1,13 @@
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { isLoaded, isEmpty } from "react-redux-firebase";
-import {
-  ALL,
-  LATEST,
-  MOST_TRENDING,
-  MOST_APPROVED,
-  MOST_JUDGED,
-  MOST_COMMENTED
-} from "../../utils/Tags";
-import { Container } from "semantic-ui-react";
+import { Segment, Grid, Card, Icon, Image, Tab } from "semantic-ui-react";
+import MyConfessions from "./MyConfessions.jsx";
+import Favorites from "./Favorites.jsx";
+import LikedConfessions from "./LikedConfessions.jsx";
 
-import Confession from "./Confession.jsx";
-import ConfessionSkeleton from "./ConfessionSkeleton.jsx";
+import faker from "faker";
 
-class ContentPanel extends Component {
-  state = {};
-
+class ProfilePanel extends Component {
   handleLike = (confession, confessionId) => {
     const { firebase } = this.props;
 
@@ -114,99 +105,79 @@ class ContentPanel extends Component {
     }
   };
 
-  filterConfessions = (confessions, filterCategory) => {
-    const specialFilterCategories = [
-      LATEST,
-      MOST_TRENDING,
-      MOST_APPROVED,
-      MOST_JUDGED,
-      MOST_COMMENTED
-    ];
-
-    // If ALL filter category is not selected then apply the selected filter
-
-    // Check if special category filtering shall be applied
-    const applySpecialCategoryFilter = specialFilterCategories.some(
-      specialFilter => specialFilter === filterCategory
-    );
-
-    if (applySpecialCategoryFilter) {
-      return this.applySpecialCategoryFilter(filterCategory, confessions);
-    } else {
-      return this.applyCategoryFilter(filterCategory, confessions);
-    }
-  };
-
-  applyCategoryFilter = (filterCategory, confessions) => {
-    let filteredConfessions = confessions;
-
-    if (filterCategory !== ALL) {
-      filteredConfessions = confessions.filter(({ key, value }) =>
-        value.tags.some(tag => tag === filterCategory)
-      );
-    }
-    return this.displayFilteredConfessions(filteredConfessions);
-  };
-
-  applySpecialCategoryFilter = (filterCategory, confessions) => {
-    switch (filterCategory) {
-      case LATEST:
-        break;
-      case MOST_TRENDING:
-        break;
-      case MOST_APPROVED:
-        break;
-      case MOST_JUDGED:
-        break;
-      case MOST_COMMENTED:
-        break;
-    }
-
-    this.displayFilteredConfessions(confessions);
-  };
-
-  displayFilteredConfessions = confessions => {
-    const { firebase } = this.props;
-    const currentUser = firebase.auth().currentUser;
-    const currentUserUid = currentUser && currentUser.uid;
-
-    return confessions.map(({ key, value }) => (
-      <Confession
-        key={key}
-        id={key}
-        confession={value}
-        confessionId={key}
-        currentUserUid={currentUserUid}
-        handleLike={this.handleLike}
-        handleDislike={this.handleDislike}
-        addFavorite={this.addFavorite}
-      />
-    ));
-  };
-
-  showSkeletonView = () =>
-    [...Array(6)].map((_, i) => <ConfessionSkeleton key={i} />);
-
   render() {
-    const { confessions, filterCategory } = this.props;
-
-    const confessionList = !isLoaded(confessions)
-      ? this.showSkeletonView()
-      : isEmpty(confessions)
-      ? "List is empty"
-      : this.filterConfessions(confessions, filterCategory);
-
+    const { currentUser, confessions } = this.props;
     return (
-      <Container style={{ marginTop: "50px" }}>{confessionList}</Container>
+      <Segment style={{ marginTop: "50px", position: "relative" }}>
+        <div className="profile__top__area">
+          <Image
+            src={faker.internet.avatar()}
+            circular
+            bordered
+            className="profile__avatar"
+          />
+          <span className="profile__user__name">{currentUser.displayName}</span>
+          <q className="profile__user__biography">
+            You know you are in love when you cant fall asleep because reality
+            finally better than your dreams.
+          </q>
+        </div>
+        <Tab
+          menu={{ secondary: true, pointing: true }}
+          panes={[
+            {
+              menuItem: "My Confessions",
+              render: () => (
+                <Tab.Pane attached={false}>
+                  <MyConfessions
+                    confessions={confessions}
+                    currentUser={currentUser}
+                    handleLike={this.handleLike}
+                    handleDislike={this.handleDislike}
+                    addFavorite={this.addFavorite}
+                  />
+                </Tab.Pane>
+              )
+            },
+            {
+              menuItem: "Liked Confessions",
+              render: () => (
+                <Tab.Pane attached={false}>
+                  <LikedConfessions
+                    confessions={confessions}
+                    currentUser={currentUser}
+                    handleLike={this.handleLike}
+                    handleDislike={this.handleDislike}
+                    addFavorite={this.addFavorite}
+                  />
+                </Tab.Pane>
+              )
+            },
+            {
+              menuItem: "Favorites",
+              render: () => (
+                <Tab.Pane attached={false}>
+                  <Favorites
+                    confessions={confessions}
+                    currentUser={currentUser}
+                    handleLike={this.handleLike}
+                    handleDislike={this.handleDislike}
+                    addFavorite={this.addFavorite}
+                  />
+                </Tab.Pane>
+              )
+            }
+          ]}
+        />
+      </Segment>
     );
   }
 }
 
-ContentPanel.propTypes = {
-  firebase: PropTypes.object,
-  confessions: PropTypes.array,
-  profile: PropTypes.object,
-  filterCategory: PropTypes.string.isRequired
+ProfilePanel.propTypes = {
+  firebase: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  confessions: PropTypes.array.isRequired
 };
 
-export default ContentPanel;
+export default ProfilePanel;

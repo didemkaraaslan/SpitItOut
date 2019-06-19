@@ -103,7 +103,12 @@ class HeaderPanel extends Component {
               >
                 <Dropdown trigger={trigger} pointing="top right" icon={null}>
                   <Dropdown.Menu>
-                    <Dropdown.Item key="user" icon="user" text="Account" />
+                    <Dropdown.Item
+                      key="user"
+                      icon="user"
+                      text="Profile"
+                      onClick={this.props.handleOpenUserProfile}
+                    />
                     <Dropdown.Item
                       key="settings"
                       icon="settings"
@@ -143,6 +148,7 @@ HeaderPanel.propTypes = {
   profile: PropTypes.object.isRequired,
   firebase: PropTypes.object.isRequired,
   handleOpenSettings: PropTypes.func.isRequired,
+  handleOpenUserProfile: PropTypes.func.isRequired,
   currentUser: PropTypes.object.isRequired,
   activeTheme: PropTypes.string
 };

@@ -43,13 +43,17 @@ class ConfessionModal extends Component {
       shareAs,
       user: {
         username: profile.username,
-        photoURL: profile.photoURL
+        photoURL: profile.photoURL,
+        uid: currentUserUid
       },
       timestamp: firebase.database.ServerValue.TIMESTAMP,
       numberOfLikes: 0,
       numberOfDislikes: 0,
       numberOfComments: 0,
       feelings: {
+        [currentUserUid]: 0
+      },
+      favorites: {
         [currentUserUid]: 0
       },
       comments: {}
