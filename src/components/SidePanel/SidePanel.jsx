@@ -28,7 +28,7 @@ class SidePanel extends Component {
             fixed="top"
             color={color}
             style={{
-              marginTop: "70px",
+              marginTop: "55px",
               fontSize: "1.1rem"
             }}
           >

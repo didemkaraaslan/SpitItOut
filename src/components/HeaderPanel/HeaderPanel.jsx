@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { Link } from "react-router-dom";
 import { firebaseConnect, getVal, isLoaded } from "react-redux-firebase";
-import faker from "faker";
 import { themes } from "../../utils/Theme";
 import {
   Menu,
@@ -13,19 +11,12 @@ import {
   Image,
   Header,
   Dropdown,
-  Segment,
   Dimmer,
   Loader
 } from "semantic-ui-react";
 
 import ConfessionModal from "../ContentPanel/ConfessionModal.jsx";
 import logo from "../../logo.png";
-
-const trigger = (
-  <span>
-    <Image avatar src={faker.internet.avatar()} /> {faker.name.findName()}
-  </span>
-);
 
 class HeaderPanel extends Component {
   state = {
@@ -52,9 +43,15 @@ class HeaderPanel extends Component {
 
   render() {
     const { openConfessionModal, activeHeaderMenuItem } = this.state;
-    const { activeTheme, firebase, profile } = this.props;
+    const { activeTheme, currentUser, firebase, profile } = this.props;
 
     const { inverted, color } = isLoaded(activeTheme) && themes[activeTheme];
+
+    const trigger = (
+      <span>
+        <Image avatar src={currentUser.photoURL} /> {currentUser.displayName}
+      </span>
+    );
 
     return (
       <React.Fragment>

@@ -63,7 +63,7 @@ class App extends Component {
 
     return (
       <Grid className="app">
-        <Grid.Row>
+        <Grid.Row style={{ zIndex: 1000 }}>
           <HeaderPanel
             handleOpenSettings={this.handleOpenSettings}
             handleOpenUserProfile={this.handleOpenUserProfile}
