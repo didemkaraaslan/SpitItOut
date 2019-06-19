@@ -9,6 +9,8 @@ import HeaderPanel from "./components/HeaderPanel/HeaderPanel.jsx";
 import SidePanel from "./components/SidePanel/SidePanel.jsx";
 import ContentPanel from "./components/ContentPanel/ContentPanel.jsx";
 import SettingsPanel from "./components/SettingsPanel/SettingsPanel.jsx";
+import ProfilePanel from "./components/ProfilePanel/ProfilePanel.jsx";
+
 import { HashLoader } from "react-spinners";
 import { css } from "@emotion/core";
 
@@ -20,15 +22,20 @@ const override = css`
 
 class App extends Component {
   state = {
-    openSettingsModal: false
+    openSettingsModal: false,
+    openUserProfile: false
   };
 
   handleOpenSettings = () => this.setState({ openSettingsModal: true });
 
   handleCloseSettings = () => this.setState({ openSettingsModal: false });
 
+  handleOpenUserProfile = () => this.setState({ openUserProfile: true });
+
+  handleCloseUserProfile = () => this.setState({ openUserProfile: false });
+
   render() {
-    const { openSettingsModal } = this.state;
+    const { openSettingsModal, openUserProfile } = this.state;
 
     const {
       firebase,
@@ -59,6 +66,7 @@ class App extends Component {
         <Grid.Row>
           <HeaderPanel
             handleOpenSettings={this.handleOpenSettings}
+            handleOpenUserProfile={this.handleOpenUserProfile}
             firebase={firebase}
             profile={profile}
             currentUser={currentUser}
@@ -79,12 +87,20 @@ class App extends Component {
               profile={profile}
               handleCloseSettings={this.handleCloseSettings}
             />
-            <ContentPanel
-              firebase={firebase}
-              profile={profile}
-              confessions={confessions}
-              filterCategory={filterCategory}
-            />
+            {openUserProfile ? (
+              <ProfilePanel
+                currentUser={currentUser}
+                confessions={confessions}
+                firebase={firebase}
+              />
+            ) : (
+              <ContentPanel
+                firebase={firebase}
+                profile={profile}
+                confessions={confessions}
+                filterCategory={filterCategory}
+              />
+            )}
           </Grid.Column>
           <Grid.Column width={4} />
         </Grid.Row>
