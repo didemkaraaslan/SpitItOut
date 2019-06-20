@@ -39,10 +39,13 @@ class Signup extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { username, email, password } = this.state;
+    const { username, email, gender, password } = this.state;
     const { firebase } = this.props;
 
     this.setState({ loading: true, errors: [] });
+
+    const [first, last] = username.split(" ");
+    const avatarBackground = gender === "female" ? "f44259" : "42f498";
 
     if (this.isFormValid()) {
       firebase
@@ -52,10 +55,7 @@ class Signup extends Component {
           createdUser.user
             .updateProfile({
               displayName: username,
-              photoURL: gravatar.url(createdUser.user.email, {
-                s: "60",
-                protocol: "https"
-              })
+              photoURL: `https://ui-avatars.com/api/?name=${first}+${last}&background=${avatarBackground}&color=fff`
             })
             .then(() => {
               this.saveUserIntoDatabase(createdUser)
@@ -167,7 +167,6 @@ class Signup extends Component {
   render() {
     const { loading, gender, errors } = this.state;
 
-    console.log(gender)
     return (
       <div className="signup">
         <Grid

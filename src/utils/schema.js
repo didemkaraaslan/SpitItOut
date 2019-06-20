@@ -47,7 +47,8 @@ const confessionSchema = Joi.object().keys({
   user: {
     uid: Joi.string().required(),
     username: Joi.string().required(),
-    photoURL: Joi.string().required()
+    photoURL: Joi.string().required(),
+    gender: Joi.string().required()
   }
 });
 

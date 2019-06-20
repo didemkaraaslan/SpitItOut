@@ -6,13 +6,13 @@ import { Comment, Divider, Segment, Label, Icon } from "semantic-ui-react";
 
 import { setCategoryFilter } from "../../actions/confessionActions";
 import { pickTagColor } from "../../utils/functions";
-import manAvatar from "../../assets/img/man_avatar.png";
-import womanAvatar from "../../assets/img/woman_avatar.png";
+import femaleAvatar from "../../assets/img/female_avatar.png";
+import maleAvatar from "../../assets/img/male_avatar.png";
 
 const getUserAvatar = confession => {
-  const gender = "woman";
+  const gender = confession.user.gender;
   if (confession.shareAs === "user") {
-    const avatar = gender === "woman" ? womanAvatar : manAvatar;
+    const avatar = gender === "female" ? femaleAvatar : maleAvatar;
     return (
       <Comment.Avatar
         src={confession.user.photoURL ? confession.user.photoURL : avatar}
@@ -20,7 +20,7 @@ const getUserAvatar = confession => {
       />
     );
   } else {
-    const avatar = gender === "woman" ? womanAvatar : manAvatar;
+    const avatar = gender === "female" ? femaleAvatar : maleAvatar;
     return <Comment.Avatar src={avatar} className="confession__avatar" />;
   }
 };
@@ -120,6 +120,7 @@ const Confession = ({
 Confession.propTypes = {
   currentUserUid: PropTypes.string,
   confessionId: PropTypes.string,
+  gender: PropTypes.string,
   confession: PropTypes.object,
   handleLike: PropTypes.func,
   handleDislike: PropTypes.func,
