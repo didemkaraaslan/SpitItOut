@@ -13,6 +13,7 @@ import { Container } from "semantic-ui-react";
 
 import Confession from "./Confession.jsx";
 import ConfessionSkeleton from "./ConfessionSkeleton.jsx";
+import NoConfessionData from "../empty/NoConfessionData.jsx";
 
 class ContentPanel extends Component {
   state = {};
@@ -190,11 +191,13 @@ class ContentPanel extends Component {
   render() {
     const { confessions, filterCategory } = this.props;
 
-    const confessionList = !isLoaded(confessions)
-      ? this.showSkeletonView()
-      : isEmpty(confessions)
-      ? "List is empty"
-      : this.filterConfessions(confessions, filterCategory);
+    const confessionList = !isLoaded(confessions) ? (
+      this.showSkeletonView()
+    ) : isEmpty(confessions) ? (
+      <NoConfessionData filterCategory={filterCategory}/>
+    ) : (
+      this.filterConfessions(confessions, filterCategory)
+    );
 
     return (
       <Container style={{ marginTop: "50px" }}>{confessionList}</Container>
