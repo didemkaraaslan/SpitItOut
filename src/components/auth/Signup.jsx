@@ -11,7 +11,8 @@ import {
   Header,
   Button,
   Icon,
-  Message
+  Message,
+  Radio
 } from "semantic-ui-react";
 import "../../app.css";
 const gravatar = require("gravatar");
@@ -21,6 +22,7 @@ class Signup extends Component {
     usersRef: this.props.firebase.database().ref("users"),
     username: "",
     email: "",
+    gender: "male",
     password: "",
     passwordConfirmation: "",
     loading: false,
@@ -32,6 +34,8 @@ class Signup extends Component {
       [event.target.name]: event.target.value
     });
   };
+
+  handleGenderChange = (e, { value }) => this.setState({ gender: value });
 
   handleSubmit = event => {
     event.preventDefault();
@@ -96,10 +100,17 @@ class Signup extends Component {
   };
 
   isFormEmpty = () => {
-    const { username, password, email, passwordConfirmation } = this.state;
+    const {
+      username,
+      password,
+      gender,
+      email,
+      passwordConfirmation
+    } = this.state;
     return (
       !username.length ||
       !password.length ||
+      !gender.length ||
       !email.length ||
       !passwordConfirmation.length
     );
@@ -143,13 +154,20 @@ class Signup extends Component {
     return this.state.usersRef.child(createdUser.user.uid).set({
       username: createdUser.user.displayName,
       email: createdUser.user.email,
-      photoURL: createdUser.user.photoURL
+      photoURL: createdUser.user.photoURL,
+      gender: this.state.gender,
+      prefs: {
+        theme: {
+          activeTheme: "light"
+        }
+      }
     });
   };
 
   render() {
-    const { loading, errors } = this.state;
+    const { loading, gender, errors } = this.state;
 
+    console.log(gender)
     return (
       <div className="signup">
         <Grid
@@ -208,6 +226,25 @@ class Signup extends Component {
                     type="password"
                   />
                 </Form.Field>
+                <Segment>
+                  <Form.Group inline>
+                    <label>Gender</label>
+                    <Form.Radio
+                      label="Male"
+                      name="radioGroup"
+                      value="male"
+                      checked={gender === "male"}
+                      onChange={this.handleGenderChange}
+                    />
+                    <Form.Radio
+                      label="Female"
+                      name="radioGroup"
+                      value="female"
+                      checked={gender === "female"}
+                      onChange={this.handleGenderChange}
+                    />
+                  </Form.Group>
+                </Segment>
                 <Button
                   color="green"
                   size="large"
