@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { firebaseConnect, getVal } from "react-redux-firebase";
 import { Modal, Button, Form, Message, Dropdown } from "semantic-ui-react";
 
 import { tagOptions } from "../../utils/Tags";
@@ -31,7 +34,7 @@ class ConfessionModal extends Component {
 
   createConfession = async () => {
     const { content, tags, shareAs } = this.state;
-    const { profile, firebase } = this.props;
+    const { profile, firebase, gender } = this.props;
     const currentUser = firebase.auth().currentUser;
     const currentUserUid = currentUser && currentUser.uid;
 
@@ -44,6 +47,7 @@ class ConfessionModal extends Component {
       user: {
         username: profile.username,
         photoURL: profile.photoURL,
+        gender,
         uid: currentUserUid
       },
       timestamp: firebase.database.ServerValue.TIMESTAMP,
@@ -175,7 +179,20 @@ ConfessionModal.propTypes = {
   open: PropTypes.bool,
   firebase: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
+  gender: PropTypes.string.isRequired,
+  currentUser: PropTypes.object.isRequired,
   handleCloseConfessionModal: PropTypes.func
 };
 
-export default ConfessionModal;
+export default compose(
+  firebaseConnect(props => {
+    const uid = props.currentUser && props.currentUser.uid;
+    return [{ path: `users/${uid}/gender` }];
+  }),
+  connect(({ firebase }, props) => ({
+    gender: getVal(
+      firebase,
+      `data/users/${props.currentUser.uid}/gender`
+    )
+  }))
+)(ConfessionModal);

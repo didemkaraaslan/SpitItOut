@@ -9,6 +9,10 @@ body {
   position: relative;
 }
 
+img {
+  border-radius: 50% !important;
+}
+
 .app {
   height: 100%;
   background-color: #ccc;
@@ -33,6 +37,9 @@ body {
 .sidepanel {
   width: 270px !important;
 }
+
+/* Confession */
+
 
 /* Theme */
 .themeImage {

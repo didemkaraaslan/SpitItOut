@@ -11,7 +11,8 @@ import {
   Header,
   Button,
   Icon,
-  Message
+  Message,
+  Radio
 } from "semantic-ui-react";
 import "../../app.css";
 const gravatar = require("gravatar");
@@ -21,6 +22,7 @@ class Signup extends Component {
     usersRef: this.props.firebase.database().ref("users"),
     username: "",
     email: "",
+    gender: "male",
     password: "",
     passwordConfirmation: "",
     loading: false,
@@ -33,12 +35,17 @@ class Signup extends Component {
     });
   };
 
+  handleGenderChange = (e, { value }) => this.setState({ gender: value });
+
   handleSubmit = event => {
     event.preventDefault();
-    const { username, email, password } = this.state;
+    const { username, email, gender, password } = this.state;
     const { firebase } = this.props;
 
     this.setState({ loading: true, errors: [] });
+
+    const [first, last] = username.split(" ");
+    const avatarBackground = gender === "female" ? "f44259" : "42f498";
 
     if (this.isFormValid()) {
       firebase
@@ -48,10 +55,7 @@ class Signup extends Component {
           createdUser.user
             .updateProfile({
               displayName: username,
-              photoURL: gravatar.url(createdUser.user.email, {
-                s: "60",
-                protocol: "https"
-              })
+              photoURL: `https://ui-avatars.com/api/?name=${first}+${last}&background=${avatarBackground}&color=fff`
             })
             .then(() => {
               this.saveUserIntoDatabase(createdUser)
@@ -96,10 +100,17 @@ class Signup extends Component {
   };
 
   isFormEmpty = () => {
-    const { username, password, email, passwordConfirmation } = this.state;
+    const {
+      username,
+      password,
+      gender,
+      email,
+      passwordConfirmation
+    } = this.state;
     return (
       !username.length ||
       !password.length ||
+      !gender.length ||
       !email.length ||
       !passwordConfirmation.length
     );
@@ -143,12 +154,18 @@ class Signup extends Component {
     return this.state.usersRef.child(createdUser.user.uid).set({
       username: createdUser.user.displayName,
       email: createdUser.user.email,
-      photoURL: createdUser.user.photoURL
+      photoURL: createdUser.user.photoURL,
+      gender: this.state.gender,
+      prefs: {
+        theme: {
+          activeTheme: "light"
+        }
+      }
     });
   };
 
   render() {
-    const { loading, errors } = this.state;
+    const { loading, gender, errors } = this.state;
 
     return (
       <div className="signup">
@@ -208,6 +225,25 @@ class Signup extends Component {
                     type="password"
                   />
                 </Form.Field>
+                <Segment>
+                  <Form.Group inline>
+                    <label>Gender</label>
+                    <Form.Radio
+                      label="Male"
+                      name="radioGroup"
+                      value="male"
+                      checked={gender === "male"}
+                      onChange={this.handleGenderChange}
+                    />
+                    <Form.Radio
+                      label="Female"
+                      name="radioGroup"
+                      value="female"
+                      checked={gender === "female"}
+                      onChange={this.handleGenderChange}
+                    />
+                  </Form.Group>
+                </Segment>
                 <Button
                   color="green"
                   size="large"

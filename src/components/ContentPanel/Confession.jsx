@@ -6,6 +6,24 @@ import { Comment, Divider, Segment, Label, Icon } from "semantic-ui-react";
 
 import { setCategoryFilter } from "../../actions/confessionActions";
 import { pickTagColor } from "../../utils/functions";
+import femaleAvatar from "../../assets/img/female_avatar.png";
+import maleAvatar from "../../assets/img/male_avatar.png";
+
+const getUserAvatar = confession => {
+  const gender = confession.user.gender;
+  if (confession.shareAs === "user") {
+    const avatar = gender === "female" ? femaleAvatar : maleAvatar;
+    return (
+      <Comment.Avatar
+        src={confession.user.photoURL ? confession.user.photoURL : avatar}
+        className="confession__avatar"
+      />
+    );
+  } else {
+    const avatar = gender === "female" ? femaleAvatar : maleAvatar;
+    return <Comment.Avatar src={avatar} className="confession__avatar" />;
+  }
+};
 
 const Confession = ({
   currentUserUid,
@@ -19,11 +37,15 @@ const Confession = ({
   <Segment loading={!confession} raised>
     <Comment.Group size="small">
       <Comment>
-        <Comment.Avatar as="a" src={confession && confession.user.photoURL} />
+        {confession && getUserAvatar(confession)}
         <Comment.Content>
-          <Comment.Author as="a">
-            {confession && confession.user.username}
-          </Comment.Author>
+          {confession && confession.shareAs === "user" ? (
+            <Comment.Author as="a">
+              {confession && confession.user.username}
+            </Comment.Author>
+          ) : (
+            <Comment.Author>Anonymous</Comment.Author>
+          )}
           <Comment.Metadata>
             <span>{moment(confession && confession.timestamp).fromNow()}</span>
           </Comment.Metadata>
@@ -98,6 +120,7 @@ const Confession = ({
 Confession.propTypes = {
   currentUserUid: PropTypes.string,
   confessionId: PropTypes.string,
+  gender: PropTypes.string,
   confession: PropTypes.object,
   handleLike: PropTypes.func,
   handleDislike: PropTypes.func,

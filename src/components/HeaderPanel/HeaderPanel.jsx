@@ -137,6 +137,7 @@ class HeaderPanel extends Component {
           open={openConfessionModal}
           profile={profile}
           firebase={firebase}
+          currentUser={currentUser}
           handleCloseConfessionModal={this.handleCloseConfessionModal}
         />
       </React.Fragment>
