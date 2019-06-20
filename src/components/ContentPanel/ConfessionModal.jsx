@@ -89,7 +89,6 @@ class ConfessionModal extends Component {
           }));
           resolve(false);
         }
-        console.log(confession)
         resolve(true);
       });
     });
@@ -179,7 +178,7 @@ ConfessionModal.propTypes = {
   open: PropTypes.bool,
   firebase: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
-  gender: PropTypes.string.isRequired,
+  gender: PropTypes.string,
   currentUser: PropTypes.object.isRequired,
   handleCloseConfessionModal: PropTypes.func
 };
@@ -190,9 +189,6 @@ export default compose(
     return [{ path: `users/${uid}/gender` }];
   }),
   connect(({ firebase }, props) => ({
-    gender: getVal(
-      firebase,
-      `data/users/${props.currentUser.uid}/gender`
-    )
+    gender: getVal(firebase, `data/users/${props.currentUser.uid}/gender`)
   }))
 )(ConfessionModal);

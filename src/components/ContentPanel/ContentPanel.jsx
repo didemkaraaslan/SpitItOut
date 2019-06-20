@@ -13,6 +13,7 @@ import { Container } from "semantic-ui-react";
 
 import Confession from "./Confession.jsx";
 import ConfessionSkeleton from "./ConfessionSkeleton.jsx";
+import NoConfessionData from "../empty/NoConfessionData.jsx";
 
 class ContentPanel extends Component {
   state = {};
@@ -115,6 +116,10 @@ class ContentPanel extends Component {
   };
 
   filterConfessions = (confessions, filterCategory) => {
+    if (isEmpty(confessions)) {
+      return <NoConfessionData filterCategory={filterCategory} />;
+    }
+
     const specialFilterCategories = [
       LATEST,
       MOST_TRENDING,
@@ -145,7 +150,7 @@ class ContentPanel extends Component {
         value.tags.some(tag => tag === filterCategory)
       );
     }
-    return this.displayFilteredConfessions(filteredConfessions);
+    return this.displayFilteredConfessions(filteredConfessions, filterCategory);
   };
 
   applySpecialCategoryFilter = (filterCategory, confessions) => {
@@ -162,13 +167,17 @@ class ContentPanel extends Component {
         break;
     }
 
-    this.displayFilteredConfessions(confessions);
+    this.displayFilteredConfessions(confessions, filterCategory);
   };
 
-  displayFilteredConfessions = confessions => {
+  displayFilteredConfessions = (confessions, filterCategory) => {
     const { firebase } = this.props;
     const currentUser = firebase.auth().currentUser;
     const currentUserUid = currentUser && currentUser.uid;
+
+    if (confessions.length <= 0) {
+      return <NoConfessionData filterCategory={filterCategory} />;
+    }
 
     return confessions.map(({ key, value }) => (
       <Confession
@@ -192,8 +201,6 @@ class ContentPanel extends Component {
 
     const confessionList = !isLoaded(confessions)
       ? this.showSkeletonView()
-      : isEmpty(confessions)
-      ? "List is empty"
       : this.filterConfessions(confessions, filterCategory);
 
     return (
