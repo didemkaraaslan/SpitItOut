@@ -120,6 +120,10 @@ class ContentPanel extends Component {
       return <NoConfessionData filterCategory={filterCategory} />;
     }
 
+    const orderedConfessions = confessions.sort(
+      (a, b) => b.value.timestamp - a.value.timestamp
+    );
+
     const specialFilterCategories = [
       LATEST,
       MOST_TRENDING,
@@ -136,9 +140,12 @@ class ContentPanel extends Component {
     );
 
     if (applySpecialCategoryFilter) {
-      return this.applySpecialCategoryFilter(filterCategory, confessions);
+      return this.applySpecialCategoryFilter(
+        filterCategory,
+        orderedConfessions
+      );
     } else {
-      return this.applyCategoryFilter(filterCategory, confessions);
+      return this.applyCategoryFilter(filterCategory, orderedConfessions);
     }
   };
 

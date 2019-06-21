@@ -107,6 +107,10 @@ class ProfilePanel extends Component {
 
   render() {
     const { currentUser, confessions } = this.props;
+    const orderedConfessions = confessions.sort(
+      (a, b) => b.value.timestamp - a.value.timestamp
+    );
+
     return (
       <Segment style={{ marginTop: "50px", position: "relative" }}>
         <div className="profile__top__area">
@@ -130,7 +134,7 @@ class ProfilePanel extends Component {
               render: () => (
                 <Tab.Pane attached={false}>
                   <MyConfessions
-                    confessions={confessions}
+                    confessions={orderedConfessions}
                     currentUser={currentUser}
                     handleLike={this.handleLike}
                     handleDislike={this.handleDislike}
@@ -144,7 +148,7 @@ class ProfilePanel extends Component {
               render: () => (
                 <Tab.Pane attached={false}>
                   <LikedConfessions
-                    confessions={confessions}
+                    confessions={orderedConfessions}
                     currentUser={currentUser}
                     handleLike={this.handleLike}
                     handleDislike={this.handleDislike}
@@ -158,7 +162,7 @@ class ProfilePanel extends Component {
               render: () => (
                 <Tab.Pane attached={false}>
                   <Favorites
-                    confessions={confessions}
+                    confessions={orderedConfessions}
                     currentUser={currentUser}
                     handleLike={this.handleLike}
                     handleDislike={this.handleDislike}
