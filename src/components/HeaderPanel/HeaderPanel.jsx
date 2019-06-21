@@ -16,7 +16,7 @@ import {
 } from "semantic-ui-react";
 
 import ConfessionModal from "../ContentPanel/ConfessionModal.jsx";
-import logo from "../../logo.png";
+import logo from "../../assets/img/logo.png";
 
 class HeaderPanel extends Component {
   state = {
@@ -66,9 +66,9 @@ class HeaderPanel extends Component {
             position="right"
           >
             <Menu.Item as="a">
-              <Header as="h2" color="violet">
+              <Header as="h2" color="black">
                 <Image src={logo} size="medium" alt="app_logo" />
-                Spit It Out!
+                SpitItOut
               </Header>
             </Menu.Item>
 
