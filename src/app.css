@@ -40,6 +40,29 @@ img {
 
 /* Confession */
 
+/* CommentPanel */
+.commentForm  {
+  margin-top: 10px;
+}
+
+.commentContainer {
+  position:relative;
+  width: 100%;
+}
+
+.commentTextarea {
+  position:relative;
+  border:none;
+  width:100%;
+  height: 100%;
+  outline: none;
+}
+
+.commentSendButton {
+  position:absolute;
+  top: 3px;
+  right:25px;
+}
 
 /* Theme */
 .themeImage {

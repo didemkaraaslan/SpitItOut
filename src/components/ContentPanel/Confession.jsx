@@ -27,12 +27,14 @@ const getUserAvatar = confession => {
 };
 
 const Confession = ({
+  currentUser,
   currentUserUid,
   confession,
   confessionId,
   handleLike,
   handleDislike,
   addFavorite,
+  postComment,
   setCategoryFilter
 }) => {
   const [commentsVisible, setCommentsVisibility] = useState(false);
@@ -118,19 +120,32 @@ const Confession = ({
                 />{" "}
                 {confession && confession.numberOfComments}
               </Comment.Action>
-              <Comment.Action style={{ float: "right" }}>Reply</Comment.Action>
+              <Comment.Action
+                as="a"
+                style={{ float: "right" }}
+                onClick={() => setCommentsVisibility(!commentsVisible)}
+              >
+                Reply
+              </Comment.Action>
             </Comment.Actions>
           </Comment.Content>
         </Comment>
       </Comment.Group>
 
       {/* Comment Panel */
-      commentsVisible && <CommentPanel />}
+      commentsVisible && (
+        <CommentPanel
+          currentUser={currentUser}
+          confessionId={confessionId}
+          postComment={postComment}
+        />
+      )}
     </Segment>
   );
 };
 
 Confession.propTypes = {
+  currentUser: PropTypes.object,
   currentUserUid: PropTypes.string,
   confessionId: PropTypes.string,
   gender: PropTypes.string,
@@ -138,6 +153,7 @@ Confession.propTypes = {
   handleLike: PropTypes.func,
   handleDislike: PropTypes.func,
   addFavorite: PropTypes.func,
+  postComment: PropTypes.func,
   setCategoryFilter: PropTypes.func.isRequired
 };
 

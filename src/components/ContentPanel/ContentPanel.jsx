@@ -115,6 +115,26 @@ class ContentPanel extends Component {
     }
   };
 
+  postComment = (confessionId, comment) => {
+    const { firebase } = this.props;
+
+    if (!comment) {
+      return;
+    }
+
+    // Set the timestamp when the comment has been made
+    comment.timestamp = firebase.database.ServerValue.TIMESTAMP;
+
+    firebase
+      .push(`comments/${confessionId}`, comment)
+      .then(() => {
+        console.log("success")
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
   filterConfessions = (confessions, filterCategory) => {
     if (isEmpty(confessions)) {
       return <NoConfessionData filterCategory={filterCategory} />;
@@ -192,6 +212,8 @@ class ContentPanel extends Component {
         id={key}
         confession={value}
         confessionId={key}
+        postComment={this.postComment}
+        currentUser={currentUser}
         currentUserUid={currentUserUid}
         handleLike={this.handleLike}
         handleDislike={this.handleDislike}
