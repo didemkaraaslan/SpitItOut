@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { isLoaded, isEmpty } from "react-redux-firebase";
 import {
@@ -44,10 +44,10 @@ class ContentPanel extends Component {
                 : confession.numberOfDislikes - 1
           })
           .then(() => {
-          console.log("like")
+            console.log("like");
           })
           .catch(error => {
-          console.error(error)
+            console.error(error);
           });
       }
     }
@@ -79,10 +79,10 @@ class ContentPanel extends Component {
                 : confession.numberOfLikes - 1
           })
           .then(() => {
-          console.log("dislike")
+            console.log("dislike");
           })
           .catch(error => {
-          console.error(error)
+            console.error(error);
           });
       }
     }
@@ -107,12 +107,50 @@ class ContentPanel extends Component {
           }
         })
         .then(() => {
-        console.log("added to favorites")
+          console.log("added to favorites");
         })
         .catch(error => {
-        console.error(error)
+          console.error(error);
         });
     }
+  };
+
+  postComment = (confession, confessionId, replyCommentId, comment) => {
+    const { firebase } = this.props;
+
+    if (!comment) {
+      return;
+    }
+
+    // Set the timestamp when the comment has been made
+    comment.timestamp = firebase.database.ServerValue.TIMESTAMP;
+
+    if (!replyCommentId || replyCommentId.length === 0) {
+      // If the comment is not a direct reply to other users comment
+      firebase
+        .push(`comments/${confessionId}`, comment)
+        .then(() => {
+          console.log("success");
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    } else {
+      firebase
+        .push(`comments/${confessionId}/${replyCommentId}/replies`, comment)
+        .then(() => {
+          console.log("success");
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+
+    // Update comment count
+    firebase.update(`confessions/${confessionId}`, {
+      ...confession,
+      numberOfComments: confession.numberOfComments + 1
+    });
   };
 
   filterConfessions = (confessions, filterCategory) => {
@@ -192,6 +230,8 @@ class ContentPanel extends Component {
         id={key}
         confession={value}
         confessionId={key}
+        postComment={this.postComment}
+        currentUser={currentUser}
         currentUserUid={currentUserUid}
         handleLike={this.handleLike}
         handleDislike={this.handleDislike}
