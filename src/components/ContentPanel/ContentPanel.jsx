@@ -44,10 +44,10 @@ class ContentPanel extends Component {
                 : confession.numberOfDislikes - 1
           })
           .then(() => {
-          console.log("like")
+            console.log("like");
           })
           .catch(error => {
-          console.error(error)
+            console.error(error);
           });
       }
     }
@@ -79,10 +79,10 @@ class ContentPanel extends Component {
                 : confession.numberOfLikes - 1
           })
           .then(() => {
-          console.log("dislike")
+            console.log("dislike");
           })
           .catch(error => {
-          console.error(error)
+            console.error(error);
           });
       }
     }
@@ -107,15 +107,15 @@ class ContentPanel extends Component {
           }
         })
         .then(() => {
-        console.log("added to favorites")
+          console.log("added to favorites");
         })
         .catch(error => {
-        console.error(error)
+          console.error(error);
         });
     }
   };
 
-  postComment = (confessionId, comment) => {
+  postComment = (confession, confessionId, replyCommentId, comment) => {
     const { firebase } = this.props;
 
     if (!comment) {
@@ -125,14 +125,36 @@ class ContentPanel extends Component {
     // Set the timestamp when the comment has been made
     comment.timestamp = firebase.database.ServerValue.TIMESTAMP;
 
-    firebase
-      .push(`comments/${confessionId}`, comment)
-      .then(() => {
-        console.log("success")
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    console.log(replyCommentId.length);
+
+    if (!replyCommentId || replyCommentId.length === 0) {
+      console.log("direct comment");
+      // If the comment is not a direct reply to other users comment
+      firebase
+        .push(`comments/${confessionId}`, comment)
+        .then(() => {
+          console.log("success");
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    } else {
+      console.log("hehehe");
+      firebase
+        .push(`comments/${confessionId}/${replyCommentId}/replies`, comment)
+        .then(() => {
+          console.log("success");
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+
+    // Update comment count
+    firebase.update(`confessions/${confessionId}`, {
+      ...confession,
+      numberOfComments: confession.numberOfComments + 1
+    });
   };
 
   filterConfessions = (confessions, filterCategory) => {

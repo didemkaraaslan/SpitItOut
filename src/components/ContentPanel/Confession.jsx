@@ -136,6 +136,7 @@ const Confession = ({
       commentsVisible && (
         <CommentPanel
           currentUser={currentUser}
+          confession={confession}
           confessionId={confessionId}
           postComment={postComment}
         />

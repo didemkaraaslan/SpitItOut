@@ -11,9 +11,15 @@ import {
 } from "react-redux-firebase";
 import { Header, Form, Button, Comment } from "semantic-ui-react";
 
-const CommentPanel = ({ currentUser, confessionId, comments, postComment }) => {
+const CommentPanel = ({
+  currentUser,
+  confession,
+  confessionId,
+  comments,
+  postComment
+}) => {
   const [content, setContent] = useState(" ");
-  const [commentTag, setCommentTag] = useState(" ");
+  const [replyCommentId, setReplyCommentId] = useState("");
 
   return (
     <Comment.Group>
@@ -32,11 +38,35 @@ const CommentPanel = ({ currentUser, confessionId, comments, postComment }) => {
               </Comment.Metadata>
               <Comment.Text>{value.content}</Comment.Text>
               <Comment.Actions>
-                <Comment.Action onClick={() => setContent("@Matt ")}>
+                <Comment.Action
+                  onClick={() => {
+                    setReplyCommentId(key);
+                    setContent(`@${value.author}`);
+                  }}
+                >
                   Reply
                 </Comment.Action>
               </Comment.Actions>
             </Comment.Content>
+            <Comment.Group>
+              {value.replies &&
+                Object.keys(value.replies).map((key, i) => (
+                  <Comment key={i}>
+                    <Comment.Avatar src={value.replies[key].photoURL} />
+                    <Comment.Content>
+                      <Comment.Author as="a">
+                        {value.replies[key].author}
+                      </Comment.Author>
+                      <Comment.Metadata>
+                        <div>
+                          moment(value.replies[key].timestamp).fromNow()
+                        </div>
+                      </Comment.Metadata>
+                      <Comment.Text>{value.replies[key].content}</Comment.Text>
+                    </Comment.Content>
+                  </Comment>
+                ))}
+            </Comment.Group>
           </Comment>
         ))}
 
@@ -55,7 +85,8 @@ const CommentPanel = ({ currentUser, confessionId, comments, postComment }) => {
             secondary
             onClick={() => {
               setContent(" ");
-              postComment(confessionId, {
+              setReplyCommentId("");
+              postComment(confession, confessionId, replyCommentId, {
                 author: currentUser.displayName,
                 photoURL: currentUser.photoURL,
                 content
