@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { isLoaded, isEmpty } from "react-redux-firebase";
 import {
@@ -125,10 +125,7 @@ class ContentPanel extends Component {
     // Set the timestamp when the comment has been made
     comment.timestamp = firebase.database.ServerValue.TIMESTAMP;
 
-    console.log(replyCommentId.length);
-
     if (!replyCommentId || replyCommentId.length === 0) {
-      console.log("direct comment");
       // If the comment is not a direct reply to other users comment
       firebase
         .push(`comments/${confessionId}`, comment)
@@ -139,7 +136,6 @@ class ContentPanel extends Component {
           console.error(error);
         });
     } else {
-      console.log("hehehe");
       firebase
         .push(`comments/${confessionId}/${replyCommentId}/replies`, comment)
         .then(() => {

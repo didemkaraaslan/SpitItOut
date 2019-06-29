@@ -3,12 +3,7 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import {
-  firebaseConnect,
-  getVal,
-  isLoaded,
-  isEmpty
-} from "react-redux-firebase";
+import { firebaseConnect, getVal } from "react-redux-firebase";
 import { Header, Form, Button, Comment } from "semantic-ui-react";
 
 const CommentPanel = ({
@@ -18,84 +13,121 @@ const CommentPanel = ({
   comments,
   postComment
 }) => {
+  const [displayComments, setDisplayComments] = useState([]);
   const [content, setContent] = useState(" ");
   const [replyCommentId, setReplyCommentId] = useState("");
 
   return (
-    <Comment.Group>
-      <Header as="h3" dividing>
-        Comments
-      </Header>
+    <div className="comments__group">
+      <Comment.Group size="small">
+        <Header as="h5">Comments</Header>
 
-      {comments &&
-        comments.map(({ key, value }) => (
-          <Comment key={key}>
-            <Comment.Avatar src={value.photoURL} />
-            <Comment.Content>
-              <Comment.Author as="a">{value.author}</Comment.Author>
-              <Comment.Metadata>
-                <div>{moment(value.timestamp).fromNow()}</div>
-              </Comment.Metadata>
-              <Comment.Text>{value.content}</Comment.Text>
-              <Comment.Actions>
-                <Comment.Action
-                  onClick={() => {
-                    setReplyCommentId(key);
-                    setContent(`@${value.author}`);
-                  }}
-                >
-                  Reply
-                </Comment.Action>
-              </Comment.Actions>
-            </Comment.Content>
-            <Comment.Group>
+        {comments &&
+          comments.map(({ key, value }) => (
+            <Comment key={key}>
+              <Comment.Avatar src={value.photoURL} />
+              <Comment.Content>
+                <Comment.Author as="a">{value.author}</Comment.Author>
+                <Comment.Metadata>
+                  <div>{moment(value.timestamp).fromNow()}</div>
+                </Comment.Metadata>
+                <Comment.Text>{value.content}</Comment.Text>
+                <Comment.Actions>
+                  <Comment.Action
+                    onClick={() => {
+                      setReplyCommentId(key);
+                      setContent(`@${value.author}`);
+                    }}
+                  >
+                    Reply
+                  </Comment.Action>
+                </Comment.Actions>
+              </Comment.Content>
               {value.replies &&
-                Object.keys(value.replies).map((key, i) => (
-                  <Comment key={i}>
-                    <Comment.Avatar src={value.replies[key].photoURL} />
-                    <Comment.Content>
-                      <Comment.Author as="a">
-                        {value.replies[key].author}
-                      </Comment.Author>
-                      <Comment.Metadata>
-                        <div>
-                          moment(value.replies[key].timestamp).fromNow()
-                        </div>
-                      </Comment.Metadata>
-                      <Comment.Text>{value.replies[key].content}</Comment.Text>
-                    </Comment.Content>
-                  </Comment>
+                (!displayComments.includes(key) ? (
+                  <button
+                    onClick={() => {
+                      setDisplayComments(prevDisplayComments => [
+                        ...prevDisplayComments,
+                        key
+                      ]);
+                    }}
+                    className="comments__view__replies__btn"
+                  >
+                    <div className="comment__display__comments__line" />
+                    <span style={{ color: "#999" }}>
+                      View replies ({Object.keys(value.replies).length})
+                    </span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setDisplayComments(prevDisplayComments =>
+                        prevDisplayComments.filter(
+                          commentKey => commentKey !== key
+                        )
+                      );
+                    }}
+                    className="comments__view__replies__btn"
+                  >
+                    <div className="comment__display__comments__line" />
+                    <span style={{ color: "#999" }}>
+                      Hide replies ({Object.keys(value.replies).length})
+                    </span>
+                  </button>
                 ))}
-            </Comment.Group>
-          </Comment>
-        ))}
+              <Comment.Group size="small">
+                {displayComments.includes(key) &&
+                  value.replies &&
+                  Object.keys(value.replies).map((key, i) => (
+                    <Comment key={i}>
+                      <Comment.Avatar src={value.replies[key].photoURL} />
+                      <Comment.Content>
+                        <Comment.Author as="a">
+                          {value.replies[key].author}
+                        </Comment.Author>
+                        <Comment.Metadata>
+                          <div>
+                            {moment(value.replies[key].timestamp).fromNow()}
+                          </div>
+                        </Comment.Metadata>
+                        <Comment.Text>
+                          {value.replies[key].content}
+                        </Comment.Text>
+                      </Comment.Content>
+                    </Comment>
+                  ))}
+              </Comment.Group>
+            </Comment>
+          ))}
 
-      <Form className="commentForm">
-        <Form.Group inline className="commentContainer">
-          <Form.TextArea
-            rows={1}
-            placeholder="Add a comment..."
-            className="commentTextarea"
-            value={content}
-            onChange={e => setContent(e.target.value)}
-          />
-          <Button
-            content="Post"
-            className="commentSendButton"
-            secondary
-            onClick={() => {
-              setContent(" ");
-              setReplyCommentId("");
-              postComment(confession, confessionId, replyCommentId, {
-                author: currentUser.displayName,
-                photoURL: currentUser.photoURL,
-                content
-              });
-            }}
-          />
-        </Form.Group>
-      </Form>
-    </Comment.Group>
+        <Form className="commentForm">
+          <Form.Group inline className="commentContainer">
+            <Form.TextArea
+              rows={1}
+              placeholder="Add a comment..."
+              className="commentTextarea"
+              value={content}
+              onChange={e => setContent(e.target.value)}
+            />
+            <Button
+              content="Post"
+              className="commentSendButton"
+              secondary
+              onClick={() => {
+                setContent(" ");
+                setReplyCommentId("");
+                postComment(confession, confessionId, replyCommentId, {
+                  author: currentUser.displayName,
+                  photoURL: currentUser.photoURL,
+                  content
+                });
+              }}
+            />
+          </Form.Group>
+        </Form>
+      </Comment.Group>
+    </div>
   );
 };
 

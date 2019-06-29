@@ -41,6 +41,29 @@ img {
 /* Confession */
 
 /* CommentPanel */
+
+.comments__group {
+  margin-left: 45px;
+}
+
+.comment__display__comments__line {
+  display: inline-block;
+  width: 25px;
+  height: 1px;
+  margin-right: 10px;
+  border: 1px solid #999;
+}
+
+.comments__view__replies__btn {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  margin-top: 7px;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+}
+
 .commentForm  {
   margin-top: 10px;
 }
