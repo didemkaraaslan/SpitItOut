@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import * as Settings from "../../utils/Settings";
 import ThemePanel from "../SettingsPanel/Theme/ThemePanel.jsx";
+import LanguagePanel from "../SettingsPanel/Language/LanguagePanel.jsx";
 import { Container, Modal, Grid, Menu } from "semantic-ui-react";
 
 class SettingsPanel extends Component {
@@ -20,7 +21,7 @@ class SettingsPanel extends Component {
       case Settings.Notifications:
         return null;
       case Settings.LanguageAndRegion:
-        return null;
+        return <LanguagePanel currentUser={currentUser} />;
       case Settings.Theme:
         return <ThemePanel currentUser={currentUser} />;
     }
