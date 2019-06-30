@@ -23,6 +23,8 @@
     "noConfessionData": "currently has no confession posted."
   },
   "categories": {
+    "categories": "Categories",
+    "alsoFilterBy": "Also filter by",
     "Latest": "Latest",
     "Most Trending": "Most Trending",
     "Most Approved": "Most Approved",

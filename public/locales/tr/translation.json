@@ -23,6 +23,8 @@
     "noConfessionData": "için bir itiraf bulunamadı!"
   },
   "categories": {
+    "categories": "Kategoriler",
+    "alsoFilterBy": "Ayrıca filtrele",
     "Latest": "En yeni",
     "Most Trending": "En popüler",
     "Most Approved": "En çok onay almış",
