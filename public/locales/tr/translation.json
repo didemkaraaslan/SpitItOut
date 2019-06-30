@@ -18,5 +18,27 @@
     "password": "Parola",
     "login": "Giriş Yap",
     "dontHaveAnAccount": "Hesabınız yok mu? <1>Buradan yeni bir hesap yaratın.</1>"
+  },
+  "empty": {
+    "noConfessionData": "için bir itiraf bulunamadı!"
+  },
+  "categories": {
+    "Latest": "En yeni",
+    "Most Trending": "En popüler",
+    "Most Approved": "En çok onay almış",
+    "Most Judged": "En çok eleştirilmiş",
+    "Most Commented": "En çok yorumlanmış",
+    "All": "Hepsi",
+    "Regret": "Pişmanlık",
+    "First Experience": "İlk Deneyim",
+    "Sad": "Üzgün",
+    "Guilty": "Suçlu",
+    "Love": "Aşk",
+    "Happy": "Mutlu",
+    "Congratulations": "Tebrikler",
+    "Depression": "Depresyon",
+    "Cheating": "Aldatma",
+    "Mocking": "Alay",
+    "Sexual Abuse": "Cinsel İstismar"
   }
 }

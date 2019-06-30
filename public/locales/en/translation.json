@@ -18,5 +18,27 @@
     "password": "Password",
     "login": "Login",
     "dontHaveAnAccount": "Don't have an account? <1>Create your account</1> instead."
+  },
+  "empty": {
+    "noConfessionData": "currently has no confession posted."
+  },
+  "categories": {
+    "Latest": "Latest",
+    "Most Trending": "Most Trending",
+    "Most Approved": "Most Approved",
+    "Most Judged": "Most Judged",
+    "Most Commented": "Most Commented",
+    "All": "All",
+    "Regret": "Regret",
+    "First Experience": "First Experience",
+    "Sad": "Sad",
+    "Guilty": "Guilty",
+    "Love": "Love",
+    "Happy": "Happy",
+    "Congratulations": "Congratulations",
+    "Depression": "Depression",
+    "Cheating": "Cheating",
+    "Mocking": "Mocking",
+    "Sexual Abuse": "Sexual Abuse"
   }
 }
