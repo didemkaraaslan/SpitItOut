@@ -27,8 +27,6 @@ const SettingsPanel = ({ firebase, profile, open, handleCloseSettings }) => {
     }
   };
 
-  console.log(activePreference);
-
   return (
     <Container style={{ marginTop: "50px" }}>
       <Modal

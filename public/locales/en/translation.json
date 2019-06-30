@@ -22,6 +22,11 @@
   "empty": {
     "noConfessionData": "currently has no confession posted."
   },
+  "theme": {
+    "customTheme": "Custom Theme",
+    "customizeTheLookOfWorkspace": "Customize the look of your workspace. Only you will see this.",
+    "createYourCustomTheme": "Create your own gorgeous custom theme"
+  },
   "header": {
     "searchForUsersTags": "Search for Users, Tags..",
     "makeConfession": "Make a confession",

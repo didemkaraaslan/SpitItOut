@@ -22,6 +22,11 @@
   "empty": {
     "noConfessionData": "için bir itiraf bulunamadı!"
   },
+  "theme": {
+    "customTheme": "Özel Tema",
+    "customizeTheLookOfWorkspace": "Çalışma alanınızın görünümünü özelleştirin. Bunu sadece sen göreceksin.",
+    "createYourCustomTheme": "Kendi muhteşem özel temanızı oluşturun"
+  },
   "header": {
     "searchForUsersTags": "Kullanıcıları, etiketleri ara..",
     "makeConfession": "İtirafta bulun",
