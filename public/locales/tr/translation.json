@@ -22,6 +22,13 @@
   "empty": {
     "noConfessionData": "için bir itiraf bulunamadı!"
   },
+  "header": {
+    "searchForUsersTags": "Kullanıcıları, etiketleri ara..",
+    "makeConfession": "İtirafta bulun",
+    "profile": "Profilim",
+    "settings": "Ayarlar",
+    "logout": "Çıkış yap"
+  },
   "categories": {
     "categories": "Kategoriler",
     "alsoFilterBy": "Ayrıca filtrele",

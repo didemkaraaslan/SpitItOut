@@ -14,6 +14,7 @@ import {
   Dimmer,
   Loader
 } from "semantic-ui-react";
+import { withTranslation } from "react-i18next";
 
 import ConfessionModal from "../ContentPanel/ConfessionModal.jsx";
 import logo from "../../assets/img/logo.png";
@@ -43,7 +44,7 @@ class HeaderPanel extends Component {
 
   render() {
     const { openConfessionModal, activeHeaderMenuItem } = this.state;
-    const { activeTheme, currentUser, firebase, profile } = this.props;
+    const { t, activeTheme, currentUser, firebase, profile } = this.props;
 
     const { inverted, color } = isLoaded(activeTheme) && themes[activeTheme];
 
@@ -84,7 +85,7 @@ class HeaderPanel extends Component {
               <Input
                 className="icon"
                 icon="search"
-                placeholder="Search for Users, Tags.."
+                placeholder={t("header.searchForUsersTags")}
               />
             </Menu.Item>
 
@@ -93,7 +94,7 @@ class HeaderPanel extends Component {
                 name="make_confession"
                 onClick={this.handleHeaderMenuItemClick}
               >
-                <Icon name="pencil" /> Make a confession
+                <Icon name="pencil" /> {t("header.makeConfession")}
               </Menu.Item>
 
               <Menu.Item
@@ -106,19 +107,19 @@ class HeaderPanel extends Component {
                     <Dropdown.Item
                       key="user"
                       icon="user"
-                      text="Profile"
+                      text={t("header.profile")}
                       onClick={this.props.handleOpenUserProfile}
                     />
                     <Dropdown.Item
                       key="settings"
                       icon="settings"
-                      text="Settings"
+                      text={t("header.settings")}
                       onClick={this.props.handleOpenSettings}
                     />
                     <Dropdown.Item
                       key="signout"
                       icon="sign out"
-                      text="Log out"
+                      text={t("header.logout")}
                       onClick={this.handleSignOut}
                     />
                   </Dropdown.Menu>
@@ -146,6 +147,7 @@ class HeaderPanel extends Component {
 }
 
 HeaderPanel.propTypes = {
+  t: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   firebase: PropTypes.object.isRequired,
   handleOpenSettings: PropTypes.func.isRequired,
@@ -155,6 +157,7 @@ HeaderPanel.propTypes = {
 };
 
 export default compose(
+  withTranslation(),
   firebaseConnect(props => {
     const uid = props.currentUser && props.currentUser.uid;
     return [{ path: `users/${uid}/prefs/theme` }];
