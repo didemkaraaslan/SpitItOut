@@ -29,6 +29,13 @@
     "settings": "Ayarlar",
     "logout": "Çıkış yap"
   },
+  "settings": {
+    "adjustPreferences": "Tercihlerinizi belirleyin",
+    "Notifications": "Bildirimler",
+    "LanguageAndRegion": "Dil & Bölge",
+    "Theme": "Tema",
+    "Advanced": "Gelişmiş"
+  },
   "language": {
     "language": "Dil",
     "chooseLanguageYoulike": "SpitItOut ile kullanmak istediğiniz dili seçin."

@@ -29,6 +29,13 @@
     "settings": "Settings",
     "logout": "Log out"
   },
+  "settings": {
+    "adjustPreferences": "Adjust your preferences",
+    "Notifications": "Notifications",
+    "LanguageAndRegion": "Language & Region",
+    "Theme": "Theme",
+    "Advanced": "Advanced"
+  },
   "language": {
     "language": "Language",
     "chooseLanguageYoulike": "Choose the language you’d like to use with SpitItOut."

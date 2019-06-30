@@ -64,7 +64,7 @@ const LanguagePanel = ({ firebase, currentUser, language }) => {
 };
 
 LanguagePanel.propTypes = {
-  t: PropTypes.func.isRequired,
+  t: PropTypes.func,
   firebase: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   language: PropTypes.string.isRequired
