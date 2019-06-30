@@ -19,6 +19,21 @@
     "login": "Giriş Yap",
     "dontHaveAnAccount": "Hesabınız yok mu? <1>Buradan yeni bir hesap yaratın.</1>"
   },
+  "confession": {
+    "anonymous": "Anonim",
+    "reply": "Yanıtla",
+    "confessYourselfOut": "Hadi itiraf et",
+    "shareYourSecret": "Sırrınızı halkla <1>anonim olarak</1> veya <1>tam isminizi kullanarak </1> paylaşın.",
+    "whatIsYourConfession": "Neyi itiraf ediyorsunuz?",
+    "tellUsAllAboutIt": "Bize her şeyi anlat..",
+    "howYouLikeToConfess": "Nasıl itiraf etmek istersin?",
+    "anonymously": "Anonim olarak",
+    "useYourFullName": "Kullanıcı Adımla",
+    "filterByTags": "Etikete göre filtrele",
+    "whichTagsDescribeBest": "İtirafınızı en iyi hangisi tanımlar?",
+    "pickAtmostThreeTags": "En fazla 3 etiket seçebilirsiniz",
+    "publishConfession": "YAYINLA"
+  },
   "empty": {
     "noConfessionData": "için bir itiraf bulunamadı!"
   },

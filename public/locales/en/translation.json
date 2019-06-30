@@ -17,7 +17,22 @@
     "email": "Email Address",
     "password": "Password",
     "login": "Login",
-    "dontHaveAnAccount": "Don't have an account? <1>Create your account</1> instead."
+    "dontHaveAnAccount": "Don't have an account? <1>Create your account</1> instead.",
+    "howYouLikeToConfess": "How would you want to share your confession?",
+    "anonymously": "Anonymously",
+    "useYourFullName": "Use your fullname",
+    "filterByTags": "Filter by tags",
+    "whichTagsDescribeBest": "Which tags describe your confession the best?",
+    "pickAtmostThreeTags": "You can pick at most 3 tags",
+    "publishConfession": "PUBLISH"
+  },
+  "confession": {
+    "anonymous": "Anonymous",
+    "reply": "Reply",
+    "confessYourselfOut": "Confess Yourself Out",
+    "shareYourSecret": "Share your secret with the public either <1>anonymously</1> or <1>use your fullname</1>",
+    "whatIsYourConfession": "What is your confession?",
+    "tellUsAllAboutIt": "Tell us all about it.."
   },
   "empty": {
     "noConfessionData": "currently has no confession posted."
