@@ -29,6 +29,10 @@
     "settings": "Ayarlar",
     "logout": "Çıkış yap"
   },
+  "language": {
+    "language": "Dil",
+    "chooseLanguageYoulike": "SpitItOut ile kullanmak istediğiniz dili seçin."
+  },
   "categories": {
     "categories": "Kategoriler",
     "alsoFilterBy": "Ayrıca filtrele",

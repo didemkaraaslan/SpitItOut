@@ -29,6 +29,10 @@
     "settings": "Settings",
     "logout": "Log out"
   },
+  "language": {
+    "language": "Language",
+    "chooseLanguageYoulike": "Choose the language you’d like to use with SpitItOut."
+  },
   "categories": {
     "categories": "Categories",
     "alsoFilterBy": "Also filter by",

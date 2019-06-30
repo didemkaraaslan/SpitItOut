@@ -41,13 +41,12 @@ const LanguagePanel = ({ firebase, currentUser, language }) => {
 
   return (
     <Suspense fallback={<h1>laoding</h1>}>
-      {t("title")}
       <Header.Subheader style={{ marginBottom: "6px" }}>
-        <em>Choose the language you’d like to use with SpitItOut.</em>
+        <em>{t("language.chooseLanguageYoulike")}</em>
       </Header.Subheader>
       <div>
         <Header.Subheader style={{ marginBottom: "3px" }}>
-          <b>Language</b>
+          <b>{t("language.language")}</b>
         </Header.Subheader>
         <Dropdown
           placeholder="Choose language"
@@ -65,6 +64,7 @@ const LanguagePanel = ({ firebase, currentUser, language }) => {
 };
 
 LanguagePanel.propTypes = {
+  t: PropTypes.func.isRequired,
   firebase: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   language: PropTypes.string.isRequired
