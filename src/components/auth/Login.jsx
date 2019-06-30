@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withFirebase } from "react-redux-firebase";
 import { withRouter, Link } from "react-router-dom";
+import { withTranslation, Trans } from "react-i18next";
+
 import {
   Grid,
   Segment,
@@ -69,6 +71,7 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="signin">
@@ -80,14 +83,14 @@ class Login extends Component {
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as="h2" color="violet" icon>
               <Icon name="comment alternate outline" />
-              Login to SpitItOut
+              {t("login.loginToSpititout")}
             </Header>
             <Form className="signup__form">
               <Segment>
                 <Form.Field>
                   <Form.Input
                     fluid
-                    placeholder="Email Address"
+                    placeholder={t("login.email")}
                     onChange={this.handleChange}
                     icon="mail"
                     iconPosition="left"
@@ -98,7 +101,7 @@ class Login extends Component {
                 <Form.Field>
                   <Form.Input
                     fluid
-                    placeholder="Password"
+                    placeholder={t("login.password")}
                     onChange={this.handleChange}
                     icon="lock"
                     iconPosition="left"
@@ -112,7 +115,7 @@ class Login extends Component {
                   fluid
                   onClick={this.handleSubmit}
                 >
-                  Submit
+                  {t("login.login")}
                 </Button>
               </Segment>
             </Form>
@@ -121,9 +124,11 @@ class Login extends Component {
             )}
             <Message>
               <Icon name="help" />
-              Dont have an account?&nbsp;
-              <Link to="/register">Create your account</Link>
-              &nbsp;instead.
+              <Trans i18nKey="login.dontHaveAnAccount">
+                Dont have an account?&nbsp;
+                <Link to="/register">Create your account</Link>
+                &nbsp;instead.
+              </Trans>
             </Message>
           </Grid.Column>
         </Grid>
@@ -133,11 +138,13 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  t: PropTypes.func.isRequired,
   firebase: PropTypes.object,
   history: PropTypes.object
 };
 
 export default compose(
+  withTranslation(),
   withFirebase,
   withRouter,
   connect(({ firebase: { auth } }) => ({ auth }))

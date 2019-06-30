@@ -11,5 +11,12 @@
     "female": "Kadın",
     "signup": "Kaydol",
     "alreadySignedup": "Zaten üye misin? <1>Buradan giriş yap</1>"
+  },
+  "login": {
+    "loginToSpititout": "SpitItOut'a Giriş Yap",
+    "email": "Mail Adresi",
+    "password": "Parola",
+    "login": "Giriş Yap",
+    "dontHaveAnAccount": "Hesabınız yok mu? <1>Buradan yeni bir hesap yaratın.</1>"
   }
 }

@@ -11,5 +11,12 @@
     "female": "Female",
     "signup": "Signup",
     "alreadySignedup": "Already signed up? <1>Login here</1> instead."
+  },
+  "login": {
+    "loginToSpititout": "Login to SpitItOut",
+    "email": "Email Address",
+    "password": "Password",
+    "login": "Login",
+    "dontHaveAnAccount": "Don't have an account? <1>Create your account</1> instead."
   }
 }
