@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Suspense, Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -48,63 +48,67 @@ class App extends Component {
 
     if (isLoading) {
       return (
-        <Grid className="app">
-          <div className="sweetloading">
-            <HashLoader
-              sizeUnit="px"
-              size={100}
-              color={"#123abc"}
-              css={override}
-            />
-          </div>
-        </Grid>
+        <Suspense fallback="loading">
+          <Grid className="app">
+            <div className="sweetloading">
+              <HashLoader
+                sizeUnit="px"
+                size={100}
+                color={"#123abc"}
+                css={override}
+              />
+            </div>
+          </Grid>
+        </Suspense>
       );
     }
 
     return (
-      <Grid className="app">
-        <Grid.Row style={{ zIndex: 1000 }}>
-          <HeaderPanel
-            handleOpenSettings={this.handleOpenSettings}
-            handleOpenUserProfile={this.handleOpenUserProfile}
-            firebase={firebase}
-            profile={profile}
-            currentUser={currentUser}
-          />
-        </Grid.Row>
-
-        <Grid.Row>
-          <Grid.Column width={4}>
-            <SidePanel
-              filterCategory={filterCategory}
+      <Suspense fallback="loading">
+        <Grid className="app">
+          <Grid.Row style={{ zIndex: 1000 }}>
+            <HeaderPanel
+              handleOpenSettings={this.handleOpenSettings}
+              handleOpenUserProfile={this.handleOpenUserProfile}
+              firebase={firebase}
+              profile={profile}
               currentUser={currentUser}
             />
-          </Grid.Column>
-          <Grid.Column width={8}>
-            <SettingsPanel
-              firebase={firebase}
-              open={openSettingsModal}
-              profile={profile}
-              handleCloseSettings={this.handleCloseSettings}
-            />
-            {openUserProfile ? (
-              <ProfilePanel
-                currentUser={currentUser}
-                confessions={confessions}
-                firebase={firebase}
-              />
-            ) : (
-              <ContentPanel
-                firebase={firebase}
-                profile={profile}
-                confessions={confessions}
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column width={4}>
+              <SidePanel
                 filterCategory={filterCategory}
+                currentUser={currentUser}
               />
-            )}
-          </Grid.Column>
-          <Grid.Column width={4} />
-        </Grid.Row>
-      </Grid>
+            </Grid.Column>
+            <Grid.Column width={8}>
+              <SettingsPanel
+                firebase={firebase}
+                open={openSettingsModal}
+                profile={profile}
+                handleCloseSettings={this.handleCloseSettings}
+              />
+              {openUserProfile ? (
+                <ProfilePanel
+                  currentUser={currentUser}
+                  confessions={confessions}
+                  firebase={firebase}
+                />
+              ) : (
+                <ContentPanel
+                  firebase={firebase}
+                  profile={profile}
+                  confessions={confessions}
+                  filterCategory={filterCategory}
+                />
+              )}
+            </Grid.Column>
+            <Grid.Column width={4} />
+          </Grid.Row>
+        </Grid>
+      </Suspense>
     );
   }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { Provider, connect } from "react-redux";
@@ -20,6 +20,7 @@ import Login from "./components/auth/Login.jsx";
 import Signup from "./components/auth/Signup.jsx";
 import NoMatch from "./components/NoMatch.jsx";
 
+import "./i18n";
 // react-redux-firebase options
 const rrfConfig = {
   userProfile: "users",
@@ -38,11 +39,11 @@ class Root extends React.Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // User signed in
-        console.log("user is signed in")
+        console.log("user is signed in");
         // set current user in redux store
         this.props.setUser(user);
       } else {
-        //sadasd
+        // sadasd
         this.props.history.push("/signin");
       }
     });
@@ -74,9 +75,11 @@ Root.propTypes = {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <RootWithAuth />
-    </Router>
+    <Suspense fallback="loading">
+      <Router>
+        <RootWithAuth />
+      </Router>
+    </Suspense>
   </Provider>,
   document.getElementById("root")
 );

@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Suspense, Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withFirebase } from "react-redux-firebase";
 import { withRouter, Link } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 import {
   Grid,
   Segment,
@@ -11,11 +12,9 @@ import {
   Header,
   Button,
   Icon,
-  Message,
-  Radio
+  Message
 } from "semantic-ui-react";
 import "../../app.css";
-const gravatar = require("gravatar");
 
 class Signup extends Component {
   state = {
@@ -37,7 +36,7 @@ class Signup extends Component {
 
   handleGenderChange = (e, { value }) => this.setState({ gender: value });
 
-  handleSubmit = event => {
+  handleSubmit = (detectedLanguage, event) => {
     event.preventDefault();
     const { username, email, gender, password } = this.state;
     const { firebase } = this.props;
@@ -58,7 +57,7 @@ class Signup extends Component {
               photoURL: `https://ui-avatars.com/api/?name=${first}+${last}&background=${avatarBackground}&color=fff`
             })
             .then(() => {
-              this.saveUserIntoDatabase(createdUser)
+              this.saveUserIntoDatabase(createdUser, detectedLanguage)
                 .then(() => {
                   this.setState({ loading: false, errors: [] });
                   this.props.history.push("/signin");
@@ -150,7 +149,7 @@ class Signup extends Component {
       <p key={key}>{error.errorMessage}</p>
     ));
 
-  saveUserIntoDatabase = createdUser => {
+  saveUserIntoDatabase = (createdUser, detectedLanguage) => {
     return this.state.usersRef.child(createdUser.user.uid).set({
       username: createdUser.user.displayName,
       email: createdUser.user.email,
@@ -159,6 +158,9 @@ class Signup extends Component {
       prefs: {
         theme: {
           activeTheme: "light"
+        },
+        language: {
+          language: detectedLanguage
         }
       }
     });
@@ -166,106 +168,112 @@ class Signup extends Component {
 
   render() {
     const { loading, gender, errors } = this.state;
+    const { t, i18n } = this.props;
+    const detectedLanguage = i18n.language;
 
     return (
-      <div className="signup">
-        <Grid
-          textAlign="center"
-          verticalAlign="middle"
-          className="form__register__login"
-        >
-          <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as="h2" color="violet" icon>
-              <Icon name="comment alternate outline" />
-              Register for SpitItOut
-            </Header>
-            <Form className="signup__form">
-              <Segment>
-                <Form.Field>
-                  <Form.Input
-                    fluid
-                    placeholder="Username"
-                    onChange={this.handleChange}
-                    icon="users"
-                    iconPosition="left"
-                    name="username"
-                    type="text"
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <Form.Input
-                    fluid
-                    placeholder="Email Address"
-                    onChange={this.handleChange}
-                    icon="mail"
-                    iconPosition="left"
-                    name="email"
-                    type="email"
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <Form.Input
-                    fluid
-                    placeholder="Password"
-                    onChange={this.handleChange}
-                    icon="lock"
-                    iconPosition="left"
-                    name="password"
-                    type="password"
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <Form.Input
-                    fluid
-                    placeholder="Password Confirmation"
-                    onChange={this.handleChange}
-                    icon="repeat"
-                    iconPosition="left"
-                    name="passwordConfirmation"
-                    type="password"
-                  />
-                </Form.Field>
+      <Suspense fallback="loading">
+        <div className="signup">
+          <Grid
+            textAlign="center"
+            verticalAlign="middle"
+            className="form__register__login"
+          >
+            <Grid.Column style={{ maxWidth: 450 }}>
+              <Header as="h2" color="violet" icon>
+                <Icon name="comment alternate outline" />
+                Register for SpitItOut
+              </Header>
+              <Form className="signup__form">
                 <Segment>
-                  <Form.Group inline>
-                    <label>Gender</label>
-                    <Form.Radio
-                      label="Male"
-                      name="radioGroup"
-                      value="male"
-                      checked={gender === "male"}
-                      onChange={this.handleGenderChange}
+                  <Form.Field>
+                    <Form.Input
+                      fluid
+                      placeholder="Username"
+                      onChange={this.handleChange}
+                      icon="users"
+                      iconPosition="left"
+                      name="username"
+                      type="text"
                     />
-                    <Form.Radio
-                      label="Female"
-                      name="radioGroup"
-                      value="female"
-                      checked={gender === "female"}
-                      onChange={this.handleGenderChange}
+                  </Form.Field>
+                  <Form.Field>
+                    <Form.Input
+                      fluid
+                      placeholder="Email Address"
+                      onChange={this.handleChange}
+                      icon="mail"
+                      iconPosition="left"
+                      name="email"
+                      type="email"
                     />
-                  </Form.Group>
+                  </Form.Field>
+                  <Form.Field>
+                    <Form.Input
+                      fluid
+                      placeholder="Password"
+                      onChange={this.handleChange}
+                      icon="lock"
+                      iconPosition="left"
+                      name="password"
+                      type="password"
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <Form.Input
+                      fluid
+                      placeholder="Password Confirmation"
+                      onChange={this.handleChange}
+                      icon="repeat"
+                      iconPosition="left"
+                      name="passwordConfirmation"
+                      type="password"
+                    />
+                  </Form.Field>
+                  <Segment>
+                    <Form.Group inline>
+                      <label>Gender</label>
+                      <Form.Radio
+                        label="Male"
+                        name="radioGroup"
+                        value="male"
+                        checked={gender === "male"}
+                        onChange={this.handleGenderChange}
+                      />
+                      <Form.Radio
+                        label="Female"
+                        name="radioGroup"
+                        value="female"
+                        checked={gender === "female"}
+                        onChange={this.handleGenderChange}
+                      />
+                    </Form.Group>
+                  </Segment>
+                  <Button
+                    color="green"
+                    size="large"
+                    loading={loading}
+                    fluid
+                    onClick={event => {
+                      this.handleSubmit(detectedLanguage, event);
+                    }}
+                  >
+                    Submit
+                  </Button>
                 </Segment>
-                <Button
-                  color="green"
-                  size="large"
-                  loading={loading}
-                  fluid
-                  onClick={this.handleSubmit}
-                >
-                  Submit
-                </Button>
-              </Segment>
-            </Form>
-            {errors.length > 0 && (
-              <Message error>{this.displayErrors()}</Message>
-            )}
-            <Message>
-              <Icon name="help" />
-              Already signed up?&nbsp;<Link to="/signin">Login here</Link>
-              &nbsp;instead.
-            </Message>
-          </Grid.Column>
-        </Grid>
-      </div>
+              </Form>
+              {errors.length > 0 && (
+                <Message error>{this.displayErrors()}</Message>
+              )}
+              <Message>
+                <Icon name="help" />
+                Already signed up?&nbsp;<Link to="/signin">Login here</Link>
+                &nbsp;instead.
+              </Message>
+            </Grid.Column>
+          </Grid>
+        </div>
+      </Suspense>
     );
   }
 }
@@ -276,6 +284,7 @@ Signup.propTypes = {
 };
 
 export default compose(
+  withTranslation(),
   withFirebase,
   withRouter,
   connect(({ firebase: { auth } }) => ({ auth }))
