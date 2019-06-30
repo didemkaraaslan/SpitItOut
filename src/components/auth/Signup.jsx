@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withFirebase } from "react-redux-firebase";
 import { withRouter, Link } from "react-router-dom";
-import { withTranslation } from "react-i18next";
+import { withTranslation, Trans } from "react-i18next";
 import {
   Grid,
   Segment,
@@ -182,14 +182,14 @@ class Signup extends Component {
             <Grid.Column style={{ maxWidth: 450 }}>
               <Header as="h2" color="violet" icon>
                 <Icon name="comment alternate outline" />
-                Register for SpitItOut
+                {t("register.registerForSpititout")}
               </Header>
               <Form className="signup__form">
                 <Segment>
                   <Form.Field>
                     <Form.Input
                       fluid
-                      placeholder="Username"
+                      placeholder={t("register.username")}
                       onChange={this.handleChange}
                       icon="users"
                       iconPosition="left"
@@ -200,7 +200,7 @@ class Signup extends Component {
                   <Form.Field>
                     <Form.Input
                       fluid
-                      placeholder="Email Address"
+                      placeholder={t("register.email")}
                       onChange={this.handleChange}
                       icon="mail"
                       iconPosition="left"
@@ -211,7 +211,7 @@ class Signup extends Component {
                   <Form.Field>
                     <Form.Input
                       fluid
-                      placeholder="Password"
+                      placeholder={t("register.password")}
                       onChange={this.handleChange}
                       icon="lock"
                       iconPosition="left"
@@ -222,7 +222,7 @@ class Signup extends Component {
                   <Form.Field>
                     <Form.Input
                       fluid
-                      placeholder="Password Confirmation"
+                      placeholder={t("register.passwordConfirmation")}
                       onChange={this.handleChange}
                       icon="repeat"
                       iconPosition="left"
@@ -232,16 +232,16 @@ class Signup extends Component {
                   </Form.Field>
                   <Segment>
                     <Form.Group inline>
-                      <label>Gender</label>
+                      <label>{t("register.gender")}</label>
                       <Form.Radio
-                        label="Male"
+                        label={t("register.male")}
                         name="radioGroup"
                         value="male"
                         checked={gender === "male"}
                         onChange={this.handleGenderChange}
                       />
                       <Form.Radio
-                        label="Female"
+                        label={t("register.female")}
                         name="radioGroup"
                         value="female"
                         checked={gender === "female"}
@@ -258,7 +258,7 @@ class Signup extends Component {
                       this.handleSubmit(detectedLanguage, event);
                     }}
                   >
-                    Submit
+                    {t("register.signup")}
                   </Button>
                 </Segment>
               </Form>
@@ -267,8 +267,10 @@ class Signup extends Component {
               )}
               <Message>
                 <Icon name="help" />
-                Already signed up?&nbsp;<Link to="/signin">Login here</Link>
-                &nbsp;instead.
+                <Trans i18nKey="register.alreadySignedup">
+                  Already signed up? <Link to="/signin">Login here</Link>{" "}
+                  instead.
+                </Trans>
               </Message>
             </Grid.Column>
           </Grid>

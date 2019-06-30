@@ -1,3 +1,15 @@
 {
-  "title": "Baslik"
+  "title": "Baslik",
+  "register": {
+    "registerForSpititout": "SpitItOut'a kaydol",
+    "username": "Kullanıcı adı",
+    "email": "Mail adresi",
+    "password": "Parola",
+    "passwordConfirmation": "Parola (Tekrar)",
+    "gender": "Cinsiyet",
+    "male": "Erkek",
+    "female": "Kadın",
+    "signup": "Kaydol",
+    "alreadySignedup": "Zaten üye misin? <1>Buradan giriş yap</1>"
+  }
 }

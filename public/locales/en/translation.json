@@ -1,3 +1,15 @@
 {
-  "title": "Title englishhhhhh"
+  "title": "Title englishhhhhh",
+  "register": {
+    "registerForSpititout": "Register for SpitItOut",
+    "username": "Username",
+    "email": "Email address",
+    "password": "Password",
+    "passwordConfirmation": "Password (Again)",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "signup": "Signup",
+    "alreadySignedup": "Already signed up? <1>Login here</1> instead."
+  }
 }
