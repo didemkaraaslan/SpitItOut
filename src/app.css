@@ -130,6 +130,15 @@ img {
 }
 
 /* User Profile */
+.backBtn {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+}
+
 .profile__top__area {
   margin-bottom: 20px;
 }
@@ -144,7 +153,7 @@ img {
 
 .profile__user__name {
   position: absolute;
-  top: 27px;
+  top: 45px;
   left: 200px;
   font-size: 17px;
   font-weight: 600;
@@ -152,7 +161,7 @@ img {
 
 .profile__user__biography {
   position: absolute;
-  top: 55px;
+  top: 85px;
   left: 200px;
   font-size: 14px;
   color: #ccc;

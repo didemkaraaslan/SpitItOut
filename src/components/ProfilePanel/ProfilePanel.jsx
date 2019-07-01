@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Segment, Grid, Card, Icon, Image, Tab } from "semantic-ui-react";
+import { Segment, Icon, Image, Tab } from "semantic-ui-react";
 import MyConfessions from "./MyConfessions.jsx";
 import Favorites from "./Favorites.jsx";
 import LikedConfessions from "./LikedConfessions.jsx";
-
-import faker from "faker";
+import { withTranslation } from "react-i18next";
 
 class ProfilePanel extends Component {
   handleLike = (confession, confessionId) => {
@@ -21,23 +20,25 @@ class ProfilePanel extends Component {
 
       if (!userAlreadyLiked) {
         firebase
-          .update(`confessions/${confessionId}`, {
-            ...confession,
-            feelings: {
-              ...confession.feelings,
-              [currentUserUid]: 1
-            },
-            numberOfLikes: confession.numberOfLikes + 1,
-            numberOfDislikes:
-              userReaction === 0
-                ? confession.numberOfDislikes
-                : confession.numberOfDislikes - 1
-          })
-          .then(() => {
-          console.log("like")
-          })
-          .catch(error => {
-          console.error(error)
+          .database()
+          .ref(`confessions/${confessionId}`)
+          .transaction(function(updateConfession) {
+            if (updateConfession) {
+              if (
+                updateConfession.feelings !== null &&
+                updateConfession.numberOfLikes !== null &&
+                updateConfession.numberOfDislikes !== null
+              ) {
+                updateConfession.feelings[currentUserUid] = 1;
+                updateConfession.numberOfLikes =
+                  updateConfession.numberOfLikes + 1;
+                updateConfession.numberOfDislikes =
+                  userReaction === 0
+                    ? updateConfession.numberOfDislikes
+                    : updateConfession.numberOfDislikes - 1;
+              }
+            }
+            return updateConfession;
           });
       }
     }
@@ -56,23 +57,25 @@ class ProfilePanel extends Component {
 
       if (!userAlreadyDisliked) {
         firebase
-          .update(`confessions/${confessionId}`, {
-            ...confession,
-            feelings: {
-              ...confession.feelings,
-              [currentUserUid]: -1
-            },
-            numberOfDislikes: confession.numberOfDislikes + 1,
-            numberOfLikes:
-              userReaction === 0
-                ? confession.numberOfLikes
-                : confession.numberOfLikes - 1
-          })
-          .then(() => {
-          console.log("dislike")
-          })
-          .catch(error => {
-          console.error(error)
+          .database()
+          .ref(`confessions/${confessionId}`)
+          .transaction(function(updateConfession) {
+            if (updateConfession) {
+              if (
+                updateConfession.feelings !== null &&
+                updateConfession.numberOfLikes !== null &&
+                updateConfession.numberOfDislikes !== null
+              ) {
+                updateConfession.feelings[currentUserUid] = -1;
+                updateConfession.numberOfDislikes =
+                  updateConfession.numberOfDislikes + 1;
+                updateConfession.numberOfLikes =
+                  userReaction === 0
+                    ? updateConfession.numberOfLikes
+                    : updateConfession.numberOfLikes - 1;
+              }
+            }
+            return updateConfession;
           });
       }
     }
@@ -97,16 +100,16 @@ class ProfilePanel extends Component {
           }
         })
         .then(() => {
-        console.log("added to favorites")
+          console.log("added to favorites");
         })
         .catch(error => {
-        console.error(error)
+          console.error(error);
         });
     }
   };
 
   render() {
-    const { currentUser, confessions } = this.props;
+    const { t, currentUser, confessions } = this.props;
     const orderedConfessions = confessions.sort(
       (a, b) => b.value.timestamp - a.value.timestamp
     );
@@ -114,8 +117,14 @@ class ProfilePanel extends Component {
     return (
       <Segment style={{ marginTop: "50px", position: "relative" }}>
         <div className="profile__top__area">
+          <button
+            className="backBtn"
+            onClick={this.props.handleCloseUserProfile}
+          >
+            <Icon link name="left arrow" />
+          </button>
           <Image
-            src={faker.internet.avatar()}
+            src={currentUser && currentUser.photoURL}
             circular
             bordered
             className="profile__avatar"
@@ -130,7 +139,7 @@ class ProfilePanel extends Component {
           menu={{ secondary: true, pointing: true }}
           panes={[
             {
-              menuItem: "My Confessions",
+              menuItem: t("profile.myConfessions"),
               render: () => (
                 <Tab.Pane attached={false}>
                   <MyConfessions
@@ -144,7 +153,7 @@ class ProfilePanel extends Component {
               )
             },
             {
-              menuItem: "Liked Confessions",
+              menuItem: t("profile.likedConfessions"),
               render: () => (
                 <Tab.Pane attached={false}>
                   <LikedConfessions
@@ -158,7 +167,7 @@ class ProfilePanel extends Component {
               )
             },
             {
-              menuItem: "Favorites",
+              menuItem: t("profile.favoritedConfessions"),
               render: () => (
                 <Tab.Pane attached={false}>
                   <Favorites
@@ -179,9 +188,11 @@ class ProfilePanel extends Component {
 }
 
 ProfilePanel.propTypes = {
+  t: PropTypes.func,
   firebase: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
-  confessions: PropTypes.array.isRequired
+  confessions: PropTypes.array.isRequired,
+  handleCloseUserProfile: PropTypes.func
 };
 
-export default ProfilePanel;
+export default withTranslation()(ProfilePanel);

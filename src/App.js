@@ -65,49 +65,72 @@ class App extends Component {
 
     return (
       <Suspense fallback="loading">
-        <Grid>
-          <Grid.Row style={{ zIndex: 400, maxHeight: "100px" }}>
-            <HeaderPanel
-              handleOpenSettings={this.handleOpenSettings}
-              handleOpenUserProfile={this.handleOpenUserProfile}
-              firebase={firebase}
-              profile={profile}
-              currentUser={currentUser}
-            />
-          </Grid.Row>
-
-          <Grid.Row>
-            <Grid.Column width={4}>
-              <SidePanel
-                filterCategory={filterCategory}
+        {openUserProfile ? (
+          <Grid>
+            <Grid.Row style={{ zIndex: 400, maxHeight: "100px" }}>
+              <HeaderPanel
+                handleOpenSettings={this.handleOpenSettings}
+                handleOpenUserProfile={this.handleOpenUserProfile}
+                firebase={firebase}
+                profile={profile}
                 currentUser={currentUser}
               />
-            </Grid.Column>
-            <Grid.Column width={8}>
-              <SettingsPanel
-                firebase={firebase}
-                open={openSettingsModal}
-                profile={profile}
-                handleCloseSettings={this.handleCloseSettings}
-              />
-              {openUserProfile ? (
+            </Grid.Row>
+
+            <Grid.Row centered>
+              <Grid.Column width={10}>
+                <SettingsPanel
+                  firebase={firebase}
+                  open={openSettingsModal}
+                  profile={profile}
+                  handleCloseSettings={this.handleCloseSettings}
+                />
                 <ProfilePanel
                   currentUser={currentUser}
                   confessions={confessions}
+                  handleCloseUserProfile={this.handleCloseUserProfile}
                   firebase={firebase}
                 />
-              ) : (
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        ) : (
+          <Grid>
+            <Grid.Row style={{ zIndex: 400, maxHeight: "100px" }}>
+              <HeaderPanel
+                handleOpenSettings={this.handleOpenSettings}
+                handleOpenUserProfile={this.handleOpenUserProfile}
+                firebase={firebase}
+                profile={profile}
+                currentUser={currentUser}
+              />
+            </Grid.Row>
+
+            <Grid.Row>
+              <Grid.Column width={4}>
+                <SidePanel
+                  filterCategory={filterCategory}
+                  currentUser={currentUser}
+                />
+              </Grid.Column>
+              <Grid.Column width={8}>
+                <SettingsPanel
+                  firebase={firebase}
+                  open={openSettingsModal}
+                  profile={profile}
+                  handleCloseSettings={this.handleCloseSettings}
+                />
                 <ContentPanel
                   firebase={firebase}
                   profile={profile}
                   confessions={confessions}
                   filterCategory={filterCategory}
                 />
-              )}
-            </Grid.Column>
-            <Grid.Column width={4} />
-          </Grid.Row>
-        </Grid>
+              </Grid.Column>
+              <Grid.Column width={4} />
+            </Grid.Row>
+          </Grid>
+        )}
       </Suspense>
     );
   }
