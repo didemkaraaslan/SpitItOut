@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { firebaseConnect, getVal } from "react-redux-firebase";
 import { Modal, Button, Form, Message, Dropdown } from "semantic-ui-react";
+import { withTranslation, Trans } from "react-i18next";
 
 import { tagOptions } from "../../utils/Tags";
 import { confessionSchema } from "../../utils/schema";
@@ -12,7 +13,7 @@ const Joi = require("@hapi/joi");
 class ConfessionModal extends Component {
   state = {
     loading: false,
-    shareAs: "user",
+    shareAs: "",
     content: "",
     tags: [],
     selectedTagsCount: 0,
@@ -22,6 +23,12 @@ class ConfessionModal extends Component {
   handleChange = (e, { value }) => {
     this.setState({
       [e.target.id]: value
+    });
+  };
+
+  handleShareOptionChange = (e, { value }) => {
+    this.setState({
+      shareAs: value
     });
   };
 
@@ -99,11 +106,11 @@ class ConfessionModal extends Component {
 
   render() {
     const { shareAs, loading, errors } = this.state;
-    const { open } = this.props;
+    const { t, open } = this.props;
 
     return (
       <Modal open={open} onClose={this.props.handleCloseConfessionModal}>
-        <Modal.Header>Confess Yourself Out</Modal.Header>
+        <Modal.Header>{t("confession.confessYourselfOut")}</Modal.Header>
         <Modal.Description>
           <p
             style={{
@@ -112,40 +119,40 @@ class ConfessionModal extends Component {
               color: "#928D8E"
             }}
           >
-            Share your secret with the public either{" "}
-            <strong>
-              <ins>anonymously</ins>
-            </strong>{" "}
-            or{" "}
-            <strong>
-              <ins>use your fullname.</ins>
-            </strong>
+            <Trans i18nKey="confession.shareYourSecret">
+              Share your secret with the public either
+              <strong>
+                <ins>anonymously</ins>
+              </strong>
+              or
+              <strong>
+                <ins>use your fullname.</ins>
+              </strong>
+            </Trans>
           </p>
         </Modal.Description>
         <Modal.Content scrolling>
           <Form>
             <Form.TextArea
               id="content"
-              label="What is your confession?"
-              placeholder="Tell us all about it..."
+              label={t("confession.whatIsYourConfession")}
+              placeholder={t("confession.tellUsAllAboutIt")}
               onChange={this.handleChange}
               value={this.state.content}
             />
             <Form.Group grouped>
-              <label>How would you want to share your confession?</label>
+              <label>{t("confession.howYouLikeToConfess")}</label>
               <Form.Radio
-                id="shareAs"
-                label="Anonymously"
+                label={t("confession.anonymously")}
                 value="anonymous"
                 checked={shareAs === "anonymous"}
-                onChange={this.handleChange}
+                onChange={this.handleShareOptionChange}
               />
               <Form.Radio
-                id="shareAs"
-                label="Use your fullname"
+                label={t("confession.useYourFullName")}
                 value="user"
                 checked={shareAs === "user"}
-                onChange={this.handleChange}
+                onChange={this.handleShareOptionChange}
               />
             </Form.Group>
             <Dropdown
@@ -153,12 +160,17 @@ class ConfessionModal extends Component {
               selection
               clearable
               multiple
-              header={<Dropdown.Header content="Filter by tags" icon="tags" />}
+              header={
+                <Dropdown.Header
+                  content={t("confession.filterByTags")}
+                  icon="tags"
+                />
+              }
               value={this.state.tags}
-              label="Which tags describe your confession the best?"
+              label={t("confession.whichTagsDescribeBest")}
               labeled
               options={tagOptions}
-              placeholder="Pick at most 3 tags"
+              placeholder={t("confession.pickAtmostThreeTags")}
               onChange={this.handleSelect}
             />
           </Form>
@@ -166,7 +178,7 @@ class ConfessionModal extends Component {
         </Modal.Content>
         <Modal.Actions>
           <Button primary loading={loading} onClick={this.createConfession}>
-            SHARE
+            {t("confession.publishConfession")}
           </Button>
         </Modal.Actions>
       </Modal>
@@ -175,6 +187,7 @@ class ConfessionModal extends Component {
 }
 
 ConfessionModal.propTypes = {
+  t: PropTypes.func,
   open: PropTypes.bool,
   firebase: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
@@ -184,6 +197,7 @@ ConfessionModal.propTypes = {
 };
 
 export default compose(
+  withTranslation(),
   firebaseConnect(props => {
     const uid = props.currentUser && props.currentUser.uid;
     return [{ path: `users/${uid}/gender` }];

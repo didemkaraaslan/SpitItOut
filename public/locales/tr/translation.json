@@ -1,3 +1,121 @@
 {
-  "title": "Baslik"
+  "title": "Baslik",
+  "register": {
+    "registerForSpititout": "SpitItOut'a kaydol",
+    "username": "Kullanıcı adı",
+    "email": "Mail adresi",
+    "password": "Parola",
+    "passwordConfirmation": "Parola (Tekrar)",
+    "gender": "Cinsiyet",
+    "male": "Erkek",
+    "female": "Kadın",
+    "signup": "Kaydol",
+    "alreadySignedup": "Zaten üye misin? <1>Buradan giriş yap</1>"
+  },
+  "login": {
+    "loginToSpititout": "SpitItOut'a Giriş Yap",
+    "email": "Mail Adresi",
+    "password": "Parola",
+    "login": "Giriş Yap",
+    "dontHaveAnAccount": "Hesabınız yok mu? <1>Buradan yeni bir hesap yaratın.</1>"
+  },
+  "commentPanel": {
+    "comments": "Yorumlar",
+    "reply": "Yanıtla",
+    "viewReplies": "Cevapları görüntüle",
+    "hideReplies": "Cevapları gizle",
+    "addComment": "Yorum yaz...",
+    "send": "Gönder"
+  },
+  "confession": {
+    "anonymous": "Anonim",
+    "reply": "Yanıtla",
+    "confessYourselfOut": "Hadi itiraf et",
+    "shareYourSecret": "Sırrınızı halkla <1>anonim olarak</1> veya <1>tam isminizi kullanarak </1> paylaşın.",
+    "whatIsYourConfession": "Neyi itiraf ediyorsunuz?",
+    "tellUsAllAboutIt": "Bize her şeyi anlat..",
+    "howYouLikeToConfess": "Nasıl itiraf etmek istersin?",
+    "anonymously": "Anonim olarak",
+    "useYourFullName": "Kullanıcı Adımla",
+    "filterByTags": "Etikete göre filtrele",
+    "whichTagsDescribeBest": "İtirafınızı en iyi hangisi tanımlar?",
+    "pickAtmostThreeTags": "En fazla 3 etiket seçebilirsiniz",
+    "publishConfession": "YAYINLA"
+  },
+  "empty": {
+    "noConfessionData": "için bir itiraf bulunamadı!"
+  },
+  "theme": {
+    "customTheme": "Özel Tema",
+    "customizeTheLookOfWorkspace": "Çalışma alanınızın görünümünü özelleştirin. Bunu sadece sen göreceksin.",
+    "createYourCustomTheme": "Kendi muhteşem özel temanızı oluşturun"
+  },
+  "predefinedThemes": {
+    "predefinedThemes": "Hazır temalar",
+    "pickOneOfThePredefinedThemes": "Sizin için hazırladığımız önceden tanımlanmış temalardan birini seçin veya kendi özel temanızı oluşturun",
+    "light": "Açık",
+    "lightGrey": "Açık Gri",
+    "lightTeal": "Açık Teal",
+    "lightBlue": "Açık Mavi",
+    "lightOrange": "Açık Turuncu",
+    "lightRed": "Açık Kırmızı",
+    "lightYellow": "Açık Sarı",
+    "lightOlive": "Açık Zeytin Yeşili",
+    "lightGreen": "Açık Yeşil",
+    "lightPurple": "Açık Mor",
+    "lightPink": "Açık Pembe",
+    "lightBrown": "Açık Kahverengi",
+    "dark": "Koyu",
+    "darkViolet": "Koyu Menekşe",
+    "darkTeal": "Koyu Teal",
+    "darkBlue": "Koyu Mavi",
+    "darkOrange": "Koyu Turuncu",
+    "darkRed": "Koyu Kırmızı",
+    "darkYellow": "Koyu Sarı",
+    "darkOlive": "Koyu Zeytin Yeşili",
+    "darkGreen": "Koyu Yeşil",
+    "darkPurple": "Koyu Mor",
+    "darkPink": "Koyu Pembe",
+    "darkBrown": "Koyu Kahverengi",
+    "darkGrey": "Koyu Gri"
+  },
+  "header": {
+    "searchForUsersTags": "Kullanıcıları, etiketleri ara..",
+    "makeConfession": "İtirafta bulun",
+    "profile": "Profilim",
+    "settings": "Ayarlar",
+    "logout": "Çıkış yap"
+  },
+  "settings": {
+    "adjustPreferences": "Tercihlerinizi belirleyin",
+    "Notifications": "Bildirimler",
+    "LanguageAndRegion": "Dil & Bölge",
+    "Theme": "Tema",
+    "Advanced": "Gelişmiş"
+  },
+  "language": {
+    "language": "Dil",
+    "chooseLanguageYoulike": "SpitItOut ile kullanmak istediğiniz dili seçin."
+  },
+  "categories": {
+    "categories": "Kategoriler",
+    "alsoFilterBy": "Ayrıca filtrele",
+    "Latest": "En yeni",
+    "Most Trending": "En popüler",
+    "Most Approved": "En çok onay almış",
+    "Most Judged": "En çok eleştirilmiş",
+    "Most Commented": "En çok yorumlanmış",
+    "All": "Hepsi",
+    "Regret": "Pişmanlık",
+    "First Experience": "İlk Deneyim",
+    "Sad": "Üzgün",
+    "Guilty": "Suçlu",
+    "Love": "Aşk",
+    "Happy": "Mutlu",
+    "Congratulations": "Tebrikler",
+    "Depression": "Depresyon",
+    "Cheating": "Aldatma",
+    "Mocking": "Alay",
+    "Sexual Abuse": "Cinsel İstismar"
+  }
 }

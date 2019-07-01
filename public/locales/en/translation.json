@@ -1,3 +1,121 @@
 {
-  "title": "Title englishhhhhh"
+  "title": "Title englishhhhhh",
+  "register": {
+    "registerForSpititout": "Register for SpitItOut",
+    "username": "Username",
+    "email": "Email address",
+    "password": "Password",
+    "passwordConfirmation": "Password (Again)",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "signup": "Signup",
+    "alreadySignedup": "Already signed up? <1>Login here</1> instead."
+  },
+  "login": {
+    "loginToSpititout": "Login to SpitItOut",
+    "email": "Email Address",
+    "password": "Password",
+    "login": "Login",
+    "dontHaveAnAccount": "Don't have an account? <1>Create your account</1> instead."
+  },
+  "commentPanel": {
+    "comments": "Comments",
+    "reply": "Reply",
+    "viewReplies": "View Replies",
+    "hideReplies": "Hide Replies",
+    "addComment": "Add a comment..",
+    "send": "Send"
+  },
+  "confession": {
+    "anonymous": "Anonymous",
+    "reply": "Reply",
+    "confessYourselfOut": "Confess Yourself Out",
+    "shareYourSecret": "Share your secret with the public either <1>anonymously</1> or <1>use your fullname</1>",
+    "whatIsYourConfession": "What is your confession?",
+    "tellUsAllAboutIt": "Tell us all about it..",
+    "howYouLikeToConfess": "How would you want to share your confession?",
+    "anonymously": "Anonymously",
+    "useYourFullName": "Use your fullname",
+    "filterByTags": "Filter by tags",
+    "whichTagsDescribeBest": "Which tags describe your confession the best?",
+    "pickAtmostThreeTags": "You can pick at most 3 tags",
+    "publishConfession": "PUBLISH"
+  },
+  "empty": {
+    "noConfessionData": "currently has no confession posted."
+  },
+  "theme": {
+    "customTheme": "Custom Theme",
+    "customizeTheLookOfWorkspace": "Customize the look of your workspace. Only you will see this.",
+    "createYourCustomTheme": "Create your own gorgeous custom theme"
+  },
+  "predefinedThemes": {
+    "predefinedThemes": "Pre-defined themes",
+    "pickOneOfThePredefinedThemes": "Pick one of the pre-defined themes we prepared for you or create your own custom theme",
+    "light": "Light",
+    "lightGrey": "Light Grey",
+    "lightTeal": "Light Teal",
+    "lightBlue": "Light Blue",
+    "lightOrange": "Light Orange",
+    "lightRed": "Light Red",
+    "lightYellow": "Light Yellow",
+    "lightOlive": "Light Olive",
+    "lightGreen": "Light Green",
+    "lightPurple": "Light Purple",
+    "lightPink": "Light Pink",
+    "lightBrown": "Light Brown",
+    "dark": "dark",
+    "darkViolet": "Dark Violet",
+    "darkTeal": "Dark Teal",
+    "darkBlue": "Dark Blue",
+    "darkOrange": "Dark Orange",
+    "darkRed": "Dark Red",
+    "darkYellow": "Dark Yellow",
+    "darkOlive": "Dark Olive",
+    "darkGreen": "Dark Green",
+    "darkPurple": "Dark Purple",
+    "darkPink": "Dark Pink",
+    "darkBrown": "Dark Brown",
+    "darkGrey": "Dark Grey"
+  },
+  "header": {
+    "searchForUsersTags": "Search for Users, Tags..",
+    "makeConfession": "Make a confession",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Log out"
+  },
+  "settings": {
+    "adjustPreferences": "Adjust your preferences",
+    "Notifications": "Notifications",
+    "LanguageAndRegion": "Language & Region",
+    "Theme": "Theme",
+    "Advanced": "Advanced"
+  },
+  "language": {
+    "language": "Language",
+    "chooseLanguageYoulike": "Choose the language you’d like to use with SpitItOut."
+  },
+  "categories": {
+    "categories": "Categories",
+    "alsoFilterBy": "Also filter by",
+    "Latest": "Latest",
+    "Most Trending": "Most Trending",
+    "Most Approved": "Most Approved",
+    "Most Judged": "Most Judged",
+    "Most Commented": "Most Commented",
+    "All": "All",
+    "Regret": "Regret",
+    "First Experience": "First Experience",
+    "Sad": "Sad",
+    "Guilty": "Guilty",
+    "Love": "Love",
+    "Happy": "Happy",
+    "Congratulations": "Congratulations",
+    "Depression": "Depression",
+    "Cheating": "Cheating",
+    "Mocking": "Mocking",
+    "Sexual Abuse": "Sexual Abuse"
+  }
 }

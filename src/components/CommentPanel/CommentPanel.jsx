@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { firebaseConnect, getVal } from "react-redux-firebase";
 import { Header, Form, Button, Comment } from "semantic-ui-react";
+import { useTranslation } from "react-i18next";
 
 const CommentPanel = ({
   currentUser,
@@ -13,6 +14,7 @@ const CommentPanel = ({
   comments,
   postComment
 }) => {
+  const { t } = useTranslation();
   const [displayComments, setDisplayComments] = useState([]);
   const [content, setContent] = useState(" ");
   const [replyCommentId, setReplyCommentId] = useState("");
@@ -20,7 +22,7 @@ const CommentPanel = ({
   return (
     <div className="comments__group">
       <Comment.Group size="small">
-        <Header as="h5">Comments</Header>
+        <Header as="h5">{t("commentPanel.comments")}</Header>
 
         {comments &&
           comments.map(({ key, value }) => (
@@ -39,7 +41,7 @@ const CommentPanel = ({
                       setContent(`@${value.author}`);
                     }}
                   >
-                    Reply
+                    {t("commentPanel.reply")}
                   </Comment.Action>
                 </Comment.Actions>
               </Comment.Content>
@@ -56,7 +58,8 @@ const CommentPanel = ({
                   >
                     <div className="comment__display__comments__line" />
                     <span style={{ color: "#999" }}>
-                      View replies ({Object.keys(value.replies).length})
+                      {t("commentPanel.viewReplies")} (
+                      {Object.keys(value.replies).length})
                     </span>
                   </button>
                 ) : (
@@ -72,7 +75,8 @@ const CommentPanel = ({
                   >
                     <div className="comment__display__comments__line" />
                     <span style={{ color: "#999" }}>
-                      Hide replies ({Object.keys(value.replies).length})
+                      {t("commentPanel.hideReplies")} (
+                      {Object.keys(value.replies).length})
                     </span>
                   </button>
                 ))}
@@ -105,13 +109,13 @@ const CommentPanel = ({
           <Form.Group inline className="commentContainer">
             <Form.TextArea
               rows={1}
-              placeholder="Add a comment..."
+              placeholder={t("commentPanel.addComment")}
               className="commentTextarea"
               value={content}
               onChange={e => setContent(e.target.value)}
             />
             <Button
-              content="Post"
+              content={t("commentPanel.send")}
               className="commentSendButton"
               secondary
               onClick={() => {
@@ -132,7 +136,9 @@ const CommentPanel = ({
 };
 
 CommentPanel.propTypes = {
+  t: PropTypes.func,
   currentUser: PropTypes.object,
+  confession: PropTypes.object,
   confessionId: PropTypes.string.isRequired,
   comments: PropTypes.array,
   postComment: PropTypes.func

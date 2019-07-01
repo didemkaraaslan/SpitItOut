@@ -1,20 +1,20 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import * as Settings from "../../utils/Settings";
 import ThemePanel from "../SettingsPanel/Theme/ThemePanel.jsx";
 import LanguagePanel from "../SettingsPanel/Language/LanguagePanel.jsx";
 import { Container, Modal, Grid, Menu } from "semantic-ui-react";
+import { useTranslation } from "react-i18next";
 
-class SettingsPanel extends Component {
-  state = {
-    activePreference: Settings.Notifications
-  };
+const SettingsPanel = ({ firebase, profile, open, handleCloseSettings }) => {
+  const [activePreference, setActivePreference] = useState(
+    Settings.Notifications
+  );
 
-  handleItemClick = (e, { name }) => this.setState({ activePreference: name });
+  const { t } = useTranslation();
 
-  renderRelatedSetting = activePreference => {
-    const { firebase } = this.props;
+  const renderRelatedSetting = activePreference => {
     const currentUser = firebase.auth().currentUser;
 
     switch (activePreference) {
@@ -27,58 +27,60 @@ class SettingsPanel extends Component {
     }
   };
 
-  render() {
-    const { activePreference } = this.state;
-    const { open, firebase, profile } = this.props;
+  return (
+    <Container style={{ marginTop: "50px" }}>
+      <Modal
+        size="fullscreen"
+        open={open}
+        onClose={handleCloseSettings}
+        closeIcon
+      >
+        <Modal.Header>{t("settings.adjustPreferences")}</Modal.Header>
+        <Modal.Content>
+          <Grid>
+            <Grid.Column width={4}>
+              <Menu fluid vertical tabular>
+                <Menu.Item
+                  name={t(`settings.${Settings.Notifications}`)}
+                  active={activePreference === Settings.Notifications}
+                  onClick={(e, { name }) =>
+                    setActivePreference(Settings.Notifications)
+                  }
+                />
+                <Menu.Item
+                  name={t(`settings.${Settings.LanguageAndRegion}`)}
+                  active={activePreference === Settings.LanguageAndRegion}
+                  onClick={(e, { name }) =>
+                    setActivePreference(Settings.LanguageAndRegion)
+                  }
+                />
+                <Menu.Item
+                  name={t(`settings.${Settings.Theme}`)}
+                  active={activePreference === Settings.Theme}
+                  onClick={(e, { name }) => setActivePreference(Settings.Theme)}
+                />
+                <Menu.Item
+                  name={t(`settings.${Settings.Advanced}`)}
+                  active={activePreference === Settings.Advanced}
+                  onClick={(e, { name }) =>
+                    setActivePreference(Settings.Advanced)
+                  }
+                />
+              </Menu>
+            </Grid.Column>
 
-    return (
-      <Container style={{ marginTop: "50px" }}>
-        <Modal
-          size="fullscreen"
-          open={open}
-          onClose={this.props.handleCloseSettings}
-          closeIcon
-        >
-          <Modal.Header>Adjust your preferences</Modal.Header>
-          <Modal.Content>
-            <Grid>
-              <Grid.Column width={4}>
-                <Menu fluid vertical tabular>
-                  <Menu.Item
-                    name={Settings.Notifications}
-                    active={activePreference === Settings.Notifications}
-                    onClick={this.handleItemClick}
-                  />
-                  <Menu.Item
-                    name={Settings.LanguageAndRegion}
-                    active={activePreference === Settings.LanguageAndRegion}
-                    onClick={this.handleItemClick}
-                  />
-                  <Menu.Item
-                    name={Settings.Theme}
-                    active={activePreference === Settings.Theme}
-                    onClick={this.handleItemClick}
-                  />
-                  <Menu.Item
-                    name={Settings.Advanced}
-                    active={activePreference === Settings.Advanced}
-                    onClick={this.handleItemClick}
-                  />
-                </Menu>
-              </Grid.Column>
-
-              <Grid.Column stretched width={12} textAlign="center">
-                {this.renderRelatedSetting(activePreference)}
-              </Grid.Column>
-            </Grid>
-          </Modal.Content>
-        </Modal>
-      </Container>
-    );
-  }
-}
+            <Grid.Column stretched width={12} textAlign="center">
+              {renderRelatedSetting(activePreference)}
+            </Grid.Column>
+          </Grid>
+        </Modal.Content>
+      </Modal>
+    </Container>
+  );
+};
 
 SettingsPanel.propTypes = {
+  t: PropTypes.func,
   firebase: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,

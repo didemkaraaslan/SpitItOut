@@ -1,10 +1,11 @@
 import React, { Suspense, Component } from "react";
+import moment from "moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withFirebase } from "react-redux-firebase";
 import { withRouter, Link } from "react-router-dom";
-import { withTranslation } from "react-i18next";
+import { withTranslation, Trans } from "react-i18next";
 import {
   Grid,
   Segment,
@@ -150,6 +151,8 @@ class Signup extends Component {
     ));
 
   saveUserIntoDatabase = (createdUser, detectedLanguage) => {
+    moment.locale(detectedLanguage);
+
     return this.state.usersRef.child(createdUser.user.uid).set({
       username: createdUser.user.displayName,
       email: createdUser.user.email,
@@ -172,108 +175,107 @@ class Signup extends Component {
     const detectedLanguage = i18n.language;
 
     return (
-      <Suspense fallback="loading">
-        <div className="signup">
-          <Grid
-            textAlign="center"
-            verticalAlign="middle"
-            className="form__register__login"
-          >
-            <Grid.Column style={{ maxWidth: 450 }}>
-              <Header as="h2" color="violet" icon>
-                <Icon name="comment alternate outline" />
-                Register for SpitItOut
-              </Header>
-              <Form className="signup__form">
-                <Segment>
-                  <Form.Field>
-                    <Form.Input
-                      fluid
-                      placeholder="Username"
-                      onChange={this.handleChange}
-                      icon="users"
-                      iconPosition="left"
-                      name="username"
-                      type="text"
-                    />
-                  </Form.Field>
-                  <Form.Field>
-                    <Form.Input
-                      fluid
-                      placeholder="Email Address"
-                      onChange={this.handleChange}
-                      icon="mail"
-                      iconPosition="left"
-                      name="email"
-                      type="email"
-                    />
-                  </Form.Field>
-                  <Form.Field>
-                    <Form.Input
-                      fluid
-                      placeholder="Password"
-                      onChange={this.handleChange}
-                      icon="lock"
-                      iconPosition="left"
-                      name="password"
-                      type="password"
-                    />
-                  </Form.Field>
-                  <Form.Field>
-                    <Form.Input
-                      fluid
-                      placeholder="Password Confirmation"
-                      onChange={this.handleChange}
-                      icon="repeat"
-                      iconPosition="left"
-                      name="passwordConfirmation"
-                      type="password"
-                    />
-                  </Form.Field>
-                  <Segment>
-                    <Form.Group inline>
-                      <label>Gender</label>
-                      <Form.Radio
-                        label="Male"
-                        name="radioGroup"
-                        value="male"
-                        checked={gender === "male"}
-                        onChange={this.handleGenderChange}
-                      />
-                      <Form.Radio
-                        label="Female"
-                        name="radioGroup"
-                        value="female"
-                        checked={gender === "female"}
-                        onChange={this.handleGenderChange}
-                      />
-                    </Form.Group>
-                  </Segment>
-                  <Button
-                    color="green"
-                    size="large"
-                    loading={loading}
+      <div className="signup">
+        <Grid
+          textAlign="center"
+          verticalAlign="middle"
+          className="form__register__login"
+        >
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as="h2" color="violet" icon>
+              <Icon name="comment alternate outline" />
+              {t("register.registerForSpititout")}
+            </Header>
+            <Form className="signup__form">
+              <Segment>
+                <Form.Field>
+                  <Form.Input
                     fluid
-                    onClick={event => {
-                      this.handleSubmit(detectedLanguage, event);
-                    }}
-                  >
-                    Submit
-                  </Button>
+                    placeholder={t("register.username")}
+                    onChange={this.handleChange}
+                    icon="users"
+                    iconPosition="left"
+                    name="username"
+                    type="text"
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Form.Input
+                    fluid
+                    placeholder={t("register.email")}
+                    onChange={this.handleChange}
+                    icon="mail"
+                    iconPosition="left"
+                    name="email"
+                    type="email"
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Form.Input
+                    fluid
+                    placeholder={t("register.password")}
+                    onChange={this.handleChange}
+                    icon="lock"
+                    iconPosition="left"
+                    name="password"
+                    type="password"
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Form.Input
+                    fluid
+                    placeholder={t("register.passwordConfirmation")}
+                    onChange={this.handleChange}
+                    icon="repeat"
+                    iconPosition="left"
+                    name="passwordConfirmation"
+                    type="password"
+                  />
+                </Form.Field>
+                <Segment>
+                  <Form.Group inline>
+                    <label>{t("register.gender")}</label>
+                    <Form.Radio
+                      label={t("register.male")}
+                      name="radioGroup"
+                      value="male"
+                      checked={gender === "male"}
+                      onChange={this.handleGenderChange}
+                    />
+                    <Form.Radio
+                      label={t("register.female")}
+                      name="radioGroup"
+                      value="female"
+                      checked={gender === "female"}
+                      onChange={this.handleGenderChange}
+                    />
+                  </Form.Group>
                 </Segment>
-              </Form>
-              {errors.length > 0 && (
-                <Message error>{this.displayErrors()}</Message>
-              )}
-              <Message>
-                <Icon name="help" />
-                Already signed up?&nbsp;<Link to="/signin">Login here</Link>
-                &nbsp;instead.
-              </Message>
-            </Grid.Column>
-          </Grid>
-        </div>
-      </Suspense>
+                <Button
+                  color="green"
+                  size="large"
+                  loading={loading}
+                  fluid
+                  onClick={event => {
+                    this.handleSubmit(detectedLanguage, event);
+                  }}
+                >
+                  {t("register.signup")}
+                </Button>
+              </Segment>
+            </Form>
+            {errors.length > 0 && (
+              <Message error>{this.displayErrors()}</Message>
+            )}
+            <Message>
+              <Icon name="help" />
+              <Trans i18nKey="register.alreadySignedup">
+                Already signed up? <Link to="/signin">Login here</Link> instead.
+              </Trans>
+            </Message>
+          </Grid.Column>
+        </Grid>
+      </div>
     );
   }
 }

@@ -4,6 +4,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { firebaseConnect, getVal, isLoaded } from "react-redux-firebase";
 import { Menu, Dimmer, Loader } from "semantic-ui-react";
+import { withTranslation } from "react-i18next";
 
 import { setCategoryFilter } from "../../actions/confessionActions";
 import * as Tag from "../../utils/Tags";
@@ -11,12 +12,12 @@ import { themes } from "../../utils/Theme";
 import "../../app.css";
 
 class SidePanel extends Component {
-  handleMenuItemClick = (e, { name }) => {
+  handleMenuItemClick = (name, event) => {
+    event.preventDefault();
     this.props.setCategoryFilter(name);
   };
-
   render() {
-    const { filterCategory, activeTheme } = this.props;
+    const { t, filterCategory, activeTheme } = this.props;
     const { inverted, color } = isLoaded(activeTheme) && themes[activeTheme];
     return (
       <React.Fragment>
@@ -33,128 +34,162 @@ class SidePanel extends Component {
             }}
           >
             <Menu.Item>
-              <Menu.Header>Categories</Menu.Header>
+              <Menu.Header>{t("categories.categories")}</Menu.Header>
               <Menu.Menu>
                 <Menu.Item
-                  name={Tag.ALL}
+                  name={t(`categories.${Tag.ALL}`)}
                   as="a"
                   icon="hashtag"
                   active={filterCategory === Tag.ALL}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.ALL, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.REGRET}
-                  as="a"
-                  icon="hashtag"
-                  active={filterCategory === Tag.REGRET}
-                  onClick={this.handleMenuItemClick}
-                />
-                <Menu.Item
-                  name={Tag.FIRST_EXPERIENCE}
-                  as="a"
-                  icon="hashtag"
-                  active={filterCategory === Tag.FIRST_EXPERIENCE}
-                  onClick={this.handleMenuItemClick}
-                />
-                <Menu.Item
-                  name={Tag.SAD}
+                  name={t(`categories.${Tag.SAD}`)}
                   as="a"
                   icon="hashtag"
                   active={filterCategory === Tag.SAD}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.SAD, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.GUILTY}
+                  name={t(`categories.${Tag.GUILTY}`)}
                   as="a"
                   icon="hashtag"
                   active={filterCategory === Tag.GUILTY}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.GUILTY, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.LOVE}
+                  name={t(`categories.${Tag.FIRST_EXPERIENCE}`)}
+                  as="a"
+                  icon="hashtag"
+                  active={filterCategory === Tag.FIRST_EXPERIENCE}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.FIRST_EXPERIENCE, event);
+                  }}
+                />
+                <Menu.Item
+                  name={t(`categories.${Tag.REGRET}`)}
+                  as="a"
+                  icon="hashtag"
+                  active={filterCategory === Tag.REGRET}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.REGRET, event);
+                  }}
+                />
+                <Menu.Item
+                  name={t(`categories.${Tag.LOVE}`)}
                   as="a"
                   icon="hashtag"
                   active={filterCategory === Tag.LOVE}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.LOVE, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.HAPPY}
+                  name={t(`categories.${Tag.HAPPY}`)}
                   as="a"
                   icon="hashtag"
                   active={filterCategory === Tag.HAPPY}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.HAPPY, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.CONGRATULATIONS}
+                  name={t(`categories.${Tag.CONGRATULATIONS}`)}
                   as="a"
                   icon="hashtag"
                   active={filterCategory === Tag.CONGRATULATIONS}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.CONGRATULATIONS, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.DEPRESSION}
+                  name={t(`categories.${Tag.DEPRESSION}`)}
                   as="a"
                   icon="hashtag"
                   active={filterCategory === Tag.DEPRESSION}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.DEPRESSION, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.CHEATING}
+                  name={t(`categories.${Tag.CHEATING}`)}
                   as="a"
                   icon="hashtag"
                   active={filterCategory === Tag.CHEATING}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.CHEATING, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.MOCKING}
+                  name={t(`categories.${Tag.MOCKING}`)}
                   as="a"
                   icon="hashtag"
                   active={filterCategory === Tag.MOCKING}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.MOCKING, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.SEXUAL_ABUSE}
+                  name={t(`categories.${Tag.SEXUAL_ABUSE}`)}
                   as="a"
                   icon="hashtag"
                   active={filterCategory === Tag.SEXUAL_ABUSE}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.SEXUAL_ABUSE, event);
+                  }}
                 />
               </Menu.Menu>
             </Menu.Item>
 
             <Menu.Item>
-              <Menu.Header>Also filter by</Menu.Header>
+              <Menu.Header>{t("categories.alsoFilterBy")}</Menu.Header>
 
               <Menu.Menu>
                 <Menu.Item
-                  name={Tag.LATEST}
+                  name={t(`categories.${Tag.LATEST}`)}
                   as="a"
                   active={filterCategory === Tag.LATEST}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.LATEST, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.MOST_TRENDING}
+                  name={t(`categories.${Tag.MOST_TRENDING}`)}
                   as="a"
                   active={filterCategory === Tag.MOST_TRENDING}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.MOST_TRENDING, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.MOST_APPROVED}
+                  name={t(`categories.${Tag.MOST_APPROVED}`)}
                   as="a"
                   active={filterCategory === Tag.MOST_APPROVED}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.MOST_APPROVED, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.MOST_JUDGED}
+                  name={t(`categories.${Tag.MOST_JUDGED}`)}
                   as="a"
                   active={filterCategory === Tag.MOST_JUDGED}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.MOST_JUDGED, event);
+                  }}
                 />
                 <Menu.Item
-                  name={Tag.MOST_COMMENTED}
+                  name={t(`categories.${Tag.MOST_COMMENTED}`)}
                   as="a"
                   active={filterCategory === Tag.MOST_COMMENTED}
-                  onClick={this.handleMenuItemClick}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.MOST_COMMENTED, event);
+                  }}
                 />
               </Menu.Menu>
             </Menu.Item>
@@ -180,6 +215,7 @@ class SidePanel extends Component {
 }
 
 SidePanel.propTypes = {
+  t: PropTypes.func.isRequired,
   filterCategory: PropTypes.string.isRequired,
   setCategoryFilter: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
@@ -198,6 +234,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
+  withTranslation(),
   firebaseConnect(props => {
     return [`users/${props.currentUser.uid}/prefs/theme/activeTheme`];
   }),

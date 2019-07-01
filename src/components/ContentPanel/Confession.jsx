@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
 import { Comment, Divider, Segment, Label, Icon } from "semantic-ui-react";
+import { useTranslation } from "react-i18next";
 
 import CommentPanel from "../CommentPanel/CommentPanel";
 import { setCategoryFilter } from "../../actions/confessionActions";
@@ -38,6 +39,7 @@ const Confession = ({
   setCategoryFilter
 }) => {
   const [commentsVisible, setCommentsVisibility] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <Segment loading={!confession} raised>
@@ -50,7 +52,7 @@ const Confession = ({
                 {confession && confession.user.username}
               </Comment.Author>
             ) : (
-              <Comment.Author>Anonymous</Comment.Author>
+              <Comment.Author>{t("confession.anonymous")}</Comment.Author>
             )}
             <Comment.Metadata>
               <span>
@@ -78,11 +80,9 @@ const Confession = ({
                   basic
                   size="tiny"
                   color={pickTagColor(prop)}
-                  onClick={(event, data) =>
-                    setCategoryFilter(data.children.props.children)
-                  }
+                  onClick={(event, data) => setCategoryFilter(prop)}
                 >
-                  <span>{prop}</span>
+                  <span>{t(`categories.${prop}`)}</span>
                 </Label>
               ))}
             <Divider />
@@ -125,7 +125,7 @@ const Confession = ({
                 style={{ float: "right" }}
                 onClick={() => setCommentsVisibility(!commentsVisible)}
               >
-                Reply
+                {t("confession.reply")}
               </Comment.Action>
             </Comment.Actions>
           </Comment.Content>
@@ -146,6 +146,7 @@ const Confession = ({
 };
 
 Confession.propTypes = {
+  t: PropTypes.func,
   currentUser: PropTypes.object,
   currentUserUid: PropTypes.string,
   confessionId: PropTypes.string,

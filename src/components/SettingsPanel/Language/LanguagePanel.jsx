@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { firebaseConnect, getVal } from "react-redux-firebase";
 import { useTranslation } from "react-i18next";
-
 import { Header, Dropdown } from "semantic-ui-react";
 
 const languageOptions = [
@@ -24,30 +23,32 @@ const LanguagePanel = ({ firebase, currentUser, language }) => {
   const { t, i18n } = useTranslation();
 
   const changeLanguage = lng => {
-    i18n.changeLanguage(lng).then(t => {
-      const currentUserUid = currentUser && currentUser.uid;
-      firebase
-        .update(`users/${currentUserUid}/prefs/language`, {
-          language: lng
-        })
-        .then(() => {
-          console.log("language changed");
-        })
-        .catch(error => {
-          console.error(error);
+    const currentUserUid = currentUser && currentUser.uid;
+    firebase
+      .update(`users/${currentUserUid}/prefs/language`, {
+        language: lng
+      })
+      .then(() => {
+        console.log("language changed");
+        throw new Promise(resolve => {
+          i18n.changeLanguage(lng, () => {
+            resolve();
+          });
         });
-    });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   return (
-    <Suspense fallback={<h1>laoding</h1>}>
-      {t("title")}
+    <React.Fragment>
       <Header.Subheader style={{ marginBottom: "6px" }}>
-        <em>Choose the language you’d like to use with SpitItOut.</em>
+        <em>{t("language.chooseLanguageYoulike")}</em>
       </Header.Subheader>
       <div>
         <Header.Subheader style={{ marginBottom: "3px" }}>
-          <b>Language</b>
+          <b>{t("language.language")}</b>
         </Header.Subheader>
         <Dropdown
           placeholder="Choose language"
@@ -60,11 +61,12 @@ const LanguagePanel = ({ firebase, currentUser, language }) => {
           }}
         />
       </div>
-    </Suspense>
+    </React.Fragment>
   );
 };
 
 LanguagePanel.propTypes = {
+  t: PropTypes.func,
   firebase: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   language: PropTypes.string.isRequired
