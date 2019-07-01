@@ -31,23 +31,25 @@ class ContentPanel extends Component {
 
       if (!userAlreadyLiked) {
         firebase
-          .update(`confessions/${confessionId}`, {
-            ...confession,
-            feelings: {
-              ...confession.feelings,
-              [currentUserUid]: 1
-            },
-            numberOfLikes: confession.numberOfLikes + 1,
-            numberOfDislikes:
-              userReaction === 0
-                ? confession.numberOfDislikes
-                : confession.numberOfDislikes - 1
-          })
-          .then(() => {
-            console.log("like");
-          })
-          .catch(error => {
-            console.error(error);
+          .database()
+          .ref(`confessions/${confessionId}`)
+          .transaction(function(updateConfession) {
+            if (updateConfession) {
+              if (
+                updateConfession.feelings !== null &&
+                updateConfession.numberOfLikes !== null &&
+                updateConfession.numberOfDislikes !== null
+              ) {
+                updateConfession.feelings[currentUserUid] = 1;
+                updateConfession.numberOfLikes =
+                  updateConfession.numberOfLikes + 1;
+                updateConfession.numberOfDislikes =
+                  userReaction === 0
+                    ? updateConfession.numberOfDislikes
+                    : updateConfession.numberOfDislikes - 1;
+              }
+            }
+            return updateConfession;
           });
       }
     }
@@ -66,23 +68,25 @@ class ContentPanel extends Component {
 
       if (!userAlreadyDisliked) {
         firebase
-          .update(`confessions/${confessionId}`, {
-            ...confession,
-            feelings: {
-              ...confession.feelings,
-              [currentUserUid]: -1
-            },
-            numberOfDislikes: confession.numberOfDislikes + 1,
-            numberOfLikes:
-              userReaction === 0
-                ? confession.numberOfLikes
-                : confession.numberOfLikes - 1
-          })
-          .then(() => {
-            console.log("dislike");
-          })
-          .catch(error => {
-            console.error(error);
+          .database()
+          .ref(`confessions/${confessionId}`)
+          .transaction(function(updateConfession) {
+            if (updateConfession) {
+              if (
+                updateConfession.feelings !== null &&
+                updateConfession.numberOfLikes !== null &&
+                updateConfession.numberOfDislikes !== null
+              ) {
+                updateConfession.feelings[currentUserUid] = -1;
+                updateConfession.numberOfDislikes =
+                  updateConfession.numberOfDislikes + 1;
+                updateConfession.numberOfLikes =
+                  userReaction === 0
+                    ? updateConfession.numberOfLikes
+                    : updateConfession.numberOfLikes - 1;
+              }
+            }
+            return updateConfession;
           });
       }
     }
@@ -146,11 +150,16 @@ class ContentPanel extends Component {
         });
     }
 
-    // Update comment count
-    firebase.update(`confessions/${confessionId}`, {
-      ...confession,
-      numberOfComments: confession.numberOfComments + 1
-    });
+    // Update comment count with firebase transaction
+    firebase
+      .database()
+      .ref(`confessions/${confessionId}`)
+      .transaction(function(confession) {
+        if (confession && confession.numberOfComments !== null) {
+          confession.numberOfComments++;
+          return confession;
+        }
+      });
   };
 
   filterConfessions = (confessions, filterCategory) => {
