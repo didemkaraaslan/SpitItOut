@@ -130,6 +130,15 @@ img {
 }
 
 /* User Profile */
+.backBtn {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+}
+
 .profile__top__area {
   margin-bottom: 20px;
 }

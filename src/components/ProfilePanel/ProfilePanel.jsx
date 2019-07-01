@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Segment, Grid, Card, Icon, Image, Tab } from "semantic-ui-react";
+import {
+  Segment,
+  Grid,
+  Card,
+  Button,
+  Icon,
+  Image,
+  Tab
+} from "semantic-ui-react";
 import MyConfessions from "./MyConfessions.jsx";
 import Favorites from "./Favorites.jsx";
 import LikedConfessions from "./LikedConfessions.jsx";
@@ -34,10 +42,10 @@ class ProfilePanel extends Component {
                 : confession.numberOfDislikes - 1
           })
           .then(() => {
-          console.log("like")
+            console.log("like");
           })
           .catch(error => {
-          console.error(error)
+            console.error(error);
           });
       }
     }
@@ -69,10 +77,10 @@ class ProfilePanel extends Component {
                 : confession.numberOfLikes - 1
           })
           .then(() => {
-          console.log("dislike")
+            console.log("dislike");
           })
           .catch(error => {
-          console.error(error)
+            console.error(error);
           });
       }
     }
@@ -97,10 +105,10 @@ class ProfilePanel extends Component {
           }
         })
         .then(() => {
-        console.log("added to favorites")
+          console.log("added to favorites");
         })
         .catch(error => {
-        console.error(error)
+          console.error(error);
         });
     }
   };
@@ -114,6 +122,12 @@ class ProfilePanel extends Component {
     return (
       <Segment style={{ marginTop: "50px", position: "relative" }}>
         <div className="profile__top__area">
+          <button
+            className="backBtn"
+            onClick={this.props.handleCloseUserProfile}
+          >
+            <Icon link name="left arrow" />
+          </button>
           <Image
             src={faker.internet.avatar()}
             circular
@@ -181,7 +195,8 @@ class ProfilePanel extends Component {
 ProfilePanel.propTypes = {
   firebase: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
-  confessions: PropTypes.array.isRequired
+  confessions: PropTypes.array.isRequired,
+  handleCloseUserProfile: PropTypes.func
 };
 
 export default ProfilePanel;
