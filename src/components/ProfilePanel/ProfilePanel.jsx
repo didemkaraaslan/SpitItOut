@@ -1,19 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  Segment,
-  Grid,
-  Card,
-  Button,
-  Icon,
-  Image,
-  Tab
-} from "semantic-ui-react";
+import { Segment, Icon, Image, Tab } from "semantic-ui-react";
 import MyConfessions from "./MyConfessions.jsx";
 import Favorites from "./Favorites.jsx";
 import LikedConfessions from "./LikedConfessions.jsx";
-
-import faker from "faker";
 
 class ProfilePanel extends Component {
   handleLike = (confession, confessionId) => {
@@ -29,23 +19,25 @@ class ProfilePanel extends Component {
 
       if (!userAlreadyLiked) {
         firebase
-          .update(`confessions/${confessionId}`, {
-            ...confession,
-            feelings: {
-              ...confession.feelings,
-              [currentUserUid]: 1
-            },
-            numberOfLikes: confession.numberOfLikes + 1,
-            numberOfDislikes:
-              userReaction === 0
-                ? confession.numberOfDislikes
-                : confession.numberOfDislikes - 1
-          })
-          .then(() => {
-            console.log("like");
-          })
-          .catch(error => {
-            console.error(error);
+          .database()
+          .ref(`confessions/${confessionId}`)
+          .transaction(function(updateConfession) {
+            if (updateConfession) {
+              if (
+                updateConfession.feelings !== null &&
+                updateConfession.numberOfLikes !== null &&
+                updateConfession.numberOfDislikes !== null
+              ) {
+                updateConfession.feelings[currentUserUid] = 1;
+                updateConfession.numberOfLikes =
+                  updateConfession.numberOfLikes + 1;
+                updateConfession.numberOfDislikes =
+                  userReaction === 0
+                    ? updateConfession.numberOfDislikes
+                    : updateConfession.numberOfDislikes - 1;
+              }
+            }
+            return updateConfession;
           });
       }
     }
@@ -64,23 +56,25 @@ class ProfilePanel extends Component {
 
       if (!userAlreadyDisliked) {
         firebase
-          .update(`confessions/${confessionId}`, {
-            ...confession,
-            feelings: {
-              ...confession.feelings,
-              [currentUserUid]: -1
-            },
-            numberOfDislikes: confession.numberOfDislikes + 1,
-            numberOfLikes:
-              userReaction === 0
-                ? confession.numberOfLikes
-                : confession.numberOfLikes - 1
-          })
-          .then(() => {
-            console.log("dislike");
-          })
-          .catch(error => {
-            console.error(error);
+          .database()
+          .ref(`confessions/${confessionId}`)
+          .transaction(function(updateConfession) {
+            if (updateConfession) {
+              if (
+                updateConfession.feelings !== null &&
+                updateConfession.numberOfLikes !== null &&
+                updateConfession.numberOfDislikes !== null
+              ) {
+                updateConfession.feelings[currentUserUid] = -1;
+                updateConfession.numberOfDislikes =
+                  updateConfession.numberOfDislikes + 1;
+                updateConfession.numberOfLikes =
+                  userReaction === 0
+                    ? updateConfession.numberOfLikes
+                    : updateConfession.numberOfLikes - 1;
+              }
+            }
+            return updateConfession;
           });
       }
     }
@@ -129,7 +123,7 @@ class ProfilePanel extends Component {
             <Icon link name="left arrow" />
           </button>
           <Image
-            src={faker.internet.avatar()}
+            src={currentUser && currentUser.photoURL}
             circular
             bordered
             className="profile__avatar"
