@@ -15,18 +15,15 @@ img {
 
 .app {
   height: 100%;
-  background-color: #ccc;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-}
-
-.signup {
-  background: url("./assets/img/trianglifymixed.png") no-repeat center center fixed;
-}
-
-.signin {
-  background: url("./assets/img/trianglifymixed.png") no-repeat center center fixed;
+  position: fixed;
+  top: 0; left: 0;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 .form__register__login {
@@ -36,6 +33,42 @@ img {
 
 .sidepanel {
   width: 270px !important;
+}
+
+.light {
+  background: linear-gradient(56deg, #d5dfdc, #c18409);
+}
+
+.lightBlue {
+
+}
+
+.lightGrey {
+
+}
+
+.lightTeal {
+
+}
+
+.lightOrange {
+
+}
+
+.lightPurple {
+
+}
+
+.dark {
+
+}
+
+.darkOrange {
+
+}
+
+.darkTeal {
+
 }
 
 /* Confession */

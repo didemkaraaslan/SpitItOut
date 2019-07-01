@@ -1,4 +1,5 @@
 import React, { Suspense, Component } from "react";
+import moment from "moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -150,6 +151,8 @@ class Signup extends Component {
     ));
 
   saveUserIntoDatabase = (createdUser, detectedLanguage) => {
+    moment.locale(detectedLanguage);
+
     return this.state.usersRef.child(createdUser.user.uid).set({
       username: createdUser.user.displayName,
       email: createdUser.user.email,

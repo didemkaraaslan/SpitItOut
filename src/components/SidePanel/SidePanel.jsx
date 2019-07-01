@@ -46,24 +46,6 @@ class SidePanel extends Component {
                   }}
                 />
                 <Menu.Item
-                  name={t(`categories.${Tag.REGRET}`)}
-                  as="a"
-                  icon="hashtag"
-                  active={filterCategory === Tag.REGRET}
-                  onClick={event => {
-                    this.handleMenuItemClick(Tag.REGRET, event);
-                  }}
-                />
-                <Menu.Item
-                  name={t(`categories.${Tag.FIRST_EXPERIENCE}`)}
-                  as="a"
-                  icon="hashtag"
-                  active={filterCategory === Tag.FIRST_EXPERIENCE}
-                  onClick={event => {
-                    this.handleMenuItemClick(Tag.FIRST_EXPERIENCE, event);
-                  }}
-                />
-                <Menu.Item
                   name={t(`categories.${Tag.SAD}`)}
                   as="a"
                   icon="hashtag"
@@ -79,6 +61,24 @@ class SidePanel extends Component {
                   active={filterCategory === Tag.GUILTY}
                   onClick={event => {
                     this.handleMenuItemClick(Tag.GUILTY, event);
+                  }}
+                />
+                <Menu.Item
+                  name={t(`categories.${Tag.FIRST_EXPERIENCE}`)}
+                  as="a"
+                  icon="hashtag"
+                  active={filterCategory === Tag.FIRST_EXPERIENCE}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.FIRST_EXPERIENCE, event);
+                  }}
+                />
+                <Menu.Item
+                  name={t(`categories.${Tag.REGRET}`)}
+                  as="a"
+                  icon="hashtag"
+                  active={filterCategory === Tag.REGRET}
+                  onClick={event => {
+                    this.handleMenuItemClick(Tag.REGRET, event);
                   }}
                 />
                 <Menu.Item

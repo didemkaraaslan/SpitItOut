@@ -66,7 +66,7 @@ class App extends Component {
     return (
       <Suspense fallback="loading">
         <Grid className="app">
-          <Grid.Row style={{ zIndex: 1000 }}>
+          <Grid.Row style={{ zIndex: 400, maxHeight: "100px" }}>
             <HeaderPanel
               handleOpenSettings={this.handleOpenSettings}
               handleOpenUserProfile={this.handleOpenUserProfile}
