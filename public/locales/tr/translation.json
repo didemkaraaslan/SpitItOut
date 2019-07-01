@@ -19,6 +19,14 @@
     "login": "Giriş Yap",
     "dontHaveAnAccount": "Hesabınız yok mu? <1>Buradan yeni bir hesap yaratın.</1>"
   },
+  "commentPanel": {
+    "comments": "Yorumlar",
+    "reply": "Yanıtla",
+    "viewReplies": "Cevapları görüntüle",
+    "hideReplies": "Cevapları gizle",
+    "addComment": "Yorum yaz...",
+    "send": "Gönder"
+  },
   "confession": {
     "anonymous": "Anonim",
     "reply": "Yanıtla",

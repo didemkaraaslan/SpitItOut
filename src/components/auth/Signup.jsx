@@ -172,110 +172,107 @@ class Signup extends Component {
     const detectedLanguage = i18n.language;
 
     return (
-      <Suspense fallback="loading">
-        <div className="signup">
-          <Grid
-            textAlign="center"
-            verticalAlign="middle"
-            className="form__register__login"
-          >
-            <Grid.Column style={{ maxWidth: 450 }}>
-              <Header as="h2" color="violet" icon>
-                <Icon name="comment alternate outline" />
-                {t("register.registerForSpititout")}
-              </Header>
-              <Form className="signup__form">
-                <Segment>
-                  <Form.Field>
-                    <Form.Input
-                      fluid
-                      placeholder={t("register.username")}
-                      onChange={this.handleChange}
-                      icon="users"
-                      iconPosition="left"
-                      name="username"
-                      type="text"
-                    />
-                  </Form.Field>
-                  <Form.Field>
-                    <Form.Input
-                      fluid
-                      placeholder={t("register.email")}
-                      onChange={this.handleChange}
-                      icon="mail"
-                      iconPosition="left"
-                      name="email"
-                      type="email"
-                    />
-                  </Form.Field>
-                  <Form.Field>
-                    <Form.Input
-                      fluid
-                      placeholder={t("register.password")}
-                      onChange={this.handleChange}
-                      icon="lock"
-                      iconPosition="left"
-                      name="password"
-                      type="password"
-                    />
-                  </Form.Field>
-                  <Form.Field>
-                    <Form.Input
-                      fluid
-                      placeholder={t("register.passwordConfirmation")}
-                      onChange={this.handleChange}
-                      icon="repeat"
-                      iconPosition="left"
-                      name="passwordConfirmation"
-                      type="password"
-                    />
-                  </Form.Field>
-                  <Segment>
-                    <Form.Group inline>
-                      <label>{t("register.gender")}</label>
-                      <Form.Radio
-                        label={t("register.male")}
-                        name="radioGroup"
-                        value="male"
-                        checked={gender === "male"}
-                        onChange={this.handleGenderChange}
-                      />
-                      <Form.Radio
-                        label={t("register.female")}
-                        name="radioGroup"
-                        value="female"
-                        checked={gender === "female"}
-                        onChange={this.handleGenderChange}
-                      />
-                    </Form.Group>
-                  </Segment>
-                  <Button
-                    color="green"
-                    size="large"
-                    loading={loading}
+      <div className="signup">
+        <Grid
+          textAlign="center"
+          verticalAlign="middle"
+          className="form__register__login"
+        >
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as="h2" color="violet" icon>
+              <Icon name="comment alternate outline" />
+              {t("register.registerForSpititout")}
+            </Header>
+            <Form className="signup__form">
+              <Segment>
+                <Form.Field>
+                  <Form.Input
                     fluid
-                    onClick={event => {
-                      this.handleSubmit(detectedLanguage, event);
-                    }}
-                  >
-                    {t("register.signup")}
-                  </Button>
+                    placeholder={t("register.username")}
+                    onChange={this.handleChange}
+                    icon="users"
+                    iconPosition="left"
+                    name="username"
+                    type="text"
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Form.Input
+                    fluid
+                    placeholder={t("register.email")}
+                    onChange={this.handleChange}
+                    icon="mail"
+                    iconPosition="left"
+                    name="email"
+                    type="email"
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Form.Input
+                    fluid
+                    placeholder={t("register.password")}
+                    onChange={this.handleChange}
+                    icon="lock"
+                    iconPosition="left"
+                    name="password"
+                    type="password"
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Form.Input
+                    fluid
+                    placeholder={t("register.passwordConfirmation")}
+                    onChange={this.handleChange}
+                    icon="repeat"
+                    iconPosition="left"
+                    name="passwordConfirmation"
+                    type="password"
+                  />
+                </Form.Field>
+                <Segment>
+                  <Form.Group inline>
+                    <label>{t("register.gender")}</label>
+                    <Form.Radio
+                      label={t("register.male")}
+                      name="radioGroup"
+                      value="male"
+                      checked={gender === "male"}
+                      onChange={this.handleGenderChange}
+                    />
+                    <Form.Radio
+                      label={t("register.female")}
+                      name="radioGroup"
+                      value="female"
+                      checked={gender === "female"}
+                      onChange={this.handleGenderChange}
+                    />
+                  </Form.Group>
                 </Segment>
-              </Form>
-              {errors.length > 0 && (
-                <Message error>{this.displayErrors()}</Message>
-              )}
-              <Message>
-                <Icon name="help" />
-                <Trans i18nKey="register.alreadySignedup">
-                  Already signed up? <Link to="/signin">Login here</Link>{" "}
-                  instead.
-                </Trans>
-              </Message>
-            </Grid.Column>
-          </Grid>
-        </div>
-      </Suspense>
+                <Button
+                  color="green"
+                  size="large"
+                  loading={loading}
+                  fluid
+                  onClick={event => {
+                    this.handleSubmit(detectedLanguage, event);
+                  }}
+                >
+                  {t("register.signup")}
+                </Button>
+              </Segment>
+            </Form>
+            {errors.length > 0 && (
+              <Message error>{this.displayErrors()}</Message>
+            )}
+            <Message>
+              <Icon name="help" />
+              <Trans i18nKey="register.alreadySignedup">
+                Already signed up? <Link to="/signin">Login here</Link> instead.
+              </Trans>
+            </Message>
+          </Grid.Column>
+        </Grid>
+      </div>
     );
   }
 }

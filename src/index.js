@@ -52,10 +52,24 @@ class Root extends React.Component {
   render() {
     return (
       <Switch>
-        <Route path="/" exact component={App} />
-        <Route path="/signin" component={Login} />
-        <Route path="/register" component={Signup} />
-        <Route component={NoMatch} />
+        <Route path="/" exact render={props => <App />} />
+        <Route
+          path="/signin"
+          render={props => (
+            <Suspense fallback="loads">
+              <Login />
+            </Suspense>
+          )}
+        />
+        <Route
+          path="/register"
+          render={props => (
+            <Suspense fallback="loads">
+              <Signup />
+            </Suspense>
+          )}
+        />
+        <Route render={props => <NoMatch />} />
       </Switch>
     );
   }
@@ -75,11 +89,9 @@ Root.propTypes = {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Suspense fallback="loading">
-      <Router>
-        <RootWithAuth />
-      </Router>
-    </Suspense>
+    <Router>
+      <RootWithAuth />
+    </Router>
   </Provider>,
   document.getElementById("root")
 );
