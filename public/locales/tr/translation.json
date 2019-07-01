@@ -19,6 +19,11 @@
     "login": "Giriş Yap",
     "dontHaveAnAccount": "Hesabınız yok mu? <1>Buradan yeni bir hesap yaratın.</1>"
   },
+  "profile": {
+    "myConfessions": "İtiraflarım",
+    "likedConfessions": "Beğendiklerim",
+    "favoritedConfessions": "Favorilerim"
+  },
   "commentPanel": {
     "comments": "Yorumlar",
     "reply": "Yanıtla",

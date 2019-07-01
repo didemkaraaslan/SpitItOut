@@ -4,6 +4,7 @@ import { Segment, Icon, Image, Tab } from "semantic-ui-react";
 import MyConfessions from "./MyConfessions.jsx";
 import Favorites from "./Favorites.jsx";
 import LikedConfessions from "./LikedConfessions.jsx";
+import { withTranslation } from "react-i18next";
 
 class ProfilePanel extends Component {
   handleLike = (confession, confessionId) => {
@@ -108,7 +109,7 @@ class ProfilePanel extends Component {
   };
 
   render() {
-    const { currentUser, confessions } = this.props;
+    const { t, currentUser, confessions } = this.props;
     const orderedConfessions = confessions.sort(
       (a, b) => b.value.timestamp - a.value.timestamp
     );
@@ -138,7 +139,7 @@ class ProfilePanel extends Component {
           menu={{ secondary: true, pointing: true }}
           panes={[
             {
-              menuItem: "My Confessions",
+              menuItem: t("profile.myConfessions"),
               render: () => (
                 <Tab.Pane attached={false}>
                   <MyConfessions
@@ -152,7 +153,7 @@ class ProfilePanel extends Component {
               )
             },
             {
-              menuItem: "Liked Confessions",
+              menuItem: t("profile.likedConfessions"),
               render: () => (
                 <Tab.Pane attached={false}>
                   <LikedConfessions
@@ -166,7 +167,7 @@ class ProfilePanel extends Component {
               )
             },
             {
-              menuItem: "Favorites",
+              menuItem: t("profile.favoritedConfessions"),
               render: () => (
                 <Tab.Pane attached={false}>
                   <Favorites
@@ -187,10 +188,11 @@ class ProfilePanel extends Component {
 }
 
 ProfilePanel.propTypes = {
+  t: PropTypes.func,
   firebase: PropTypes.object.isRequired,
   currentUser: PropTypes.object.isRequired,
   confessions: PropTypes.array.isRequired,
   handleCloseUserProfile: PropTypes.func
 };
 
-export default ProfilePanel;
+export default withTranslation()(ProfilePanel);

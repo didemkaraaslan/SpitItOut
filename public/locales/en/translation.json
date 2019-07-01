@@ -19,6 +19,11 @@
     "login": "Login",
     "dontHaveAnAccount": "Don't have an account? <1>Create your account</1> instead."
   },
+  "profile": {
+    "myConfessions": "My Confessions",
+    "likedConfessions": "Liked Confessions",
+    "favoritedConfessions": "Favorites"
+  },
   "commentPanel": {
     "comments": "Comments",
     "reply": "Reply",
