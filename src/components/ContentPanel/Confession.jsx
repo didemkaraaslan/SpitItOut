@@ -12,19 +12,22 @@ import femaleAvatar from "../../assets/img/female_avatar.png";
 import maleAvatar from "../../assets/img/male_avatar.png";
 
 const getUserAvatar = confession => {
-  const gender = confession.user.gender;
-  if (confession.shareAs === "user") {
-    const avatar = gender === "female" ? femaleAvatar : maleAvatar;
-    return (
-      <Comment.Avatar
-        src={confession.user.photoURL ? confession.user.photoURL : avatar}
-        className="confession__avatar"
-      />
-    );
-  } else {
-    const avatar = gender === "female" ? femaleAvatar : maleAvatar;
-    return <Comment.Avatar src={avatar} className="confession__avatar" />;
+  if(confession.user) {
+    const gender = confession.user.gender;
+    if (confession.shareAs === "user") {
+      const avatar = gender === "female" ? femaleAvatar : maleAvatar;
+      return (
+        <Comment.Avatar
+          src={confession.user.photoURL ? confession.user.photoURL : avatar}
+          className="confession__avatar"
+        />
+      );
+    } else {
+      const avatar = gender === "female" ? femaleAvatar : maleAvatar;
+      return <Comment.Avatar src={avatar} className="confession__avatar" />;
+    }
   }
+
 };
 
 const Confession = ({
@@ -49,7 +52,7 @@ const Confession = ({
           <Comment.Content>
             {confession && confession.shareAs === "user" ? (
               <Comment.Author as="a">
-                {confession && confession.user.username}
+                {confession.username && confession.user.username}
               </Comment.Author>
             ) : (
               <Comment.Author>{t("confession.anonymous")}</Comment.Author>
